@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct PokedexApp: App {
+    
+    let swiftDexService = SwiftDexService()
+            
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environmentObject(swiftDexService)
         }
     }
 }
