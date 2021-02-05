@@ -36,6 +36,8 @@ struct PokedexView: View {
     
     @Binding var selectedMove: Move?
     @Binding var showSelectedMoveView: Bool
+    @Binding var selectedItem: Item?
+    @Binding var showSelectedItemView: Bool
     
     @State private var pokemonDexNumberToShow: PokemonDexNumber?
     
@@ -54,6 +56,10 @@ struct PokedexView: View {
     @State private var selectedPocket: ItemPocket?
     @State private var selectedPocketViewSourceFrame: CGRect = CGRect.zero
     @State private var showItemPocketSelectionView: Bool = false
+    
+    @State private var selectedMoveDamageClass: MoveDamageClass?
+    @State private var selectedMoveDamageViewSourceFrame: CGRect = CGRect.zero
+    @State private var showMoveDamageClassSelectionsView: Bool = false
         
     func pokemonIsInSearchText(dexNumber: PokemonDexNumber) -> Bool {
         let pokemonForRegion = dexNumber.species!.pokemonForm(for: swiftDexService.selectedRegion)
@@ -107,7 +113,7 @@ struct PokedexView: View {
                                         )
                                 }
                             }
-                            .frame(width: fullView.size.width * 0.65)
+                            .frame(minWidth: fullView.size.width * 0.65)
                             .cornerRadius(8)
                             .onTapGesture {
                                 self.showVersionSelectionSheet = true
@@ -116,28 +122,39 @@ struct PokedexView: View {
                                 VersionGroupSelectionView(generations: swiftDexService.generations, pokemonFormRestriction: nil, selectedVersionGroup: $swiftDexService.selectedVersionGroup, selectedVersion: $swiftDexService.selectedVersion)
                             })
                             
-                            GeometryReader { pokedexSelectionViewGeo in
-                                if selectedDexCategory == .pokémon {
-                                    PokedexSelectionView(pokedex: swiftDexService.selectedPokedex)
-                                        .onAppear() {
-                                            pokedexSelectedViewSourceFrame = pokedexSelectionViewGeo.frame(in: .global)
-                                        }
-                                        .onTapGesture {
-                                            showPokedexSelectionView.toggle()
-                                        }
+                            if selectedDexCategory != .abilities {
+                                GeometryReader { pokedexSelectionViewGeo in
+                                    if selectedDexCategory == .pokémon {
+                                        PokedexSelectionView(pokedex: swiftDexService.selectedPokedex)
+                                            .onAppear() {
+                                                pokedexSelectedViewSourceFrame = pokedexSelectionViewGeo.frame(in: .global)
+                                            }
+                                            .onTapGesture {
+                                                showPokedexSelectionView.toggle()
+                                            }
+                                    }
+                                    if selectedDexCategory == .items {
+                                        ItemPocketSelectionView(itemPocket: selectedPocket)
+                                            .onAppear() {
+                                                selectedPocketViewSourceFrame = pokedexSelectionViewGeo.frame(in: .global)
+                                            }
+                                            .onTapGesture {
+                                                showItemPocketSelectionView.toggle()
+                                            }
+                                    }
+                                    if selectedDexCategory == .moves {
+                                        MoveDamageClassSelectionView(damageClass: selectedMoveDamageClass)
+                                            .onAppear() {
+                                                selectedMoveDamageViewSourceFrame = pokedexSelectionViewGeo.frame(in: .global)
+                                            }
+                                            .onTapGesture {
+                                                showMoveDamageClassSelectionsView.toggle()
+                                            }
+                                    }
                                 }
-                                if selectedDexCategory == .items {
-                                    ItemPocketSelectionView(itemPocket: selectedPocket)
-                                        .onAppear() {
-                                            selectedPocketViewSourceFrame = pokedexSelectionViewGeo.frame(in: .global)
-                                        }
-                                        .onTapGesture {
-                                            showItemPocketSelectionView.toggle()
-                                        }
-                                }
+                                .frame(height: 30)
+                                .frame(maxWidth: .infinity)
                             }
-                            .frame(height: 30)
-                            .frame(minWidth: 0, maxWidth: .infinity)
                         }
                     }
                     .padding(.horizontal)
@@ -166,7 +183,7 @@ struct PokedexView: View {
                         
                         if selectedDexCategory == .moves {
                             LazyVStack(spacing: 2) {
-                                ForEach(swiftDexService.movesForVersionGroup()) { move in
+                                ForEach(swiftDexService.movesForVersionGroup(of: selectedMoveDamageClass)) { move in
                                     if moveIsInSearchText(move: move) {
                                         MoveView(move: move, pokemonMove: nil, versionGroup: swiftDexService.selectedVersionGroup)
                                             .onTapGesture {
@@ -183,7 +200,13 @@ struct PokedexView: View {
                         if selectedDexCategory == .items {
                             LazyVStack(spacing: 2) {
                                 ForEach(swiftDexService.itemsForCurrentVersionGroup(in: selectedPocket, andOf: nil)) { item in
-                                    ItemView(item: item)
+                                    if isInSearchText(text: item.name) {
+                                        ItemView(item: item, versionGroup: swiftDexService.selectedVersionGroup)
+                                            .onTapGesture {
+                                                selectedItem = item
+                                                showSelectedItemView = true
+                                            }
+                                    }
                                 }
                             }
                             .padding(.top, 2)
@@ -192,7 +215,9 @@ struct PokedexView: View {
                         if selectedDexCategory == .abilities {
                             LazyVStack(spacing: 2) {
                                 ForEach(swiftDexService.abilitiesForVersionGroup()) { ability in
-                                    AbilityView(ability: ability)
+                                    if isInSearchText(text: ability.name) {
+                                        AbilityView(ability: ability)
+                                    }
                                 }
                             }
                         }
@@ -201,10 +226,22 @@ struct PokedexView: View {
                 }
             }
             
+            if showDexSelectionViews || showPokedexSelectionView || showItemPocketSelectionView || showMoveDamageClassSelectionsView {
+                BlankView(bgColor: .black)
+                    .opacity(0.5)
+                    .onTapGesture {
+                        showDexSelectionViews = false
+                        showPokedexSelectionView = false
+                        showItemPocketSelectionView = false
+                        showMoveDamageClassSelectionsView = false
+                    }
+            }
+            
             GeometryReader { geo in
                 DexCategorySelectionView(selectedDexCategory: $selectedDexCategory, showView: $showDexSelectionViews, sourceFrame: $dexCategorySelectedViewSourceFrame, searchText: $searchText)
                 VersionGroupPokedexesSelectionView(sourceFrame: $pokedexSelectedViewSourceFrame, showView: $showPokedexSelectionView)
                 ItemPocketsSelectionView(itemPocketsOrdered: swiftDexService.itemPockets().compactMap({$0}), showView: $showItemPocketSelectionView, selectedPocket: $selectedPocket, sourceFrame: $selectedPocketViewSourceFrame, searchText: $searchText)
+                MoveDamageClassSelectionsView(damageClassesOrdered: swiftDexService.damageClasses().compactMap({$0}), showView: $showMoveDamageClassSelectionsView, selectedDamageClass: $selectedMoveDamageClass, sourceFrame: $selectedMoveDamageViewSourceFrame, searchText: $searchText)
             }
             .edgesIgnoringSafeArea(.top)
         }
@@ -234,6 +271,7 @@ struct AbilityView: View {
 
 struct ItemView: View {
     let item: Item
+    let versionGroup: VersionGroup
     
     var body: some View {
         HStack {
@@ -245,7 +283,7 @@ struct ItemView: View {
                 Text(item.name)
                     .font(.title2)
                     .fontWeight(.semibold)
-                Text(item.flavorText)
+                Text(item.flavorText(for: versionGroup))
                     .font(.subheadline)
             }
             .padding(.vertical, 10)
@@ -254,6 +292,68 @@ struct ItemView: View {
         }
         .padding(.horizontal)
         .background(Color(.systemBackground))
+    }
+}
+
+struct MoveDamageClassSelectionsView: View {
+    let damageClassesOrdered: [MoveDamageClass]
+    @Binding var showView: Bool
+    @Binding var selectedDamageClass: MoveDamageClass?
+    @Binding var sourceFrame: CGRect
+    @Binding var searchText: String
+    
+    var damageClasses: [MoveDamageClass] {
+        return damageClassesOrdered.filter({$0.id != selectedDamageClass?.id})
+    }
+    
+    var body: some View {
+        ZStack(alignment: .leading) {
+            Group {
+                ForEach(damageClasses) { damageClass in
+                    MoveDamageClassSelectionView(damageClass: damageClass)
+                        .frame(width: sourceFrame.width, height: sourceFrame.height)
+                        .offset(y: showView ? CGFloat(damageClasses.firstIndex(of: damageClass)! * 35) : 0)
+                        .onTapGesture {
+                            selectedDamageClass = damageClass
+                            searchText = ""
+                            showView.toggle()
+                        }
+                }
+                
+                if selectedDamageClass != nil {
+                    MoveDamageClassSelectionView(damageClass: nil)
+                        .frame(width: sourceFrame.width, height: sourceFrame.height)
+                        .offset(y: showView ? CGFloat(damageClasses.count * 35) : 0)
+                        .onTapGesture {
+                            selectedDamageClass = nil
+                            searchText = ""
+                            showView.toggle()
+                        }
+                }
+            }
+            .opacity(showView ? 1 : 0)
+            .shadow(radius: 5)
+            .scaleEffect(showView ? 1.3 : 1, anchor: .topTrailing)
+            .animation(.default)
+            
+        }
+        .offset(x: sourceFrame.minX, y: showView ? sourceFrame.maxY + 5 : sourceFrame.minY)
+    }
+}
+
+struct MoveDamageClassSelectionView: View {
+    let damageClass: MoveDamageClass?
+    
+    var body: some View {
+        RoundedRectangle(cornerRadius: 8)
+            .foregroundColor(Color(.systemGray5))
+            .overlay(
+                Text(damageClass?.name.capitalized ?? "All Types")
+                    .padding(.horizontal)
+                    .minimumScaleFactor(0.5)
+                    .lineLimit(1)
+                    .foregroundColor(Color(.secondaryLabel))
+            )
     }
 }
 
@@ -393,7 +493,7 @@ struct ClearButton: ViewModifier {
 
 struct PokedexView_Previews: PreviewProvider {
     static var previews: some View {
-        PokedexView(selectedMove: .constant(nil), showSelectedMoveView: .constant(false)).environmentObject(SwiftDexService())
+        PokedexView(selectedMove: .constant(nil), showSelectedMoveView: .constant(false), selectedItem: .constant(nil), showSelectedItemView: .constant(false)).environmentObject(SwiftDexService())
     }
 }
 

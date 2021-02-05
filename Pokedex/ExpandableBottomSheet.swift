@@ -7,113 +7,84 @@
 
 import SwiftUI
 
-enum DragState {
-    case inactive
-    case pressing
-    case dragging(translation: CGSize)
-    
-    var translation: CGSize {
-        switch self {
-        case .inactive, .pressing:
-            return .zero
-        case .dragging(let translation):
-            return translation
-        }
-    }
-    
-    var isDragging: Bool {
-        switch self {
-        case .pressing, .dragging:
-            return true
-        case .inactive:
-            return false
-        }
-    }
-    
-}
-
 struct ExpandableBottomSheet: ViewModifier {
     
     enum ViewState {
-        case full
-        case half
+        case full, half
     }
     
-    @GestureState private var dragState = DragState.inactive
-    @State private var positionOffset: CGFloat = 0.0
-    @State private var viewState = ViewState.half
-    @State private var scrollOffset: CGFloat = 0.0
+    let containerHeight: CGFloat
     
-    @Binding var isShow: Bool
+    @State private var viewState = ViewState.half
+    
+    @Binding var showing: Bool
+    
+    @GestureState private var dragTranslation: CGFloat = 0
+    
+    @State private var scrollOffset: CGFloat = 0
+    @State private var positionOffset: CGFloat = 0
+    
+    private var sheetOffset: CGFloat {
+        return containerHeight - (viewState == .full ? fullSheetHeight : halfSheetHeight)
+    }
+    
+    private var fullSheetHeight: CGFloat {
+        return containerHeight * 0.85
+    }
+    
+    private var halfSheetHeight: CGFloat {
+        return fullSheetHeight * 0.5
+    }
     
     func body(content: Content) -> some View {
-        GeometryReader { geometry in
-            VStack {
-                Spacer()
-                
-                HandleBar()
-                
-                ScrollView(.vertical) {
-                   
-                    GeometryReader { scrollViewProxy in
-                        Color.clear.preference(key: ScrollOffsetKey.self, value: scrollViewProxy.frame(in: .named("scrollview")).minY)
-                    }
-                    .frame(height: 0)
-                    
-                    content
-                    .offset(y: -self.scrollOffset)
+        VStack {
+            Spacer()
+            HandleBar()
+            ScrollView(.vertical) {
+                GeometryReader { scrollViewProxy in
+                    Color.clear.preference(key: ScrollOffsetKey.self, value: scrollViewProxy.frame(in: .named("scrollview")).minY)
+                }
+                .frame(height: 0)
+                content
+                    .offset(y: -scrollOffset)
                     .animation(nil)
-                }
-                .background(Color.white)
-                .cornerRadius(10, antialiased: true)
-                .disabled(self.viewState == .half)
-                .coordinateSpace(name: "scrollview")
-                
             }
-            .offset(y: geometry.size.height/2 + self.dragState.translation.height + self.positionOffset)
-            .offset(y: self.scrollOffset)
-            .animation(.interpolatingSpring(stiffness: 200.0, damping: 25.0, initialVelocity: 10.0))
-            .edgesIgnoringSafeArea(.all)
-            .onPreferenceChange(ScrollOffsetKey.self) { value in
-                if self.viewState == .full {
-                    self.scrollOffset = value > 0 ? value : 0
-
-                    if self.scrollOffset > 120 {
-                        self.positionOffset = 0
-                        self.viewState = .half
-                        self.scrollOffset = 0
-                    }
-                }
+            .background(Color(.systemBackground))
+            .cornerRadius(10, antialiased: true)
+            .coordinateSpace(name: "scrollview")
+            .disabled(viewState == .half)
+        }
+        .frame(height: fullSheetHeight)
+        .offset(y: sheetOffset)
+        .offset(y: viewState == .half ? dragTranslation : 0)
+        .offset(y: scrollOffset)
+        .animation(.interpolatingSpring(stiffness: 200.0, damping: 25.0, initialVelocity: 10.0))
+        .onPreferenceChange(ScrollOffsetKey.self) { value in
+            scrollOffset = value > 0 ? value : 0
+            
+            if scrollOffset > containerHeight * 0.1 {
+                scrollOffset = 0
+                viewState = .half
             }
-            .gesture(DragGesture()
-                .updating(self.$dragState, body: { (value, state, transaction) in
-                    state = .dragging(translation: value.translation)
-                    })
+        }
+        .gesture(
+            DragGesture()
+                .updating($dragTranslation, body: { (value, state, transaction) in
+                    state = value.translation.height
+                })
                 .onEnded({ (value) in
-                    
-                    if self.viewState == .half {
-                        // Threshold #1
-                        // Slide up and when it goes beyond the threshold
-                        // change the view state to fully opened by updating
-                        // the position offset
-                        if value.translation.height < -geometry.size.height * 0.25 {
-                            self.positionOffset = -geometry.size.height/2 + 50
-                            self.viewState = .full
+                    if viewState == .half {
+                        if value.translation.height < -containerHeight * 0.25 {
+                            positionOffset = -containerHeight / 2 + 50
+                            viewState = .full
                         }
                         
-                        // Threshold #2
-                        // Slide down and when it goes pass the threshold
-                        // dismiss the view by setting isShow to false
-                        if value.translation.height > geometry.size.height * 0.3 {
-                            self.isShow = false
+                        if value.translation.height > containerHeight * 0.15 {
+                            showing = false
                         }
                     }
-                  
                 })
-            )
-            
-            
-        }
+        )
     }
 }
 

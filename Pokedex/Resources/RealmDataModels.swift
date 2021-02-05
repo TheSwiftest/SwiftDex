@@ -418,6 +418,10 @@ class ItemCategory: Object {
     override class func primaryKey() -> String? {
         return "id"
     }
+    
+    var name: String {
+        return prose.first(where: {$0.localLanguageId == 9})?.name ?? identifier
+    }
 }
 
 // MARK: - ItemCategoryProse
@@ -463,6 +467,7 @@ class Item: Object, Identifiable {
     
     let machines = LinkingObjects(fromType: Machine.self, property: "item")
     let names = LinkingObjects(fromType: ItemName.self, property: "item")
+    let prose = LinkingObjects(fromType: ItemProse.self, property: "item")
     let gameIndices = LinkingObjects(fromType: ItemGameIndex.self, property: "item")
     let flavorTexts = LinkingObjects(fromType: ItemFlavorText.self, property: "item")
     let flags = LinkingObjects(fromType: ItemFlagMap.self, property: "item")
@@ -479,8 +484,16 @@ class Item: Object, Identifiable {
         return URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/\(identifier).png")!
     }
     
-    var flavorText: String {
-        return flavorTexts.first(where: {$0.languageId == 9})?.flavorText.replacingOccurrences(of: "\n", with: " ") ?? "No Flavor Text"
+    func flavorText(for versionGroup: VersionGroup) -> String {
+        return flavorTexts.first(where: {$0.languageId == 9 && $0.versionGroup!.id == versionGroup.id})?.flavorText.replacingOccurrences(of: "\n", with: " ") ?? "No Flavor Text"
+    }
+    
+    var effectText: String {
+        return prose.first(where: {$0.localLanguageId == 9})?.effect ?? "No item effect"
+    }
+    
+    var shortEffectText: String {
+        return prose.first(where: {$0.localLanguageId == 9})?.shortEffect ?? "No short effect text"
     }
 }
 
@@ -501,6 +514,10 @@ class ItemFlingEffect: Object {
     
     override class func primaryKey() -> String? {
         return "id"
+    }
+    
+    var effect: String {
+        return prose.first(where: {$0.localLanguageId == 9})?.effect ?? identifier
     }
 }
 
@@ -721,7 +738,7 @@ class MoveChangelog: Object {
     let effectChance = RealmOptional<Int>()
 }
 
-class MoveDamageClass: Object {
+class MoveDamageClass: Object, Identifiable {
     @objc dynamic var id = 0
     @objc dynamic var identifier = ""
     

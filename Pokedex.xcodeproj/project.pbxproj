@@ -10,6 +10,8 @@
 		C8157AD725C1CFD000A1046A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C8157AD625C1CFD000A1046A /* Kingfisher */; };
 		C8157B2E25C3086600A1046A /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C8157B2D25C3086600A1046A /* Realm */; };
 		C8157B3025C3086600A1046A /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C8157B2F25C3086600A1046A /* RealmSwift */; };
+		C82A8B0225CB5CB30039AD52 /* TeamBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82A8B0125CB5CB30039AD52 /* TeamBuilderView.swift */; };
+		C82A8B0625CB5CC00039AD52 /* BattleSimulatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82A8B0525CB5CC00039AD52 /* BattleSimulatorView.swift */; };
 		C878847D25BDEAEF00BB3662 /* PokedexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C878847C25BDEAEF00BB3662 /* PokedexApp.swift */; };
 		C878847F25BDEAEF00BB3662 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C878847E25BDEAEF00BB3662 /* ContentView.swift */; };
 		C878848125BDEAF100BB3662 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C878848025BDEAF100BB3662 /* Assets.xcassets */; };
@@ -39,6 +41,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C82A8B0125CB5CB30039AD52 /* TeamBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamBuilderView.swift; sourceTree = "<group>"; };
+		C82A8B0525CB5CC00039AD52 /* BattleSimulatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleSimulatorView.swift; sourceTree = "<group>"; };
 		C878847925BDEAEF00BB3662 /* Pokedex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pokedex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C878847C25BDEAEF00BB3662 /* PokedexApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokedexApp.swift; sourceTree = "<group>"; };
 		C878847E25BDEAEF00BB3662 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -113,6 +117,8 @@
 				C878847C25BDEAEF00BB3662 /* PokedexApp.swift */,
 				C878847E25BDEAEF00BB3662 /* ContentView.swift */,
 				C8DAEF2B25C7009000B76089 /* PokedexView.swift */,
+				C82A8B0125CB5CB30039AD52 /* TeamBuilderView.swift */,
+				C82A8B0525CB5CC00039AD52 /* BattleSimulatorView.swift */,
 				C894214925CB2001007E3A04 /* SettingsView.swift */,
 				C878848025BDEAF100BB3662 /* Assets.xcassets */,
 				C878848525BDEAF100BB3662 /* Info.plist */,
@@ -265,12 +271,14 @@
 				C8A682FA25BF5A4500BF905D /* PokemonStatsView.swift in Sources */,
 				C8A682F025BF59BE00BF905D /* PokemonAbilitiesView.swift in Sources */,
 				C885B3D425C659EE00D2B7AF /* PokemonAlternateFormsView.swift in Sources */,
+				C82A8B0225CB5CB30039AD52 /* TeamBuilderView.swift in Sources */,
 				C8A6830925C085A100BF905D /* PokemonMovesView.swift in Sources */,
 				C8A6830625C0856700BF905D /* SpeciesBreedingInfoView.swift in Sources */,
 				C8A6830C25C0861A00BF905D /* PokemonEVYieldsView.swift in Sources */,
 				C878847D25BDEAEF00BB3662 /* PokedexApp.swift in Sources */,
 				C894215325CB292A007E3A04 /* MoveDetailView.swift in Sources */,
 				C87E4B1125C5EB2B00A294C5 /* RealmDataModels.swift in Sources */,
+				C82A8B0625CB5CC00039AD52 /* BattleSimulatorView.swift in Sources */,
 				C8DAEF2C25C7009000B76089 /* PokedexView.swift in Sources */,
 				C8A6830F25C0865A00BF905D /* PokemonTypeWeaknessesView.swift in Sources */,
 				C8A682F725BF5A1200BF905D /* PokemonEvolutionView.swift in Sources */,
@@ -412,6 +420,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bestcoast.swiftdex;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -434,6 +443,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bestcoast.swiftdex;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

@@ -1,5 +1,5 @@
 //
-//  SettingsView.swift
+//  BattleSimulatorView.swift
 //  Pokedex
 //
 //  Created by TempUser on 2/3/21.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SettingsView: View {
+struct BattleSimulatorView: View {
     var body: some View {
         VStack {
             Text("Coming Soon!")
@@ -20,8 +20,8 @@ struct SettingsView: View {
     }
 }
 
-struct SettingsView_Previews: PreviewProvider {
+struct BattleSimulatorView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        BattleSimulatorView()
     }
 }

@@ -55,6 +55,9 @@ struct PokemonView: View {
                                 Text("Info")
                             }
                             PokemonMovesView(selectedPokemon: $selectedPokemon, selectedLearnMethod: swiftDexService.moveLearnMethodsForSelectedVersionGroup.first!, selectedVersion: $selectedVersion, selectedMove: $selectedMove, showMoveDetailView: $showMoveDetailView)
+                                .sheet(item: $selectedMove) { move in
+                                    MoveDetailView(move: move, versionGroup: selectedVersionGroup)
+                                }
                             .tabItem {
                                 Image("tab_icon_moves")
                                 Text("Moves")
@@ -71,18 +74,19 @@ struct PokemonView: View {
                 }
                 .zIndex(0)
                 
-                if let selectedMove = selectedMove, showMoveDetailView {
-                    BlankView(bgColor: .black)
-                        .opacity(0.5)
-                        .onTapGesture {
-                            showMoveDetailView = false
-                        }
-                        .zIndex(1)
-                    MoveDetailView(move: selectedMove, versionGroup: selectedVersionGroup)
-                        .modifier(ExpandableBottomSheet(isShow: $showMoveDetailView))
-                        .transition(.move(edge: .bottom))
-                        .zIndex(2)
-                }
+//                if let selectedMove = selectedMove, showMoveDetailView {
+//                    GeometryReader { geo in
+//                        BlankView(bgColor: .black)
+//                            .opacity(0.5)
+//                            .onTapGesture {
+//                                showMoveDetailView = false
+//                            }
+//                        MoveDetailView(move: selectedMove, versionGroup: selectedVersionGroup)
+//                            .modifier(ExpandableBottomSheet(containerHeight: geo.size.height, showing: $showMoveDetailView))
+//                    }
+//                    .transition(.move(edge: .bottom))
+//                    .edgesIgnoringSafeArea(.bottom)
+//                }
             }
         }
     }

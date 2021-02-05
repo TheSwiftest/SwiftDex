@@ -27,7 +27,7 @@ class SwiftDexService: ObservableObject {
     }
         
     init() {
-        let mostRecentVersionGroup = realm.object(ofType: VersionGroup.self, forPrimaryKey: 20)!
+        let mostRecentVersionGroup = realm.object(ofType: VersionGroup.self, forPrimaryKey: 18)!
         self.selectedVersionGroup = mostRecentVersionGroup
         self.selectedPokedex = realm.object(ofType: Pokedex.self, forPrimaryKey: 1)!
         self.selectedVersion = mostRecentVersionGroup.versions.first!
@@ -47,12 +47,22 @@ class SwiftDexService: ObservableObject {
         return itemGameIndices.compactMap({$0.item})
     }
     
+    func damageClasses() -> Results<MoveDamageClass> {
+        return realm.objects(MoveDamageClass.self)
+    }
+    
     func itemPockets() -> Results<ItemPocket> {
         return realm.objects(ItemPocket.self)
     }
     
-    func movesForVersionGroup() -> [Move]{
-        return realm.objects(Move.self).filter("generation.id <= \(selectedVersionGroup.generation!.id)").compactMap({$0})
+    func movesForVersionGroup(of moveDamageClass: MoveDamageClass?) -> Results<Move> {
+        var moves = realm.objects(Move.self).filter("generation.id <= \(selectedVersionGroup.generation!.id)")
+        
+        if let moveDamageClass = moveDamageClass {
+            moves = moves.filter("damageClass.id == \(moveDamageClass.id)")
+        }
+        
+        return moves
     }
     
     func abilitiesForVersionGroup() -> [Ability] {

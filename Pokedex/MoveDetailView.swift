@@ -47,106 +47,103 @@ struct MoveDetailView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            Text(move.name)
-                .font(.title2)
-                .fontWeight(.semibold)
-                .padding(.vertical, 5)
-            Rectangle()
-                .foregroundColor(Color(.systemFill))
-                .frame(height: 1)
-                .padding(.bottom, 10)
-            VStack(alignment: .leading, spacing: 15) {
-                HStack {
-                    Rectangle()
-                        .foregroundColor(move.type!.color)
-                        .frame(height: 30)
-                        .cornerRadius(15)
-                        .overlay(
-                            HStack {
-                                move.type!.icon
-                                    .frame(width: 20, height: 20)
-                                    .foregroundColor(Color(.white))
-                                Text(move.type!.name.uppercased())
-                                    .font(.system(size: 18))
-                                    .fontWeight(.bold)
-                                    .foregroundColor(Color(.white))
-                            }
-                        )
-                    if let damageClass = move.damageClass {
+        ScrollView {
+            VStack(spacing: 0) {
+                Text(move.name)
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .padding(.top)
+                    .padding(.bottom, 10)
+                Rectangle()
+                    .foregroundColor(Color(.systemFill))
+                    .frame(height: 1)
+                    .padding(.bottom, 10)
+                VStack(alignment: .leading, spacing: 15) {
+                    HStack {
                         Rectangle()
-                            .foregroundColor(damageClass.backgroundColor)
+                            .foregroundColor(move.type!.color)
                             .frame(height: 30)
                             .cornerRadius(15)
                             .overlay(
                                 HStack {
-                                    damageClass.icon
-                                        .resizable()
+                                    move.type!.icon
                                         .frame(width: 20, height: 20)
-                                        .foregroundColor(damageClass.color)
-                                    Text(damageClass.name.uppercased())
+                                        .foregroundColor(Color(.white))
+                                    Text(move.type!.name.uppercased())
                                         .font(.system(size: 18))
                                         .fontWeight(.bold)
                                         .foregroundColor(Color(.white))
                                 }
                             )
+                        if let damageClass = move.damageClass {
+                            Rectangle()
+                                .foregroundColor(damageClass.backgroundColor)
+                                .frame(height: 30)
+                                .cornerRadius(15)
+                                .overlay(
+                                    HStack {
+                                        damageClass.icon
+                                            .resizable()
+                                            .frame(width: 20, height: 20)
+                                            .foregroundColor(damageClass.color)
+                                        Text(damageClass.name.uppercased())
+                                            .font(.system(size: 18))
+                                            .fontWeight(.bold)
+                                            .foregroundColor(Color(.white))
+                                    }
+                                )
+                        }
                     }
+
+                    Text(flavorText)
+                        .font(.body)
+
+                    PokemonDetailSectionHeader(text: "Stats")
+                    HStack {
+                        VStack {
+                            Text("POW")
+                                .font(.title2)
+                            Text(powerText)
+                                .font(.title2)
+                                .bold()
+                        }
+                        .frame(maxWidth: .infinity)
+                        VStack {
+                            Text("ACC")
+                                .font(.title2)
+                            Text(accuracyText)
+                                .font(.title2)
+                                .bold()
+                        }
+                        .frame(maxWidth: .infinity)
+                        VStack {
+                            Text("PP")
+                                .font(.title2)
+                            Text(ppText)
+                                .font(.title2)
+                                .bold()
+                        }
+                        .frame(maxWidth: .infinity)
+                        VStack {
+                            Text("PRIO")
+                                .font(.title2)
+                            Text("\(move.priority)")
+                                .font(.title2)
+                                .bold()
+                        }
+                        .frame(maxWidth: .infinity)
+                    }
+
+                    PokemonDetailSectionHeader(text: "Effect")
+                    Text(moveEffectText)
+                        .font(.body)
+
+                    PokemonDetailSectionHeader(text: "Target")
+                    Text(move.target!.targetDescription)
+                        .font(.body)
                 }
-
-                Text(flavorText)
-                    .font(.body)
-
-                PokemonDetailSectionHeader(text: "Stats")
-                HStack {
-                    VStack {
-                        Text("POW")
-                            .font(.title2)
-                        Text(powerText)
-                            .font(.title2)
-                            .bold()
-                    }
-                    .frame(maxWidth: .infinity)
-                    VStack {
-                        Text("ACC")
-                            .font(.title2)
-                        Text(accuracyText)
-                            .font(.title2)
-                            .bold()
-                    }
-                    .frame(maxWidth: .infinity)
-                    VStack {
-                        Text("PP")
-                            .font(.title2)
-                        Text(ppText)
-                            .font(.title2)
-                            .bold()
-                    }
-                    .frame(maxWidth: .infinity)
-                    VStack {
-                        Text("PRIO")
-                            .font(.title2)
-                        Text("\(move.priority)")
-                            .font(.title2)
-                            .bold()
-                    }
-                    .frame(maxWidth: .infinity)
-                }
-
-                PokemonDetailSectionHeader(text: "Effect")
-                Text(moveEffectText)
-                    .font(.body)
-
-                PokemonDetailSectionHeader(text: "Target")
-                Text(move.target!.targetDescription)
-                    .font(.body)
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
         }
     }
 }
-//
-//
-//struct MoveDetailView_Previews: PreviewProvider {
-//    static var previews: some View {
-//    }
-//}
