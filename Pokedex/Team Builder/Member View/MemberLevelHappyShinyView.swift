@@ -21,9 +21,18 @@ struct TeamPokemonLevelAndHappinessView: View {
                     .foregroundColor(color)
                     .multilineTextAlignment(.center)
                 
-                Text("Level")
-                    .font(.subheadline)
-                    .frame(maxWidth: .infinity)
+                Button(action: {
+                    if level < 50 {
+                        level = 50
+                    } else if level < 100 {
+                        level = 100
+                    } else { level = 0 }
+                }, label: {
+                    Text("Level")
+                        .font(.subheadline)
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(Color(.label))
+                })
             }
             
             VStack(spacing: 0) {
@@ -32,9 +41,18 @@ struct TeamPokemonLevelAndHappinessView: View {
                     .foregroundColor(color)
                     .multilineTextAlignment(.center)
                 
-                Text("Happiness")
-                    .font(.subheadline)
-                    .frame(maxWidth: .infinity)
+                Button(action: {
+                    if happiness != 255 {
+                        happiness = 255
+                    } else {
+                        happiness = 0
+                    }
+                }, label: {
+                    Text("Happiness")
+                        .font(.subheadline)
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(Color(.label))
+                })
             }
             
             VStack(spacing: 0) {

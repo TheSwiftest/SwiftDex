@@ -74,10 +74,10 @@ struct TeamPokemonIVsView: View {
                         }
                         
                         Button(ivText(for: index)) {
-                            if ivs[index] != 0 {
-                                ivs[index] = 0
-                            } else {
+                            if ivs[index] != 31 {
                                 ivs[index] = 31
+                            } else {
+                                ivs[index] = 0
                             }
                         }
                         .foregroundColor(color)

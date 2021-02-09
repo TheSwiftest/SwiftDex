@@ -18,7 +18,7 @@ struct PokemonBasicInfoView: View {
         ScrollView {
             VStack {
                 Group {
-                    SpeciesBasicInfoView(id: pokemon.id, height: pokemon.height, weight: pokemon.weight, bodyShape: species.shape!.id, genus: species.names.first(where: {$0.localLanguageId == 9})!.genus, color: pokemon.types.first(where: {$0.slot == 1})!.type!.color)
+                    SpeciesBasicInfoView(species: species, id: pokemon.id, height: pokemon.height, weight: pokemon.weight, bodyShape: species.shape!.id, genus: species.names.first(where: {$0.localLanguageId == 9})!.genus, color: pokemon.types.first(where: {$0.slot == 1})!.type!.color)
                     PokemonAbilitiesView(pokemon: $pokemon)
                     PokemonStatsView(pokemon: $pokemon)
                     PokemonEvolutionChainView(species: species)
@@ -31,7 +31,7 @@ struct PokemonBasicInfoView: View {
 }
 
 struct SpeciesBasicInfoView: View {
-    
+    let species: PokemonSpecies
     let id: Int
     let height: Int
     let weight: Int
@@ -54,7 +54,11 @@ struct SpeciesBasicInfoView: View {
                 Group {
                     SpeciesInfoTextView(title: "\(heightInMetersText)m", subtitle: "Height")
                     SpeciesInfoTextView(title: "\(weightInKGText)kg", subtitle: "Weight")
-                    SpeciesInfoImageView(image: Image("cry"), imageSize: 18, subtitle: "Cry", color: color)
+                    Button(action: {
+                        swiftDexService.playCry(for: species)
+                    }, label: {
+                        SpeciesInfoImageView(image: Image("cry"), imageSize: 18, subtitle: "Cry", color: color)
+                    })
                 }
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
             }

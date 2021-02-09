@@ -30,19 +30,19 @@ struct TeamPokemonDetailView: View {
     var body: some View {
         VStack(spacing: 0) {
             TeamPokemonSummaryView(pokemon: teamPokemon.pokemon, shiny: teamPokemon.shiny)
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(spacing: 20) {
                     TeamPokemonNicknameAndGenderView(genders: [swiftDexService.male, swiftDexService.female], nickname: $teamPokemon.nickname, gender: $teamPokemon.gender, color: teamPokemon.pokemon.color)
                     TeamPokemonAbilitiesView(pokemonAbilities: teamPokemon.pokemon.abilities.compactMap({$0}), color: teamPokemon.pokemon.color, ability: $teamPokemon.ability)
-                    TeamPokemonMoveSetView(allMoves: swiftDexService.allMoves.compactMap{$0}, availableMoves: teamPokemon.availableMoves, firstMove: $teamPokemon.firstMove, secondMove: $teamPokemon.secondMove, thirdMove: $teamPokemon.thirdMove, fourthMove: $teamPokemon.fourthMove)
+                    TeamPokemonMoveSetView(pokemon: teamPokemon.pokemon, firstMove: $teamPokemon.firstMove, secondMove: $teamPokemon.secondMove, thirdMove: $teamPokemon.thirdMove, fourthMove: $teamPokemon.fourthMove)
                     TeamPokemonLevelAndHappinessView(level: $teamPokemon.level, happiness: $teamPokemon.happiness, color: teamPokemon.pokemon.color, shiny: $teamPokemon.shiny)
                     TeamPokemonNatureAndItemView(availableNatures: natures, availableItems: items, nature: $teamPokemon.nature, item: $teamPokemon.item)
                     TeamPokemonStatsView(pokemonStats: teamPokemon.pokemon.stats.compactMap({$0}), nature: teamPokemon.nature, evs: teamPokemon.evs, ivs: teamPokemon.ivs, level: teamPokemon.level)
                     TeamPokemonEVsView(evs: $teamPokemon.evs, color: teamPokemon.pokemon.color)
                     TeamPokemonIVsView(ivs: $teamPokemon.ivs, color: teamPokemon.pokemon.color)
                 }
+                .padding()
             }
-            .padding()
         }
         .onDisappear() {
             _teamPokemonOriginal.wrappedValue = _teamPokemon.wrappedValue

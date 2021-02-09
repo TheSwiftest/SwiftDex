@@ -24,7 +24,7 @@ struct PokemonTypeWeaknessesView: View {
     var body: some View {
         VStack {
             PokemonDetailSectionHeader(text: "Type Weaknesses")
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))], alignment: .center) {
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], alignment: .center) {
                 ForEach(TypeEffectiveness.TypeData.all(), id: \.rawValue) { type in
                     Rectangle()
                         .foregroundColor(Color(.secondarySystemFill))

@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+struct MemberNatureView_Previews: PreviewProvider {
+    static var previews: some View {
+        NatureView(nature: SwiftDexService().nature(with: "Bold")!)
+        TeamPokemonNatureSelectionView(natures: SwiftDexService().natures.compactMap({$0}), selectedNature: .constant(nil))
+    }
+}
+
 struct TeamPokemonNatureSelectionView: View {
     @Environment(\.presentationMode) var presentationMode
     
@@ -30,9 +37,8 @@ struct TeamPokemonNatureSelectionView: View {
                                 presentationMode.wrappedValue.dismiss()
                             }
                     }
-                    .padding(.top, 2)
                 }
-                .padding(.horizontal)
+                .padding(.top, 2)
                 .background(Color(.secondarySystemBackground))
             }
         }
@@ -47,12 +53,35 @@ struct NatureView: View {
             HStack {
                 Text(nature.name)
                     .font(.title)
+                Spacer()
             }
             
-            HStack {
-                
+            HStack(spacing: 15) {
+                if nature.increasedStat != nature.decreasedStat {
+                    if let stat = nature.increasedStat {
+                        NatureStatFlavorView(increased: true, identifier: stat.identifier.uppercased())
+                    }
+                    
+                    if let stat = nature.decreasedStat {
+                        NatureStatFlavorView(increased: false, identifier: stat.identifier.uppercased())
+                    }
+                    
+                    if let flavor = nature.likesFlavor {
+                        NatureStatFlavorView(increased: true, identifier: flavor.identifier.capitalized)
+                    }
+                    
+                    if let flavor = nature.hatesFlavor {
+                        NatureStatFlavorView(increased: false, identifier: flavor.identifier.capitalized)
+                    }
+                } else {
+                    Text("Neutral Flavor")
+                }
+
+                Spacer()
             }
         }
+        .padding()
+        .background(Color(.systemBackground))
     }
 }
 
@@ -156,6 +185,23 @@ struct TeamPokemonNatureAndItemView: View {
                 Text("Item")
                     .font(.subheadline)
             }
+        }
+    }
+}
+
+struct NatureStatFlavorView: View {
+    
+    let increased: Bool
+    let identifier: String
+    
+    var body: some View {
+        HStack(spacing: 4) {
+            Image(systemName: "arrow.\(increased ? "up" : "down")")
+                .font(.subheadline)
+                .foregroundColor(Color(increased ? .systemRed : .systemBlue))
+            Text(identifier)
+                .font(.subheadline)
+                .foregroundColor(Color(increased ? .systemRed : .systemBlue))
         }
     }
 }

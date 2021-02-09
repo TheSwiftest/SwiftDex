@@ -21,7 +21,7 @@ struct VersionGroupSelectionView: View {
             return generations.filter({$0.id >= formRestriction.introducedInVersionGroup!.generation!.id})
         }
         
-        return generations
+        return generations.sorted(by: {$0.id > $1.id})
     }
     
     var body: some View {

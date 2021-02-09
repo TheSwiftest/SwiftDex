@@ -7,9 +7,18 @@
 
 import SwiftUI
 
+struct TeamPokemonMoveSetView_Previews: PreviewProvider {
+    static var previews: some View {
+        TeamPokemonMoveSetView(pokemon: SwiftDexService().pokemon(withId: 1)!, firstMove: .constant(nil), secondMove: .constant(nil), thirdMove: .constant(nil), fourthMove: .constant(nil)).environmentObject(SwiftDexService())
+                
+        TeamPokemonMoveSelectionView(pokemon: SwiftDexService().pokemon(withId: 1)!, selectedMove: .constant(nil)).environmentObject(SwiftDexService())
+    }
+}
+
 struct TeamPokemonMoveSetView: View {
-    let allMoves: [Move]
-    let availableMoves: [Move]
+    @EnvironmentObject var swiftDexService: SwiftDexService
+    
+    let pokemon: Pokemon
     @Binding var firstMove: Move?
     @Binding var secondMove: Move?
     @Binding var thirdMove: Move?
@@ -20,13 +29,13 @@ struct TeamPokemonMoveSetView: View {
             PokemonDetailSectionHeader(text: "Move Set")
             VStack {
                 HStack {
-                    TeamPokemonMoveView(allMoves: allMoves, availableMoves: availableMoves, move: $firstMove)
-                    TeamPokemonMoveView(allMoves: allMoves, availableMoves: availableMoves, move: $secondMove)
+                    TeamPokemonMoveView(pokemon: pokemon, move: $firstMove).environmentObject(swiftDexService)
+                    TeamPokemonMoveView(pokemon: pokemon, move: $secondMove).environmentObject(swiftDexService)
                 }
                 
                 HStack {
-                    TeamPokemonMoveView(allMoves: allMoves, availableMoves: availableMoves, move: $thirdMove)
-                    TeamPokemonMoveView(allMoves: allMoves, availableMoves: availableMoves, move: $fourthMove)
+                    TeamPokemonMoveView(pokemon: pokemon, move: $thirdMove).environmentObject(swiftDexService)
+                    TeamPokemonMoveView(pokemon: pokemon, move: $fourthMove).environmentObject(swiftDexService)
                 }
             }
             .cornerRadius(8)
@@ -35,8 +44,9 @@ struct TeamPokemonMoveSetView: View {
 }
 
 struct TeamPokemonMoveView: View {
-    let allMoves: [Move]
-    let availableMoves: [Move]
+    @EnvironmentObject var swiftDexService: SwiftDexService
+    
+    let pokemon: Pokemon
     @Binding var move: Move?
     @State private var showMoveSelectionView = false
     
@@ -73,25 +83,21 @@ struct TeamPokemonMoveView: View {
             showMoveSelectionView = true
         }
         .sheet(isPresented: $showMoveSelectionView) {
-            TeamPokemonMoveSelectionView(allMoves: allMoves, availableMoves: availableMoves, selectedMove: $move)
+            TeamPokemonMoveSelectionView(pokemon: pokemon, selectedMove: $move).environmentObject(swiftDexService)
         }
     }
 }
 
 struct TeamPokemonMoveSelectionView: View {
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var swiftDexService: SwiftDexService
     
-    let allMoves: [Move]
-    let availableMoves: [Move]
+    let pokemon: Pokemon
     @Binding var selectedMove: Move?
     
     @State private var searchText: String = ""
     @State private var showAllMoves: Bool = false
-    
-    private var moves: [Move] {
-        return showAllMoves ? allMoves : availableMoves
-    }
-    
+
     var body: some View {
         VStack {
             VStack {
@@ -110,7 +116,7 @@ struct TeamPokemonMoveSelectionView: View {
             
             ScrollView {
                 LazyVStack(spacing: 2) {
-                    ForEach(moves.filter({searchText.isEmpty ? true : $0.identifier.localizedCaseInsensitiveContains(searchText)})) { move in
+                    ForEach(swiftDexService.moves(matching: searchText, for: showAllMoves ? nil : pokemon)) { move in
                         MoveView(move: move, pokemonMove: nil, versionGroup: nil)
                             .onTapGesture {
                                 selectedMove = move

@@ -32,15 +32,14 @@ struct PokemonAlternateFormsView: View {
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], alignment: .center) {
                     ForEach(validPokemon, id:\.id) { pokemon in
                         VStack {
-                            Text(pokemon.defaultFormName)
+                            Text(pokemon.name)
                                 .minimumScaleFactor(0.5)
-                                
                                 .lineLimit(1)
                             Rectangle()
                                 .foregroundColor(Color(.secondarySystemBackground))
                                 .frame(width: 100, height: 100)
                                 .overlay(
-                                    KFImage(URL(string: pokemon.spriteImageLink))
+                                    pokemon.sprite
                                         .resizable()
                                         .scaledToFill()
                                         .frame(width: 70, height: 70)

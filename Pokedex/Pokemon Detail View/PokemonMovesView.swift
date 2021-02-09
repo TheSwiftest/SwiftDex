@@ -96,7 +96,7 @@ struct MoveView: View {
     
     let move: Move
     let pokemonMove: PokemonMove?
-    let versionGroup: VersionGroup
+    let versionGroup: VersionGroup?
     
     private var subtitle: String? {
         guard let pokemonMove = pokemonMove, let moveMethod = pokemonMove.pokemonMoveMethod else {

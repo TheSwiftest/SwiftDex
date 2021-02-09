@@ -96,9 +96,12 @@ struct PokedexView: View {
                             .frame(width: 30, height: 30)
                             
                             TextField(selectedDexCategory.rawValue.capitalized, text: $searchText)
+                                .disableAutocorrection(true)
                                 .font(.title)
                                 .modifier(ClearButton(text: $searchText))
                         }
+                        .frame(height: 35)
+                        
                         HStack {
                             HStack {
                                 ForEach(swiftDexService.selectedVersionGroup.versions) { version in
@@ -164,16 +167,25 @@ struct PokedexView: View {
                     ScrollView {
                         if selectedDexCategory == .pokémon {
                             LazyVStack(spacing: 10) {
-                                ForEach(swiftDexService.selectedPokedex.pokemonSpeciesDexNumbers.filter("species.generation.id <= \(swiftDexService.selectedVersionGroup.generation!.id)").sorted(byKeyPath: "pokedexNumber", ascending: true)) { speciesDexNumber in
-                                    if pokemonIsInSearchText(dexNumber: speciesDexNumber) {
-                                        PokemonView(pokemonDexNumber: speciesDexNumber, selectedVersionGroup: swiftDexService.selectedVersionGroup).environmentObject(swiftDexService)
-                                            .frame(height: 112)
-                                            .padding(.horizontal, 10)
-                                            .onTapGesture {
-                                                self.pokemonDexNumberToShow = speciesDexNumber
-                                            }
-                                    }
+                                ForEach(swiftDexService.pokemonDexNumbers(matching: searchText)) { speciesDexNumber in
+                                    PokemonView(pokemonDexNumber: speciesDexNumber, selectedVersionGroup: swiftDexService.selectedVersionGroup)
+                                        .frame(height: 112)
+                                        .padding(.horizontal, 10)
+                                        .onTapGesture {
+                                            self.pokemonDexNumberToShow = speciesDexNumber
+                                        }
                                 }
+//                                ForEach(swiftDexService.selectedPokedex.pokemonSpeciesDexNumbers.filter("species.generation.id <= \(swiftDexService.selectedVersionGroup.generation!.id)").sorted(byKeyPath: "pokedexNumber", ascending: true)) { speciesDexNumber in
+//                                    if pokemonIsInSearchText(dexNumber: speciesDexNumber) {
+//
+//                                        PokemonView(pokemonDexNumber: speciesDexNumber, selectedVersionGroup: swiftDexService.selectedVersionGroup).environmentObject(swiftDexService)
+//                                            .frame(height: 112)
+//                                            .padding(.horizontal, 10)
+//                                            .onTapGesture {
+//                                                self.pokemonDexNumberToShow = speciesDexNumber
+//                                            }
+//                                    }
+//                                }
                             }
                             .padding(.top, 10)
                             .sheet(item: $pokemonDexNumberToShow) { pokemonDexNumber in
@@ -271,11 +283,11 @@ struct AbilityView: View {
 
 struct ItemView: View {
     let item: Item
-    let versionGroup: VersionGroup
+    let versionGroup: VersionGroup?
     
     var body: some View {
         HStack {
-            KFImage(item.imageURL)
+            item.image
                 .resizable()
                 .frame(width: 30, height: 30)
             
@@ -483,6 +495,7 @@ struct ClearButton: ViewModifier {
                     self.text = ""
                 }, label: {
                     Image(systemName: "xmark.circle.fill")
+                        .font(.system(size: 25))
                         .foregroundColor(Color(.secondarySystemFill))
                 })
                 .padding(.trailing, 8)

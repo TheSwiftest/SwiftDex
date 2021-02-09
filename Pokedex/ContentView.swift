@@ -9,7 +9,7 @@ import SwiftUI
 import Kingfisher
 
 struct ContentView: View {
-    
+    @EnvironmentObject var pokemonShowdownService: PokemonShowdownService
     @EnvironmentObject var swiftDexService: SwiftDexService
     @State private var selectedMove: Move?
     @State private var showSelectedMoveDetail: Bool = false
@@ -26,7 +26,7 @@ struct ContentView: View {
                     Image("tab_icon_dex")
                     Text("SwiftDex")
                 }
-                TeamBuilderView()
+                TeamBuilderView().environmentObject(swiftDexService).environmentObject(pokemonShowdownService)
                     .tabItem {
                         Image("tab_icon_team_builder")
                         Text("Team Builder")
@@ -116,7 +116,7 @@ struct ItemDetailView: View {
                     Text(item.flavorText(for: versionGroup))
                         .font(.caption)
                 }
-                KFImage(item.imageURL)
+                item.image
                     .resizable()
                     .frame(width: 45, height: 45)
             }

@@ -29,17 +29,6 @@ struct PokemonSummaryView: View {
         return "#\(String(format: "%03d", pokemonDexNumber.pokedexNumber))"
     }
     
-    private var name: String {
-        let speciesName = species.names.first(where: {$0.localLanguageId == 9})?.name ?? "No Name Available"
-        let pokemonFormName = selectedForm.names.first(where: {$0.localLanguageId == 9})?.pokemonName
-        
-        if let pokemonFormName = pokemonFormName, !pokemonFormName.isEmpty {
-            return pokemonFormName
-        }
-        
-        return speciesName
-    }
-    
     private var color: Color {
         return selectedPokemon.types.first(where: {$0.slot == 1})?.type?.color ?? .fire
     }
@@ -57,9 +46,11 @@ struct PokemonSummaryView: View {
                         HStack {
                             Text(pokedexNumber)
                                 .font(.title2)
-                            Text(name)
+                            Text(selectedPokemon.name)
                                 .font(.title2)
                                 .bold()
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.5)
                             Spacer()
                         }
                         Rectangle()
@@ -90,7 +81,7 @@ struct PokemonSummaryView: View {
                         
                     }
                     
-                    KFImage(URL(string: selectedPokemon.spriteImageLink))
+                    selectedPokemon.sprite
                         .resizable()
                         .scaledToFill()
                         .frame(width: 96, height: 96)

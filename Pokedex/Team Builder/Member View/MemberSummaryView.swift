@@ -60,7 +60,7 @@ struct TeamPokemonSummaryView: View {
                     
                 }
                 
-                KFImage(URL(string: shiny ? pokemon.shinySpriteImageLink : pokemon.spriteImageLink))
+                (shiny ? pokemon.shinySprite : pokemon.sprite)
                     .resizable()
                     .scaledToFill()
                     .frame(width: 96, height: 96)

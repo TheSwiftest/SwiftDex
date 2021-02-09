@@ -10,6 +10,7 @@ import Foundation
 import Realm
 import RealmSwift
 import SwiftUI
+import AVFoundation
 
 class Ability: Object, Identifiable {
     @objc dynamic var id = 0
@@ -480,12 +481,13 @@ class Item: Object, Identifiable {
         return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
     
-    var imageURL: URL {
-        return URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/\(identifier).png")!
+    var image: Image {
+        return Image("sprites/items/\(identifier)")
     }
     
-    func flavorText(for versionGroup: VersionGroup) -> String {
-        return flavorTexts.first(where: {$0.languageId == 9 && $0.versionGroup!.id == versionGroup.id})?.flavorText.replacingOccurrences(of: "\n", with: " ") ?? "No Flavor Text"
+    func flavorText(for versionGroup: VersionGroup?) -> String {
+        return flavorTexts.first(where: {$0.languageId == 9 && $0.versionGroup!.id == versionGroup?.id ?? 18})?.flavorText.replacingOccurrences(of: "\n", with: " ") ?? "No Flavor Text"
+        
     }
     
     var effectText: String {
@@ -713,6 +715,7 @@ class Move: Object, Identifiable {
     let firstInSuperContestCombos = LinkingObjects(fromType: SuperContestCombo.self, property: "firstMove")
     let secondInContestCombos = LinkingObjects(fromType: ContestCombo.self, property: "secondMove")
     let secondInSuperContestCombos = LinkingObjects(fromType: SuperContestCombo.self, property: "secondMove")
+    let pokemonMoves = LinkingObjects(fromType: PokemonMove.self, property: "move")
 
     override static func primaryKey() -> String? {
         return "id"
@@ -965,7 +968,7 @@ class NaturePokeathlonStat: Object {
 }
 
 // MARK: - Nature
-class Nature: Object {
+class Nature: Object, Identifiable {
     @objc dynamic var id: Int = 0
     @objc dynamic var identifier: String = ""
     @objc dynamic var decreasedStat: Stat?
@@ -980,6 +983,10 @@ class Nature: Object {
     
     override class func primaryKey() -> String? {
         return "id"
+    }
+    
+    var name: String {
+        return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
 }
 
@@ -1358,6 +1365,13 @@ class PokemonSpecies: Object, Identifiable {
         return regionForm
     }
     
+//    func playCry() {
+//        let audioPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: Bundle.main.path(forResource: "1", ofType: "mp3")!))
+//        audioPlayer.volume = 1.0
+//        audioPlayer.prepareToPlay()
+//        audioPlayer.play()
+//    }
+    
     var name: String {
         return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
@@ -1379,7 +1393,7 @@ class PokemonType: Object {
 }
 
 // MARK: - Pokemon
-class Pokemon: Object {
+class Pokemon: Object, Identifiable {
     @objc dynamic var id: Int = 0
     @objc dynamic var identifier: String = ""
     @objc dynamic var species: PokemonSpecies?
@@ -1402,15 +1416,48 @@ class Pokemon: Object {
         return "id"
     }
     
+    var baseHP: Int {
+        return stats.first(where: {$0.stat?.id == 1})?.baseStat ?? 0
+    }
+    
+    var baseATK: Int {
+        return stats.first(where: {$0.stat?.id == 2})?.baseStat ?? 0
+    }
+    
+    var baseDEF: Int {
+        return stats.first(where: {$0.stat?.id == 3})?.baseStat ?? 0
+    }
+    
+    var baseSATK: Int {
+        return stats.first(where: {$0.stat?.id == 4})?.baseStat ?? 0
+    }
+    
+    var baseSDEF: Int {
+        return stats.first(where: {$0.stat?.id == 5})?.baseStat ?? 0
+    }
+    
+    var baseSPE: Int {
+        return stats.first(where: {$0.stat?.id == 6})?.baseStat ?? 0
+    }
+    
     var color: Color {
         return types.first(where: {$0.slot == 1})!.type!.color
     }
     
     var name: String {
-        let formNameAlt = defaultForm.names.first(where: {$0.localLanguageId == 9})?.pokemonName ?? defaultForm.identifier
-        let speciesName = species!.names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
+        if let formName = defaultForm.names.first(where: {$0.localLanguageId == 9})?.pokemonName, !formName.isEmpty, !isDefault {
+            return formName
+        }
         
-        return formNameAlt.isEmpty ? speciesName : formNameAlt
+        return species?.names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
+    }
+    
+    var showdownName: String {
+        if identifier.contains("-alola") || identifier.contains("-galar") || identifier.contains("-gmax") || identifier.contains("-mega") || identifier.contains("-eternamax") {
+            return identifier
+        }
+        
+        return name
     }
     
     var defaultForm: PokemonForm {
@@ -1423,9 +1470,28 @@ class Pokemon: Object {
         return formName
     }
     
-    var spriteImageLink: String {
-        let link = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(species!.id)\(defaultForm.formIdentifier.isEmpty ? "" : "-\(defaultForm.formIdentifier)").png"
-        return link
+    var sprite: Image {
+        guard let speciesId = species?.id else {
+            fatalError()
+        }
+        
+        if isDefault {
+            return Image("sprites/pokemon/\(speciesId)")
+        }
+        
+        return Image("sprites/pokemon/\(speciesId)-\(defaultForm.formIdentifier)")
+    }
+    
+    var shinySprite: Image {
+        guard let speciesId = species?.id else {
+            fatalError()
+        }
+        
+        if isDefault {
+            return Image("sprites/pokemon/shiny/\(speciesId)")
+        }
+        
+        return Image("sprites/pokemon/shiny/\(speciesId)-\(defaultForm.formIdentifier)")
     }
 }
 

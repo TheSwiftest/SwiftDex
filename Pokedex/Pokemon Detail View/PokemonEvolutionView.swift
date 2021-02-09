@@ -39,7 +39,7 @@ struct PokemonEvolutionStepView: View {
             RoundedRectangle(cornerRadius: 8)
                 .foregroundColor(Color(.secondarySystemBackground))
             HStack {
-                KFImage(URL(string: fromSpecies.defaultForm.spriteImageLink)!)
+                fromSpecies.defaultForm.sprite
                     .resizable()
                     .frame(width: 125, height: 125)
                 
@@ -47,7 +47,7 @@ struct PokemonEvolutionStepView: View {
                     PokemonEvolutionStepTriggerView(evolution: evolution)
                 }
                 
-                KFImage(URL(string: toSpecies.defaultForm.spriteImageLink)!)
+                toSpecies.defaultForm.sprite
                     .resizable()
                     .frame(width: 125, height: 125)
             }
@@ -86,13 +86,13 @@ struct EvolutionStepTriggerSectionTwo: View {
         }
         
         if let partySpecies = evolution.partySpecies {
-            KFImage(URL(string: partySpecies.defaultForm.spriteImageLink))
+            partySpecies.defaultForm.sprite
                 .resizable()
                 .frame(width: 50, height: 50)
         }
         
         if let tradeSpecies = evolution.tradeSpecies {
-            KFImage(URL(string: tradeSpecies.defaultForm.spriteImageLink))
+            tradeSpecies.defaultForm.sprite
                 .resizable()
                 .frame(width: 50, height: 50)
         }
@@ -121,13 +121,13 @@ struct EvolutionStepTriggerSectionOne: View {
         }
         
         if let triggerItem = evolution.triggerItem {
-            KFImage(triggerItem.imageURL)
+            triggerItem.image
                 .resizable()
                 .frame(width: 25, height: 25)
         }
         
         if let heldItem = evolution.heldItem {
-            KFImage(heldItem.imageURL)
+            heldItem.image
                 .resizable()
                 .frame(width: 25, height: 25)
         }

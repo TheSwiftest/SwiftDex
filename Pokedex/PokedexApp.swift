@@ -11,10 +11,11 @@ import SwiftUI
 struct PokedexApp: App {
     
     let swiftDexService = SwiftDexService()
+    let pokemonShowdownService = PokemonShowdownService()
             
     var body: some Scene {
         WindowGroup {
-            ContentView().environmentObject(swiftDexService)
+            ContentView().environmentObject(swiftDexService).environmentObject(pokemonShowdownService)
         }
     }
 }

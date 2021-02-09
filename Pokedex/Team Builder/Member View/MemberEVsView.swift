@@ -52,7 +52,7 @@ struct TeamPokemonEVsView: View {
                             if evs[index] != 0 {
                                 evs[index] = 0
                             } else {
-                                evs[index] = min(252, evsRemaining)
+                                evs[index] = min(252, max(0, evsRemaining))
                             }
                         }
                         .foregroundColor(color)
