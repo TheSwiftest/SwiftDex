@@ -365,7 +365,7 @@ class GenerationName: Object {
 }
 
 // MARK: - Generation
-class Generation: Object {
+class Generation: Object, Identifiable {
     @objc dynamic var id = 0
     @objc dynamic var mainRegion: Region?
     @objc dynamic var identifier: String = ""
@@ -379,6 +379,10 @@ class Generation: Object {
     
     override class func primaryKey() -> String? {
         return "id"
+    }
+    
+    var name: String {
+        return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
 }
 
@@ -1365,13 +1369,6 @@ class PokemonSpecies: Object, Identifiable {
         return regionForm
     }
     
-//    func playCry() {
-//        let audioPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: Bundle.main.path(forResource: "1", ofType: "mp3")!))
-//        audioPlayer.volume = 1.0
-//        audioPlayer.prepareToPlay()
-//        audioPlayer.play()
-//    }
-    
     var name: String {
         return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
@@ -1511,6 +1508,39 @@ class Region: Object {
     let versionGroups = LinkingObjects(fromType: VersionGroupRegion.self, property: "region")
     let locations = LinkingObjects(fromType: Location.self, property: "region")
     let generations = LinkingObjects(fromType: Generation.self, property: "mainRegion")
+    
+    override class func primaryKey() -> String? {
+        return "id"
+    }
+}
+
+// MARK: - Showdown Format
+class ShowdownFormat: Object, Identifiable {
+    var id: String { return identifier }
+    @objc dynamic var identifier: String = ""
+    @objc dynamic var generation: Generation?
+    @objc dynamic var category: ShowdownCategory?
+    @objc dynamic var group: ShowdownFormatGroup?
+    
+    override class func primaryKey() -> String? {
+        return "identifier"
+    }
+}
+
+class ShowdownCategory: Object, Identifiable {
+    @objc dynamic var id: Int = 0
+    @objc dynamic var name: String = ""
+    
+    override class func primaryKey() -> String? {
+        return "id"
+    }
+    
+    let formats = LinkingObjects(fromType: ShowdownFormat.self, property: "category")
+}
+
+class ShowdownFormatGroup: Object, Identifiable {
+    @objc dynamic var id: Int = 0
+    @objc dynamic var name: String = ""
     
     override class func primaryKey() -> String? {
         return "id"

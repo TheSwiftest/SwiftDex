@@ -33,6 +33,14 @@ struct TeamSummaryView: View {
                         .foregroundColor(Color(.secondaryLabel))
                 })
             }
+            
+            HStack {
+                Text(team.format.identifier)
+                    .font(.caption)
+                
+                Spacer()
+            }
+            
             LazyVGrid(columns: [GridItem(.flexible(), spacing: 15), GridItem(.flexible(), spacing: 15), GridItem(.flexible(), spacing: 15)], spacing: 15) {
                 ForEach(0...5, id: \.self) { index in
                     let pokemon: TeamPokemon? = team.pokemon.count > index ? team.pokemon[index] : nil

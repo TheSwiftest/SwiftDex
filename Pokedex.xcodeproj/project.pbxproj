@@ -10,6 +10,7 @@
 		C8157AD725C1CFD000A1046A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C8157AD625C1CFD000A1046A /* Kingfisher */; };
 		C8157B2E25C3086600A1046A /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C8157B2D25C3086600A1046A /* Realm */; };
 		C8157B3025C3086600A1046A /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C8157B2F25C3086600A1046A /* RealmSwift */; };
+		C8297E0825D486380046655B /* swiftdex in Resources */ = {isa = PBXBuildFile; fileRef = C8297E0725D486380046655B /* swiftdex */; };
 		C82A8B0225CB5CB30039AD52 /* TeamBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82A8B0125CB5CB30039AD52 /* TeamBuilderView.swift */; };
 		C82A8B0625CB5CC00039AD52 /* BattleSimulatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C82A8B0525CB5CC00039AD52 /* BattleSimulatorView.swift */; };
 		C832B3A325CF1C4000DC7F54 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C832B3A225CF1C4000DC7F54 /* Array+Extensions.swift */; };
@@ -27,7 +28,6 @@
 		C87E4B2D25C60CBC00A294C5 /* VersionGroupSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87E4B2C25C60CBC00A294C5 /* VersionGroupSelectionView.swift */; };
 		C880B8B325CDB5B800700D24 /* MemberDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C880B8B225CDB5B800700D24 /* MemberDetailView.swift */; };
 		C885B3D425C659EE00D2B7AF /* PokemonAlternateFormsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C885B3D325C659EE00D2B7AF /* PokemonAlternateFormsView.swift */; };
-		C894214425C9A90B007E3A04 /* swiftdex in Resources */ = {isa = PBXBuildFile; fileRef = C894214325C9A90B007E3A04 /* swiftdex */; };
 		C894214A25CB2001007E3A04 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894214925CB2001007E3A04 /* SettingsView.swift */; };
 		C894215025CB2618007E3A04 /* ExpandableBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894214F25CB2618007E3A04 /* ExpandableBottomSheet.swift */; };
 		C894215325CB292A007E3A04 /* MoveDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C894215225CB292A007E3A04 /* MoveDetailView.swift */; };
@@ -57,6 +57,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C8297E0725D486380046655B /* swiftdex */ = {isa = PBXFileReference; lastKnownFileType = file; path = swiftdex; sourceTree = "<group>"; };
 		C82A8B0125CB5CB30039AD52 /* TeamBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamBuilderView.swift; sourceTree = "<group>"; };
 		C82A8B0525CB5CC00039AD52 /* BattleSimulatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleSimulatorView.swift; sourceTree = "<group>"; };
 		C832B3A225CF1C4000DC7F54 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
@@ -76,7 +77,6 @@
 		C87E4B2C25C60CBC00A294C5 /* VersionGroupSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersionGroupSelectionView.swift; sourceTree = "<group>"; };
 		C880B8B225CDB5B800700D24 /* MemberDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDetailView.swift; sourceTree = "<group>"; };
 		C885B3D325C659EE00D2B7AF /* PokemonAlternateFormsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonAlternateFormsView.swift; sourceTree = "<group>"; };
-		C894214325C9A90B007E3A04 /* swiftdex */ = {isa = PBXFileReference; lastKnownFileType = file; path = swiftdex; sourceTree = "<group>"; };
 		C894214925CB2001007E3A04 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C894214F25CB2618007E3A04 /* ExpandableBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableBottomSheet.swift; sourceTree = "<group>"; };
 		C894215225CB292A007E3A04 /* MoveDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveDetailView.swift; sourceTree = "<group>"; };
@@ -202,7 +202,7 @@
 		C87E4B1325C5F13500A294C5 /* Realm */ = {
 			isa = PBXGroup;
 			children = (
-				C894214325C9A90B007E3A04 /* swiftdex */,
+				C8297E0725D486380046655B /* swiftdex */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -319,7 +319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C878848425BDEAF100BB3662 /* Preview Assets.xcassets in Resources */,
-				C894214425C9A90B007E3A04 /* swiftdex in Resources */,
+				C8297E0825D486380046655B /* swiftdex in Resources */,
 				C878848125BDEAF100BB3662 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -508,7 +508,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.2;
+				MARKETING_VERSION = 0.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bestcoast.swiftdex;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -531,7 +531,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.2;
+				MARKETING_VERSION = 0.1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bestcoast.swiftdex;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

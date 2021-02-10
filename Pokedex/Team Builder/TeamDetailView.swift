@@ -10,7 +10,7 @@ import Kingfisher
 
 struct TeamDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        TeamDetailView(team: testTeams[0])
+        TeamDetailView(team: testTeams[0]).environmentObject(PokemonShowdownService()).environmentObject(SwiftDexService())
     }
 }
 
@@ -30,6 +30,7 @@ struct TeamDetailView: View {
     @Environment(\.presentationMode) var presentationMode
     
     @EnvironmentObject var pokemonShowdownService: PokemonShowdownService
+    @EnvironmentObject var swiftDexService: SwiftDexService
     
     @State var team: Team
     
@@ -37,6 +38,15 @@ struct TeamDetailView: View {
     @State private var shakePokemonCount: Int = 0
     
     @State private var showDeleteConfirmationAlert: Bool = false
+    
+    @State private var showFormatSelectionView: Bool = false
+    
+//    @State private var selectedGeneration: Generation
+//    @State private var selectedFormat: ShowdownFormat
+    
+    init(team: Team) {
+        _team = State(initialValue: team)
+    }
     
     var body: some View {
         VStack {
@@ -79,6 +89,23 @@ struct TeamDetailView: View {
                             .foregroundColor(Color(.secondarySystemFill))
                     }
                     
+                    HStack {
+                        Button(action: {
+                            showFormatSelectionView = true
+                        }, label: {
+                            Text(team.format.identifier)
+                                .padding(10)
+                                .background(Color(.secondarySystemFill))
+                                .foregroundColor(Color(.secondaryLabel))
+                                .cornerRadius(8)
+                        })
+                        .sheet(isPresented: $showFormatSelectionView, content: {
+                            TeamFormatSelectionView(formats: swiftDexService.showdownFormats.compactMap({$0}), selectedFormat: $team.format, showView: $showFormatSelectionView)
+                        })
+                        
+                        Spacer()
+                    }
+                    
                     TeamMembersDetailView(team: $team).environmentObject(pokemonShowdownService)
                         .modifier(Shake(animatableData: CGFloat(shakePokemonCount)))
                     
@@ -110,9 +137,53 @@ struct TeamDetailView: View {
     }
 }
 
-struct TeamStatAvgView: View {
-    let hpAvg, atkAvg, defAvg, satkAvg, sdefAvg, speAvg: Int
+struct TeamFormatSelectionView: View {
+    let formats: [ShowdownFormat]
+    @Binding var selectedFormat: ShowdownFormat
+    @Binding var showView: Bool
     
+    @State private var searchText: String = ""
+    
+    private var formatsFiltered: [ShowdownFormat] {
+        return formats.filter({searchText.isEmpty ? true : $0.identifier.localizedCaseInsensitiveContains(searchText)})
+    }
+    
+    var body: some View {
+        VStack {
+            TextField("Formats", text: $searchText)
+                .font(.title)
+                .padding()
+                .modifier(ClearButton(text: $searchText))
+                .disableAutocorrection(true)
+            
+            ScrollView {
+                LazyVStack(spacing: 2) {
+                    ForEach(formatsFiltered, id: \.self) { format in
+                        HStack {
+                            Text(format.identifier)
+                                .font(.title)
+                                .padding(.vertical)
+                            Spacer()
+                        }
+                        .onTapGesture {
+                            selectedFormat = format
+                            showView = false
+                        }
+                        .padding(.horizontal)
+                        .background(Color(.systemBackground))
+                    }
+                }
+                .padding(.top, 2)
+            }
+            .background(Color(.secondarySystemBackground))
+        }
+        
+    }
+}
+
+struct TeamStatAvgView: View {
+    
+    let hpAvg, atkAvg, defAvg, satkAvg, sdefAvg, speAvg: Int
     
     var body: some View {
         VStack {

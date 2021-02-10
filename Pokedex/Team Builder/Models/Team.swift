@@ -13,7 +13,11 @@ struct Team: Identifiable, Equatable, Codable {
     var id = UUID()
     var name: String
     var pokemon: [TeamPokemon]
-    var format: ShowdownFormat?
+    var format: ShowdownFormat
+    
+    enum CodingKeys: CodingKey {
+        case id, name, pokemon, format
+    }
     
     var hpAvg: Int {
         if pokemon.count == 0 {
@@ -58,9 +62,31 @@ struct Team: Identifiable, Equatable, Codable {
         return pokemon.map({$0.pokemon.baseSPE}).reduce(0, +) / pokemon.count
     }
     
-    init(name: String = "", pokemon: [TeamPokemon] = []) {
+    init(name: String = "", format: ShowdownFormat? = nil, pokemon: [TeamPokemon] = []) {
         self.name = name
+        self.format = format ?? swiftDexService.showdownFormats.first!
         self.pokemon = pokemon
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try! container.encode(id, forKey: .id)
+        try! container.encode(name, forKey: .name)
+        try! container.encode(pokemon, forKey: .pokemon)
+        try! container.encode(format.identifier, forKey: .format)
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try! decoder.container(keyedBy: CodingKeys.self)
+        self.id = try! container.decode(UUID.self, forKey: .id)
+        self.name = try! container.decode(String.self, forKey: .name)
+        self.pokemon = try! container.decode([TeamPokemon].self, forKey: .pokemon)
+        
+        if let formatIdentifier = try? container.decode(String.self, forKey: .format) {
+            self.format = swiftDexService.showdownFormats.first(where: {$0.identifier == formatIdentifier})!
+        } else {
+            self.format = swiftDexService.showdownFormats.first!
+        }
     }
     
     func isValid(for searchText: String) -> Bool {
@@ -169,9 +195,8 @@ struct TeamPokemon: Identifiable, Equatable, Codable {
     }
 }
 
-#if DEBUG
 let testTeams: [Team] = [
-    Team(name: "Team 1", pokemon: [
+    Team(name: "Team 1", format: swiftDexService.showdownFormats.first, pokemon: [
         TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
         TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
         TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
@@ -203,4 +228,3 @@ let testTeams: [Team] = [
         TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!)
     ])
 ]
-#endif

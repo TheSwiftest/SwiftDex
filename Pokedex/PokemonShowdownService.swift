@@ -8,11 +8,11 @@
 import Foundation
 import SwiftUI
 
-struct ShowdownFormat: Identifiable, Codable, Equatable {
-    let id: Int
-    let name: String
-    let generationId: Int
-}
+//struct ShowdownFormat: Identifiable, Codable, Equatable {
+//    let id: Int
+//    let name: String
+//    let generationId: Int
+//}
 
 class PokemonShowdownService: ObservableObject {
     
@@ -39,6 +39,10 @@ class PokemonShowdownService: ObservableObject {
             teams.append(team)
         }
         
+        saveTeams()
+    }
+    
+    func saveTeams() {
         do {
             let teamsData = try JSONEncoder().encode(teams)
             UserDefaults.standard.setValue(teamsData, forKey: "teams")
@@ -184,6 +188,38 @@ class PokemonShowdownService: ObservableObject {
         }
         
         return TeamPokemon(pokemon: pokemon, nickname: pokemonData["nickname"] as? String ?? "", gender: gender, ability: ability, firstMove: firstMove, secondMove: secondMove, thirdMove: thirdMove, fourthMove: fourthMove, level: level, shiny: shiny, item: item, evs: pokemonData["EVs"] as! [Int], nature: nature, ivs: pokemonData["IVs"] as! [Int], happiness: happiness)
+    }
+    
+    func importTeamsFromClipboard() {
+        var teams: [Team] = []
+        guard let clipboardText = UIPasteboard.general.string else {
+           return
+        }
+        
+        let teamsData = clipboardText.trimmingCharacters(in: ["\n"]).components(separatedBy: "\n\n\n")
+        
+        for teamData in teamsData {
+            var pokemonData = teamData.components(separatedBy: "\n\n")
+            var teamHeader = pokemonData.removeFirst()
+            teamHeader = teamHeader.trimmingCharacters(in: ["=", " "])
+            var components = teamHeader.components(separatedBy: " ")
+            let formatIdentifier = components.removeFirst().trimmingCharacters(in: ["[", "]"])
+            let name = components.joined(separator: " ")
+            
+            let format = swiftDexService.showdownFormats.first(where: {$0.identifier == formatIdentifier})
+            
+            var team = Team(name: name, format: format, pokemon: [])
+            for data in pokemonData {
+                if let teamPokemon = loadPokemon(from: data) {
+                    team.pokemon.append(teamPokemon)
+                }
+            }
+            
+            teams.append(team)
+        }
+        
+        self.teams = teams
+        saveTeams()
     }
     
     func importTeamFromClipboard() -> Team? {

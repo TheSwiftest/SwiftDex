@@ -53,6 +53,19 @@ class SwiftDexService: ObservableObject {
         self.selectedVersion = mostRecentVersionGroup.versions.first!
     }
     
+    var showdownFormats: Results<ShowdownFormat> {
+        return realm.objects(ShowdownFormat.self)
+    }
+    
+    func showdownCategories(for generation: Generation?) -> Results<ShowdownCategory> {
+        guard let generation = generation else { return showdownCategories }
+        return showdownCategories.filter("ANY formats.generation.id == \(generation.id)")
+    }
+    
+    var showdownCategories: Results<ShowdownCategory> {
+        return realm.objects(ShowdownCategory.self)
+    }
+    
     var allMoves: Results<Move> {
         return realm.objects(Move.self).sorted(byKeyPath: "identifier")
     }
@@ -74,7 +87,12 @@ class SwiftDexService: ObservableObject {
     }
     
     func move(with name: String?) -> Move? {
-        guard let name = name else { return nil }
+        guard var name = name else { return nil }
+        
+        if name.starts(with: "Hidden Power") {
+            name = "Hidden Power"
+        }
+        
         return realm.objects(MoveName.self).filter("name == '\(name)'").first?.move
     }
     

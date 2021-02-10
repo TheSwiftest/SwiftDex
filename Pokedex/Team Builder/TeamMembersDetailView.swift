@@ -100,36 +100,43 @@ struct TeamMembersDetailView: View {
                                 TeamPokemonDetailView(teamPokemon: $team.pokemon[index]).environmentObject(swiftDexService)
                             }
                         }
-                        VStack {
-                            HStack {
-                                Spacer()
-                                if editingTeamMembers {
-                                    Image(systemName: "xmark.circle.fill")
-                                        .font(.system(size: 30))
+                    
+                    
+                    
+                    VStack {
+                        HStack {
+                            Spacer()
+                            if editingTeamMembers {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.system(size: 30))
+                                    .foregroundColor(Color(.secondaryLabel))
+                                    .zIndex(1)
+                                    .offset(x: 10, y: -10)
+                                    .highPriorityGesture(TapGesture().onEnded() { _ in
+                                        if let index = team.pokemon.firstIndex(of: pokemon) {
+                                            team.pokemon.remove(at: index)
+                                        }
+                                    })
+                            } else {
+                                Button(action: {
+                                    pokemonShowdownService.exportToClipboard(pokemon)
+                                }, label: {
+                                    Image(systemName: "doc.on.doc")
+                                        .font(.system(size: 20))
                                         .foregroundColor(Color(.secondaryLabel))
                                         .zIndex(1)
-                                        .offset(x: 10, y: -10)
-                                        .highPriorityGesture(TapGesture().onEnded() { _ in
-                                            if let index = team.pokemon.firstIndex(of: pokemon) {
-                                                team.pokemon.remove(at: index)
-                                            }
-                                        })
-                                } else {
-                                    Button(action: {
-                                        pokemonShowdownService.exportToClipboard(pokemon)
-                                    }, label: {
-                                        Image(systemName: "doc.on.doc")
-                                            .font(.system(size: 20))
-                                            .foregroundColor(Color(.secondaryLabel))
-                                            .zIndex(1)
-                                            .padding(.top, 4)
-                                            .padding(.trailing, 4)
-                                    })
-                                }
-                                
+                                        .padding(.top, 4)
+                                        .padding(.trailing, 4)
+                                })
                             }
-                            Spacer()
+                            
                         }
+                        Spacer()
+                    }
+                    
+                    if editingTeamMembers {
+                        TeamPokemonReorderView(team: $team, pokemon: pokemon)
+                    }
                     
                     VStack {
                         Spacer()
@@ -172,6 +179,41 @@ struct TeamMembersDetailView: View {
         }
         .animation(.default, value: team.pokemon)
         .animation(.default, value: editingTeamMembers)
+    }
+}
+
+struct TeamPokemonReorderView: View {
+    @Binding var team: Team
+    let pokemon: TeamPokemon
+    
+    var body: some View {
+        VStack {
+            HStack {
+                if let index = team.pokemon.firstIndex(of: pokemon), index != 0 {
+                    Button(action: {
+                        team.pokemon.move(pokemon, to: index - 1)
+                    }, label: {
+                        Image(systemName: "arrow.left.circle.fill")
+                            .font(.system(size: 25))
+                            .foregroundColor(Color(.secondaryLabel))
+                            .zIndex(1)
+                    })
+                }
+                Spacer()
+                
+                if let index = team.pokemon.firstIndex(of: pokemon), index < team.pokemon.count - 1 {
+                    Button(action: {
+                        team.pokemon.move(pokemon, to: index + 1)
+                    }, label: {
+                        Image(systemName: "arrow.right.circle.fill")
+                            .font(.system(size: 25))
+                            .foregroundColor(Color(.secondaryLabel))
+                            .zIndex(1)
+                    })
+                }
+            }
+            .padding(.horizontal, 2)
+        }
     }
 }
 

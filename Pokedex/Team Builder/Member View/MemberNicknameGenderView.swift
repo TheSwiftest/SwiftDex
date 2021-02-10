@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+struct TeamPokemonNicknameAndGenderView_Previews: PreviewProvider {
+    static var previews: some View {
+        TeamPokemonNicknameAndGenderView(genders: [SwiftDexService().male, SwiftDexService().female], nickname: .constant(""), gender: .constant(nil), color: .ice)
+    }
+}
+
 struct TeamPokemonNicknameAndGenderView: View {
     let genders: [Gender]
     @Binding var nickname: String
