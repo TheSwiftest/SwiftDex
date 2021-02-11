@@ -62,8 +62,7 @@ struct PokedexView: View {
     @State private var showMoveDamageClassSelectionsView: Bool = false
         
     func pokemonIsInSearchText(dexNumber: PokemonDexNumber) -> Bool {
-        let pokemonForRegion = dexNumber.species!.pokemonForm(for: swiftDexService.selectedRegion)
-        return searchText.isEmpty ? true : pokemonForRegion.name.localizedCaseInsensitiveContains(searchText)
+        return searchText.isEmpty ? true : dexNumber.pokemon!.name.localizedCaseInsensitiveContains(searchText)
     }
     
     func moveIsInSearchText(move: Move) -> Bool {

@@ -10,13 +10,16 @@ import Kingfisher
 
 struct PokemonAlternateFormsView: View {
     
-    let species: PokemonSpecies
     @Binding var selectedPokemon: Pokemon
     @Binding var selectedForm: PokemonForm
     let selectedVersionGroup: VersionGroup
     
+    private var species: PokemonSpecies {
+        return selectedPokemon.species!
+    }
+    
     var validDefaultPokemonForms: [PokemonForm] {
-        return selectedPokemon.species!.pokemon.compactMap({$0.defaultForm}).filter { (form) -> Bool in
+        return species.pokemon.compactMap({$0.defaultForm}).filter { (form) -> Bool in
             return form.introducedInVersionGroup!.generation!.id <= selectedVersionGroup.generation!.id
         }
     }

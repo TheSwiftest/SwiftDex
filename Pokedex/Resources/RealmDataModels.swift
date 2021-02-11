@@ -1106,12 +1106,13 @@ class PokemonColor: Object {
 
 // MARK: - PokemonDexNumber
 class PokemonDexNumber: Object, Identifiable {
-    @objc dynamic var species: PokemonSpecies?
+    @objc dynamic var pokemon: Pokemon?
     @objc dynamic var pokedex: Pokedex?
     @objc dynamic var pokedexNumber: Int = 0
     
     var id: String {
-        return "\(pokedex!.identifier)-\(pokedexNumber)"
+        return "\(pokedex!.id)-\(pokedexNumber)-\(pokemon!.id)"
+        
     }
 }
 
@@ -1346,7 +1347,6 @@ class PokemonSpecies: Object, Identifiable {
     let flavorText = LinkingObjects(fromType: PokemonSpeciesFlavorText.self, property: "species")
     let names = LinkingObjects(fromType: PokemonSpeciesName.self, property: "pokemonSpecies")
     let eggGroups = LinkingObjects(fromType: PokemonEggGroup.self, property: "species")
-    let dexNumbers = LinkingObjects(fromType: PokemonDexNumber.self, property: "species")
     let palParkAreas = LinkingObjects(fromType: PalParkAreaSpecies.self, property: "species")
     
     override class func primaryKey() -> String? {
@@ -1408,6 +1408,7 @@ class Pokemon: Object, Identifiable {
     let forms = LinkingObjects(fromType: PokemonForm.self, property: "pokemon")
     let abilities = LinkingObjects(fromType: PokemonAbility.self, property: "pokemon")
     let encounters = LinkingObjects(fromType: Encounter.self, property: "pokemon")
+    let dexNumbers = LinkingObjects(fromType: PokemonDexNumber.self, property: "pokemon")
     
     override class func primaryKey() -> String? {
         return "id"

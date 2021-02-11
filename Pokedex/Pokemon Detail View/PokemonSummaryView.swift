@@ -10,10 +10,10 @@ import Kingfisher
 
 struct PokemonSummaryView_Previews: PreviewProvider {
     static var previews: some View {
-        PokemonSummaryView(pokemonDexNumber: SwiftDexService().selectedPokedex.pokemonSpeciesDexNumbers.first!, selectedPokemon: SwiftDexService().selectedPokedex.pokemonSpeciesDexNumbers.first!.species!.defaultForm, selectedForm: SwiftDexService().selectedPokedex.pokemonSpeciesDexNumbers.first!.species!.defaultForm.defaultForm, showingContent: false, showVersionSelectionView: .constant(false), selectedVersion: .constant(SwiftDexService().selectedVersion))
+        PokemonSummaryView(pokemonDexNumber: SwiftDexService().selectedPokedex.pokemonSpeciesDexNumbers.first!, pokemon: SwiftDexService().selectedPokedex.pokemonSpeciesDexNumbers.first!.pokemon!, showingContent: false, showVersionSelectionView: .constant(false), selectedVersion: .constant(SwiftDexService().selectedVersion))
             .frame(height: 112)
         
-        PokemonSummaryView(pokemonDexNumber: SwiftDexService().selectedPokedex.pokemonSpeciesDexNumbers.first!, selectedPokemon: SwiftDexService().selectedPokedex.pokemonSpeciesDexNumbers.first!.species!.defaultForm, selectedForm: SwiftDexService().selectedPokedex.pokemonSpeciesDexNumbers.first!.species!.defaultForm.defaultForm, showingContent: false, showVersionSelectionView: .constant(false), selectedVersion: .constant(SwiftDexService().selectedVersion))
+        PokemonSummaryView(pokemonDexNumber: SwiftDexService().selectedPokedex.pokemonSpeciesDexNumbers.first!, pokemon: SwiftDexService().selectedPokedex.pokemonSpeciesDexNumbers.first!.pokemon!, showingContent: false, showVersionSelectionView: .constant(false), selectedVersion: .constant(SwiftDexService().selectedVersion))
             .frame(height: 112)
             .previewDevice(PreviewDevice(rawValue: "iPhone 7"))
     }
@@ -22,18 +22,17 @@ struct PokemonSummaryView_Previews: PreviewProvider {
 struct PokemonSummaryView: View {
         
     let pokemonDexNumber: PokemonDexNumber
-    let selectedPokemon: Pokemon
-    let selectedForm: PokemonForm
+    let pokemon: Pokemon
     let showingContent: Bool
     @Binding var showVersionSelectionView: Bool
     @Binding var selectedVersion: Version
     
     private var species: PokemonSpecies {
-        return pokemonDexNumber.species!
+        return pokemon.species!
     }
     
     private var types: [Type] {
-        return selectedPokemon.types.sorted(byKeyPath: "slot", ascending: true).compactMap({$0.type})
+        return pokemon.types.sorted(byKeyPath: "slot", ascending: true).compactMap({$0.type})
     }
     
     private var pokedexNumber: String {
@@ -41,7 +40,7 @@ struct PokemonSummaryView: View {
     }
     
     private var color: Color {
-        return selectedPokemon.types.first(where: {$0.slot == 1})?.type?.color ?? .fire
+        return pokemon.types.first(where: {$0.slot == 1})?.type?.color ?? .fire
     }
         
     var body: some View {
@@ -57,7 +56,7 @@ struct PokemonSummaryView: View {
                         HStack {
                             Text(pokedexNumber)
                                 .font(.title2)
-                            Text(selectedPokemon.name)
+                            Text(pokemon.name)
                                 .font(.title2)
                                 .bold()
                                 .lineLimit(1)
@@ -94,7 +93,7 @@ struct PokemonSummaryView: View {
                         
                     }
                     
-                    selectedPokemon.sprite
+                    pokemon.sprite
                         .resizable()
                         .scaledToFill()
                         .frame(width: 96, height: 96)

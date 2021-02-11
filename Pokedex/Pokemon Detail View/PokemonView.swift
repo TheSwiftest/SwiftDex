@@ -27,11 +27,8 @@ struct PokemonView: View {
         _selectedVersion = State(initialValue: selectedVersionGroup.versions.first!)
         _showingContent = State(initialValue: showingContent)
         
-        let region = pokemonDexNumber.pokedex!.region
-        let pokemonRegionalVersion = pokemonDexNumber.species!.pokemonForm(for: region)
-        
-        _selectedPokemon = State(initialValue: pokemonRegionalVersion)
-        _selectedPokemonForm = State(initialValue: pokemonRegionalVersion.defaultForm)
+        _selectedPokemon = State(initialValue: pokemonDexNumber.pokemon!)
+        _selectedPokemonForm = State(initialValue: pokemonDexNumber.pokemon!.defaultForm)
     }
     
     private var color: Color {
@@ -42,14 +39,14 @@ struct PokemonView: View {
         GeometryReader { fullView in
             ZStack {
                 VStack(spacing: 0) {
-                    PokemonSummaryView(pokemonDexNumber: pokemonDexNumber, selectedPokemon: selectedPokemon, selectedForm: selectedPokemonForm, showingContent: showingContent, showVersionSelectionView: $showVersionSelectionView, selectedVersion: $selectedVersion)
+                    PokemonSummaryView(pokemonDexNumber: pokemonDexNumber, pokemon: selectedPokemon, showingContent: showingContent, showVersionSelectionView: $showVersionSelectionView, selectedVersion: $selectedVersion)
                         .frame(height: showingContent ? 152 : 112)
                         .sheet(isPresented: $showVersionSelectionView) {
                             VersionGroupSelectionView(generations: swiftDexService.generations, pokemonFormRestriction: selectedPokemonForm, selectedVersionGroup: $selectedVersionGroup, selectedVersion: $selectedVersion)
                         }
                     if showingContent {
                         TabView {
-                            PokemonBasicInfoView(species: pokemonDexNumber.species!, pokemon: $selectedPokemon, pokemonForm: $selectedPokemonForm, selectedVersionGroup: selectedVersionGroup)
+                            PokemonBasicInfoView(pokemon: $selectedPokemon, pokemonForm: $selectedPokemonForm, selectedVersionGroup: selectedVersionGroup)
                             .tabItem {
                                 Image(systemName: "info.circle")
                                 Text("Info")

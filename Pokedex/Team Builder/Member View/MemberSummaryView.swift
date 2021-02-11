@@ -15,7 +15,7 @@ struct TeamPokemonSummaryView: View {
     
     private var nationalPokedexNumber: String {
         
-        return"#\(String(format: "%03d", pokemon.species!.dexNumbers.first(where: {$0.pokedex?.id == 1})!.pokedexNumber))"
+        return"#\(String(format: "%03d", pokemon.dexNumbers.first(where: {$0.pokedex?.id == 1})!.pokedexNumber))"
     }
     
     var body: some View {

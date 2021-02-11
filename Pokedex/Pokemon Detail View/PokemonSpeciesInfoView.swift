@@ -9,16 +9,19 @@ import SwiftUI
 
 struct PokemonBasicInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        PokemonBasicInfoView(species: SwiftDexService().pokemon(withId: 2)!.species!, pokemon: .constant(SwiftDexService().pokemon(withId: 2)!), pokemonForm: .constant(SwiftDexService().pokemon(withId: 2)!.defaultForm), selectedVersionGroup: SwiftDexService().selectedVersionGroup)
+        PokemonBasicInfoView(pokemon: .constant(SwiftDexService().pokemon(withId: 2)!), pokemonForm: .constant(SwiftDexService().pokemon(withId: 2)!.defaultForm), selectedVersionGroup: SwiftDexService().selectedVersionGroup)
     }
 }
 
 struct PokemonBasicInfoView: View {
     
-    let species: PokemonSpecies
     @Binding var pokemon: Pokemon
     @Binding var pokemonForm: PokemonForm
     let selectedVersionGroup: VersionGroup
+    
+    private var species: PokemonSpecies {
+        return pokemon.species!
+    }
     
     var body: some View {
         ScrollView {
@@ -28,7 +31,7 @@ struct PokemonBasicInfoView: View {
                     PokemonAbilitiesView(pokemon: $pokemon)
                     PokemonStatsView(pokemon: $pokemon)
                     PokemonEvolutionChainView(species: species)
-                    PokemonAlternateFormsView(species: species, selectedPokemon: $pokemon, selectedForm: $pokemonForm, selectedVersionGroup: selectedVersionGroup)
+                    PokemonAlternateFormsView(selectedPokemon: $pokemon, selectedForm: $pokemonForm, selectedVersionGroup: selectedVersionGroup)
                 }
                 .padding()
             }
