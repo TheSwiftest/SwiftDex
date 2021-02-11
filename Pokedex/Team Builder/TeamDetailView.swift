@@ -40,9 +40,7 @@ struct TeamDetailView: View {
     @State private var showDeleteConfirmationAlert: Bool = false
     
     @State private var showFormatSelectionView: Bool = false
-    
-//    @State private var selectedGeneration: Generation
-//    @State private var selectedFormat: ShowdownFormat
+
     
     init(team: Team) {
         _team = State(initialValue: team)
@@ -109,7 +107,7 @@ struct TeamDetailView: View {
                     TeamMembersDetailView(team: $team).environmentObject(pokemonShowdownService)
                         .modifier(Shake(animatableData: CGFloat(shakePokemonCount)))
                     
-                    TeamStatAvgView(hpAvg: team.hpAvg, atkAvg: team.atkAvg, defAvg: team.defAvg, satkAvg: team.satkAvg, sdefAvg: team.sdefAvg, speAvg: team.speAvg)
+                    TeamStatsAvgView(baseHp: team.baseHpAvg, baseAtk: team.baseAtkAvg, baseDef: team.baseDefAvg, baseSatk: team.baseSatkAvg, baseSdef: team.baseSdefAvg, baseSpe: team.baseSpeAvg, totHp: team.totHpAvg, totAtk: team.totAtkAvg, totDef: team.totDefAvg, totSatk: team.totSatkAvg, totSdef: team.totSdefAvg, totSpe: team.totSpeAvg)
                     
                     Button(action: {
                         showDeleteConfirmationAlert = true
@@ -181,19 +179,36 @@ struct TeamFormatSelectionView: View {
     }
 }
 
-struct TeamStatAvgView: View {
+struct TeamStatsAvgView: View {
     
-    let hpAvg, atkAvg, defAvg, satkAvg, sdefAvg, speAvg: Int
+    let baseHp, baseAtk, baseDef, baseSatk, baseSdef, baseSpe: Int
+    let totHp, totAtk, totDef, totSatk, totSdef, totSpe: Int
+    
+    @State private var showTotals: Bool = false
     
     var body: some View {
         VStack {
-            PokemonDetailSectionHeader(text: "Average Base Stats")
-            PokemonStatView(name: "HP", color: Color(.systemGray2), baseStat: hpAvg, max: 300)
-            PokemonStatView(name: "ATK", color: Color(.systemGray2), baseStat: atkAvg, max: 300)
-            PokemonStatView(name: "DEF", color: Color(.systemGray2), baseStat: defAvg, max: 300)
-            PokemonStatView(name: "SATK", color: Color(.systemGray2), baseStat: satkAvg, max: 300)
-            PokemonStatView(name: "SDEF", color: Color(.systemGray2), baseStat: sdefAvg, max: 300)
-            PokemonStatView(name: "SPE", color: Color(.systemGray2), baseStat: speAvg, max: 300)
+            VStack(spacing: 5) {
+                PokemonDetailSectionHeader(text: "Average Stats")
+                HStack {
+                    Spacer()
+                        .frame(maxWidth: .infinity)
+                    Picker("", selection: $showTotals) {
+                        Text("Base").tag(false)
+                        Text("Total").tag(true)
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    Spacer()
+                        .frame(maxWidth: .infinity)
+                }
+            }
+            
+            PokemonStatView(name: "HP", color: Color(.systemGray2), baseStat: showTotals ? totHp : baseHp, max: showTotals ? 714 : 255)
+            PokemonStatView(name: "ATK", color: Color(.systemGray2), baseStat: showTotals ? totAtk : baseAtk, max: showTotals ? 526 : 190)
+            PokemonStatView(name: "DEF", color: Color(.systemGray2), baseStat: showTotals ? totDef : baseDef, max: showTotals ? 658 : 250)
+            PokemonStatView(name: "SATK", color: Color(.systemGray2), baseStat: showTotals ? totSatk : baseSatk, max: showTotals ? 535 : 194)
+            PokemonStatView(name: "SDEF", color: Color(.systemGray2), baseStat: showTotals ? totSdef : baseSdef, max: showTotals ? 658 : 250)
+            PokemonStatView(name: "SPE", color: Color(.systemGray2), baseStat: showTotals ? totSpe : baseSpe, max: showTotals ? 548 : 200)
         }
     }
 }

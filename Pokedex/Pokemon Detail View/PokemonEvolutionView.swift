@@ -8,8 +8,14 @@
 import SwiftUI
 import Kingfisher
 
-struct PokemonEvolutionChainView: View {
+struct PokemonEvolutionChainView_Previews: PreviewProvider {
+    static var previews: some View {
+        PokemonEvolutionChainView(species: SwiftDexService().pokemon(withId: 2)!.species!)
+    }
+}
 
+struct PokemonEvolutionChainView: View {
+    
     let species: PokemonSpecies
 
     var body: some View {

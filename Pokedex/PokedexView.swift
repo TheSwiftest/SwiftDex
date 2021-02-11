@@ -175,17 +175,7 @@ struct PokedexView: View {
                                             self.pokemonDexNumberToShow = speciesDexNumber
                                         }
                                 }
-//                                ForEach(swiftDexService.selectedPokedex.pokemonSpeciesDexNumbers.filter("species.generation.id <= \(swiftDexService.selectedVersionGroup.generation!.id)").sorted(byKeyPath: "pokedexNumber", ascending: true)) { speciesDexNumber in
-//                                    if pokemonIsInSearchText(dexNumber: speciesDexNumber) {
-//
-//                                        PokemonView(pokemonDexNumber: speciesDexNumber, selectedVersionGroup: swiftDexService.selectedVersionGroup).environmentObject(swiftDexService)
-//                                            .frame(height: 112)
-//                                            .padding(.horizontal, 10)
-//                                            .onTapGesture {
-//                                                self.pokemonDexNumberToShow = speciesDexNumber
-//                                            }
-//                                    }
-//                                }
+
                             }
                             .padding(.top, 10)
                             .sheet(item: $pokemonDexNumberToShow) { pokemonDexNumber in
@@ -507,6 +497,9 @@ struct ClearButton: ViewModifier {
 struct PokedexView_Previews: PreviewProvider {
     static var previews: some View {
         PokedexView(selectedMove: .constant(nil), showSelectedMoveView: .constant(false), selectedItem: .constant(nil), showSelectedItemView: .constant(false)).environmentObject(SwiftDexService())
+        
+        PokedexView(selectedMove: .constant(nil), showSelectedMoveView: .constant(false), selectedItem: .constant(nil), showSelectedItemView: .constant(false)).environmentObject(SwiftDexService())
+            .previewDevice(PreviewDevice(rawValue: "iPhone 7"))
     }
 }
 

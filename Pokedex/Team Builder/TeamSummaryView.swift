@@ -67,7 +67,7 @@ struct TeamMemberSummaryView: View {
     
     var body: some View {
         ZStack {
-            pokemon?.pokemon.sprite
+            pokemon?.sprite
                 .resizable()
                 .scaledToFit()
                 .padding()

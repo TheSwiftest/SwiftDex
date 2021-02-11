@@ -9,10 +9,10 @@ import SwiftUI
 
 struct PokemonMovesView: View {
     
-    @Binding var selectedPokemon: Pokemon
+    let selectedPokemon: Pokemon
     
     @State var selectedLearnMethod: PokemonMoveMethod
-    @Binding var selectedVersion: Version
+    let selectedVersion: Version
     
     @Binding var selectedMove: Move?
     @Binding var showMoveDetailView: Bool

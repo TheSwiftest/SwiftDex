@@ -42,19 +42,19 @@ struct PokemonView: View {
         GeometryReader { fullView in
             ZStack {
                 VStack(spacing: 0) {
-                    PokemonSummaryView(pokemonDexNumber: pokemonDexNumber, selectedPokemon: $selectedPokemon, selectedForm: $selectedPokemonForm, showingContent: $showingContent, showVersionSelectionView: $showVersionSelectionView, selectedVersion: $selectedVersion)
+                    PokemonSummaryView(pokemonDexNumber: pokemonDexNumber, selectedPokemon: selectedPokemon, selectedForm: selectedPokemonForm, showingContent: showingContent, showVersionSelectionView: $showVersionSelectionView, selectedVersion: $selectedVersion)
                         .frame(height: showingContent ? 152 : 112)
                         .sheet(isPresented: $showVersionSelectionView) {
                             VersionGroupSelectionView(generations: swiftDexService.generations, pokemonFormRestriction: selectedPokemonForm, selectedVersionGroup: $selectedVersionGroup, selectedVersion: $selectedVersion)
                         }
                     if showingContent {
                         TabView {
-                            PokemonBasicInfoView(species: pokemonDexNumber.species!, pokemon: $selectedPokemon, pokemonForm: $selectedPokemonForm, selectedVersionGroup: $selectedVersionGroup)
+                            PokemonBasicInfoView(species: pokemonDexNumber.species!, pokemon: $selectedPokemon, pokemonForm: $selectedPokemonForm, selectedVersionGroup: selectedVersionGroup)
                             .tabItem {
                                 Image(systemName: "info.circle")
                                 Text("Info")
                             }
-                            PokemonMovesView(selectedPokemon: $selectedPokemon, selectedLearnMethod: swiftDexService.moveLearnMethodsForSelectedVersionGroup.first!, selectedVersion: $selectedVersion, selectedMove: $selectedMove, showMoveDetailView: $showMoveDetailView)
+                            PokemonMovesView(selectedPokemon: selectedPokemon, selectedLearnMethod: swiftDexService.moveLearnMethodsForSelectedVersionGroup.first!, selectedVersion: selectedVersion, selectedMove: $selectedMove, showMoveDetailView: $showMoveDetailView)
                                 .sheet(item: $selectedMove) { move in
                                     MoveDetailView(move: move, versionGroup: selectedVersionGroup)
                                 }

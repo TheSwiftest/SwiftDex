@@ -10,12 +10,14 @@ import SwiftUI
 struct PokemonStatsView: View {
     
     @Binding var pokemon: Pokemon
+    
+    private let maxBaseStats = [255, 190, 250, 194, 250, 200]
         
     var body: some View {
         VStack {
             PokemonDetailSectionHeader(text: "Base Stats")
             ForEach(pokemon.stats.indices) { index in
-                PokemonStatView(name: pokemon.stats[index].stat!.identifier, color: pokemon.color, baseStat: pokemon.stats[index].baseStat, max: 300)
+                PokemonStatView(name: pokemon.stats[index].stat!.identifier, color: pokemon.color, baseStat: pokemon.stats[index].baseStat, max: maxBaseStats[index])
             }
         }
     }
@@ -48,6 +50,7 @@ struct PokemonStatView: View {
                             .cornerRadius(6.5)
                             .frame(width: geo.size.width * CGFloat(baseStat) / CGFloat(max))
                             .foregroundColor(color)
+                            .animation(.easeIn)
                     }
                 )
         }

@@ -13,7 +13,7 @@ struct PokemonAlternateFormsView: View {
     let species: PokemonSpecies
     @Binding var selectedPokemon: Pokemon
     @Binding var selectedForm: PokemonForm
-    @Binding var selectedVersionGroup: VersionGroup
+    let selectedVersionGroup: VersionGroup
     
     var validDefaultPokemonForms: [PokemonForm] {
         return selectedPokemon.species!.pokemon.compactMap({$0.defaultForm}).filter { (form) -> Bool in

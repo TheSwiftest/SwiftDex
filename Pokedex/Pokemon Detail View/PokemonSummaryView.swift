@@ -8,12 +8,23 @@
 import SwiftUI
 import Kingfisher
 
+struct PokemonSummaryView_Previews: PreviewProvider {
+    static var previews: some View {
+        PokemonSummaryView(pokemonDexNumber: SwiftDexService().selectedPokedex.pokemonSpeciesDexNumbers.first!, selectedPokemon: SwiftDexService().selectedPokedex.pokemonSpeciesDexNumbers.first!.species!.defaultForm, selectedForm: SwiftDexService().selectedPokedex.pokemonSpeciesDexNumbers.first!.species!.defaultForm.defaultForm, showingContent: false, showVersionSelectionView: .constant(false), selectedVersion: .constant(SwiftDexService().selectedVersion))
+            .frame(height: 112)
+        
+        PokemonSummaryView(pokemonDexNumber: SwiftDexService().selectedPokedex.pokemonSpeciesDexNumbers.first!, selectedPokemon: SwiftDexService().selectedPokedex.pokemonSpeciesDexNumbers.first!.species!.defaultForm, selectedForm: SwiftDexService().selectedPokedex.pokemonSpeciesDexNumbers.first!.species!.defaultForm.defaultForm, showingContent: false, showVersionSelectionView: .constant(false), selectedVersion: .constant(SwiftDexService().selectedVersion))
+            .frame(height: 112)
+            .previewDevice(PreviewDevice(rawValue: "iPhone 7"))
+    }
+}
+
 struct PokemonSummaryView: View {
         
     let pokemonDexNumber: PokemonDexNumber
-    @Binding var selectedPokemon: Pokemon
-    @Binding var selectedForm: PokemonForm
-    @Binding var showingContent: Bool
+    let selectedPokemon: Pokemon
+    let selectedForm: PokemonForm
+    let showingContent: Bool
     @Binding var showVersionSelectionView: Bool
     @Binding var selectedVersion: Version
     
@@ -74,6 +85,8 @@ struct PokemonSummaryView: View {
                                             .font(.system(.subheadline))
                                             .fontWeight(.semibold)
                                             .opacity(0.55)
+                                            .lineLimit(1)
+                                            .minimumScaleFactor(0.5)
                                     }
                                 }
                             }
@@ -89,7 +102,7 @@ struct PokemonSummaryView: View {
                 }
                 
                 if showingContent {
-                    PokemonSummaryAdditionInfo(showVersionSelectionView: $showVersionSelectionView, selectedPokemon: $selectedPokemon, selectedVersion: $selectedVersion)
+                    PokemonSummaryAdditionInfo(showVersionSelectionView: $showVersionSelectionView, selectedVersion: $selectedVersion)
                 }
             }
             .padding(.leading)
@@ -100,7 +113,6 @@ struct PokemonSummaryView: View {
 struct PokemonSummaryAdditionInfo: View {
     
     @Binding var showVersionSelectionView: Bool
-    @Binding var selectedPokemon: Pokemon
     @Binding var selectedVersion: Version
     
     var body: some View {

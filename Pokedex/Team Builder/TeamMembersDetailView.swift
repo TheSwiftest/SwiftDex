@@ -50,15 +50,17 @@ struct DragRelocateDelegate: DropDelegate {
 }
 
 struct TeamMembersDetailView: View {
+    private struct PokemonLongPressState {
+        let detectingLongPress: Bool
+        let pokemonPressing: TeamPokemon?
+    }
+    
     @EnvironmentObject var pokemonShowdownService: PokemonShowdownService
     @Binding var team: Team
 
     @State private var editingTeamMembers: Bool = false
     @State private var rotationAmount: Double = 0
-    @GestureState private var detectingLongPress: Bool = false
-    @State private var completedLongPress: Bool = false
-    @State private var longPressIndex: Int = 0
-    
+    @GestureState private var longPressPokemonState = PokemonLongPressState(detectingLongPress: false, pokemonPressing: nil)
     @State private var selectedTeamPokemon: TeamPokemon?
     @State private var showPokemonSelectionView: Bool = false
     @State private var showPokemonSelectionActionSheet: Bool = false
@@ -82,19 +84,19 @@ struct TeamMembersDetailView: View {
                                     selectedTeamPokemon = pokemon
                                 }
                             }
-                            .exclusively(before:
-                                            LongPressGesture(minimumDuration: 1)
-                                            .updating($detectingLongPress, body: { (currentState, gestureState, transaction) in
-                                                gestureState = currentState
+                            .simultaneously(with:
+                                            LongPressGesture()
+                                            .updating($longPressPokemonState, body: { (currentState, gestureState, transaction) in
+                                                gestureState = PokemonLongPressState(detectingLongPress: currentState, pokemonPressing: pokemon)
                                             })
                                             .onEnded() { finished in
-                                                completedLongPress = finished
                                                 if !editingTeamMembers {
                                                     editingTeamMembers = true
                                                     rotationAmount = -3
                                                     return
                                                 }
-                            }))
+                                            }
+                            ))
                         .sheet(item: $selectedTeamPokemon) { selectedTeamPokemon in
                             if let index = team.pokemon.firstIndex(of: selectedTeamPokemon) {
                                 TeamPokemonDetailView(teamPokemon: $team.pokemon[index]).environmentObject(swiftDexService)
@@ -150,6 +152,8 @@ struct TeamMembersDetailView: View {
                         }
                     }
                 }
+                .scaleEffect(!editingTeamMembers && longPressPokemonState.detectingLongPress && longPressPokemonState.pokemonPressing == pokemon ? 0.85 : 1.0)
+                .animation(.easeOut)
             }
             
             if team.pokemon.count < 6 && !editingTeamMembers {
@@ -272,7 +276,7 @@ struct TeamMemberDetailView: View {
     
     var body: some View {
         VStack {
-            pokemon.pokemon.sprite
+            pokemon.sprite
                 .resizable()
                 .scaledToFit()
                 .padding()

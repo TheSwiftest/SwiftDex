@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 let swiftDexService = SwiftDexService()
 
@@ -19,47 +20,90 @@ struct Team: Identifiable, Equatable, Codable {
         case id, name, pokemon, format
     }
     
-    var hpAvg: Int {
+    var baseHpAvg: Int {
         if pokemon.count == 0 {
             return 0
         }
         
         return pokemon.map({$0.pokemon.baseHP}).reduce(0, +) / pokemon.count
     }
-    var atkAvg: Int {
+    var baseAtkAvg: Int {
         if pokemon.count == 0 {
             return 0
         }
         
         return pokemon.map({$0.pokemon.baseATK}).reduce(0, +) / pokemon.count
     }
-    var defAvg: Int {
+    var baseDefAvg: Int {
         if pokemon.count == 0 {
             return 0
         }
         
         return pokemon.map({$0.pokemon.baseDEF}).reduce(0, +) / pokemon.count
     }
-    var satkAvg: Int {
+    var baseSatkAvg: Int {
         if pokemon.count == 0 {
             return 0
         }
         
         return pokemon.map({$0.pokemon.baseSATK}).reduce(0, +) / pokemon.count
     }
-    var sdefAvg: Int {
+    var baseSdefAvg: Int {
         if pokemon.count == 0 {
             return 0
         }
         
         return pokemon.map({$0.pokemon.baseSDEF}).reduce(0, +) / pokemon.count
     }
-    var speAvg: Int {
+    var baseSpeAvg: Int {
         if pokemon.count == 0 {
             return 0
         }
         
         return pokemon.map({$0.pokemon.baseSPE}).reduce(0, +) / pokemon.count
+    }
+    
+    var totHpAvg: Int {
+        if pokemon.count == 0 {
+            return 0
+        }
+        
+        return pokemon.map({$0.totHp}).reduce(0, +) / pokemon.count
+    }
+    var totAtkAvg: Int {
+        if pokemon.count == 0 {
+            return 0
+        }
+        
+        return pokemon.map({$0.totAtk}).reduce(0, +) / pokemon.count
+    }
+    var totDefAvg: Int {
+        if pokemon.count == 0 {
+            return 0
+        }
+        
+        return pokemon.map({$0.totDef}).reduce(0, +) / pokemon.count
+    }
+    var totSatkAvg: Int {
+        if pokemon.count == 0 {
+            return 0
+        }
+        
+        return pokemon.map({$0.totSatk}).reduce(0, +) / pokemon.count
+    }
+    var totSdefAvg: Int {
+        if pokemon.count == 0 {
+            return 0
+        }
+        
+        return pokemon.map({$0.totSdef}).reduce(0, +) / pokemon.count
+    }
+    var totSpeAvg: Int {
+        if pokemon.count == 0 {
+            return 0
+        }
+        
+        return pokemon.map({$0.totSpe}).reduce(0, +) / pokemon.count
     }
     
     init(name: String = "", format: ShowdownFormat? = nil, pokemon: [TeamPokemon] = []) {
@@ -120,8 +164,75 @@ struct TeamPokemon: Identifiable, Equatable, Codable {
     var nature: Nature? = nil
     var ivs: [Int] = [31,31,31,31,31,31]
     
+    var sprite: Image {
+        return shiny ? pokemon.shinySprite : pokemon.sprite
+    }
+    
     var availableMoves: [Move] {
         return pokemon.moves.filter("versionGroup.id == 18").distinct(by: ["move.id"]).sorted(byKeyPath: "move.identifier").compactMap({$0.move})
+    }
+    
+    var totHp: Int {
+        guard let baseHp = pokemon.stats.first(where: {$0.stat?.id == 1})?.baseStat else {
+            return 0
+        }
+        
+        return (((2 * baseHp + ivs[0] + (evs[0] / 4)) * level) / 100) + level + 10
+    }
+    
+    var totAtk: Int {
+        guard let stat = pokemon.stats.first(where: {$0.stat?.id == 2}) else {
+            return 0
+        }
+        
+        return baseNonHPStat(stat: stat)
+    }
+    
+    var totDef: Int {
+        guard let stat = pokemon.stats.first(where: {$0.stat?.id == 3}) else {
+            return 0
+        }
+        
+        return baseNonHPStat(stat: stat)
+    }
+    
+    var totSatk: Int {
+        guard let stat = pokemon.stats.first(where: {$0.stat?.id == 4}) else {
+            return 0
+        }
+        
+        return baseNonHPStat(stat: stat)
+    }
+    
+    var totSdef: Int {
+        guard let stat = pokemon.stats.first(where: {$0.stat?.id == 5}) else {
+            return 0
+        }
+        
+        return baseNonHPStat(stat: stat)
+    }
+    
+    var totSpe: Int {
+        guard let stat = pokemon.stats.first(where: {$0.stat?.id == 6}) else {
+            return 0
+        }
+        
+        return baseNonHPStat(stat: stat)
+    }
+    
+    private func baseNonHPStat(stat: PokemonStat) -> Int {
+        let helpfulNature = nature?.increasedStat?.id == stat.stat!.id
+        let hinderingNature = nature?.decreasedStat?.id == stat.stat!.id
+        let ev = Double(evs[stat.stat!.id - 1])
+        let iv = Double(ivs[stat.stat!.id - 1])
+        let base = stat.baseStat
+        
+        let first = 2 * Double(base) + iv + (ev / 4)
+        let second = first * Double(level) / 100
+        let third = second + 5
+        let natureModifier = 1.0 + (helpfulNature ? 0.1 : 0) - (hinderingNature ? 0.1 : 0)
+        
+        return Int(third * natureModifier)
     }
     
     init(pokemon: Pokemon, nickname: String = "", gender: Gender? = nil, ability: Ability? = nil, firstMove: Move? = nil, secondMove: Move? = nil, thirdMove: Move? = nil, fourthMove: Move? = nil, level: Int = 50, shiny: Bool = false, item: Item? = nil, evs: [Int] = [0,0,0,0,0,0], nature: Nature? = nil, ivs: [Int] = [31,31,31,31,31,31], happiness: Int = 255) {
