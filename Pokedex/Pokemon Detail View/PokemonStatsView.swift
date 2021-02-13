@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PokemonStatsView: View {
     
-    @Binding var pokemon: Pokemon
+    let pokemon: Pokemon
     
     private let maxBaseStats = [255, 190, 250, 194, 250, 200]
         

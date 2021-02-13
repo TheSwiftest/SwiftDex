@@ -308,7 +308,7 @@ class EvolutionChain: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var babyTriggerItem: Item?
     
-    let pokemonSpeciesInChain = LinkingObjects(fromType: PokemonSpecies.self, property: "evolutionChain")
+    let pokemonInChain = LinkingObjects(fromType: Pokemon.self, property: "evolutionChain")
     
     override class func primaryKey() -> String? {
         return "id"
@@ -1125,7 +1125,7 @@ class PokemonEggGroup: Object {
 // MARK: - PokemonEvolution
 class PokemonEvolution: Object {
     @objc dynamic var id = 0
-    @objc dynamic var evolvedSpecies: PokemonSpecies?
+    @objc dynamic var evolvedPokemon: Pokemon?
     @objc dynamic var evolutionTrigger: EvolutionTrigger?
     @objc dynamic var triggerItem: Item?
     let minimumLevel = RealmOptional<Int>()
@@ -1322,8 +1322,6 @@ class PokemonSpecies: Object, Identifiable {
     @objc dynamic var id: Int = 0
     @objc dynamic var identifier: String = ""
     @objc dynamic var generation: Generation?
-    @objc dynamic var evolvesFromSpeciesId: PokemonSpecies?
-    @objc dynamic var evolutionChain: EvolutionChain?
     @objc dynamic var color: PokemonColor?
     @objc dynamic var shape: PokemonShape?
     @objc dynamic var habitat: PokemonHabitat?
@@ -1340,8 +1338,6 @@ class PokemonSpecies: Object, Identifiable {
     @objc dynamic var order: Int = 0
     let conquestOrder = RealmOptional<Int>()
     
-    let pokemonEvolution = LinkingObjects(fromType: PokemonEvolution.self, property: "evolvedSpecies")
-    let evolvesTo = LinkingObjects(fromType: PokemonSpecies.self, property: "evolvesFromSpeciesId")
     let pokemon = LinkingObjects(fromType: Pokemon.self, property: "species")
     let prose = LinkingObjects(fromType: PokemonSpeciesProse.self, property: "pokemonSpecies")
     let flavorText = LinkingObjects(fromType: PokemonSpeciesFlavorText.self, property: "species")
@@ -1394,12 +1390,16 @@ class Pokemon: Object, Identifiable {
     @objc dynamic var id: Int = 0
     @objc dynamic var identifier: String = ""
     @objc dynamic var species: PokemonSpecies?
+    @objc dynamic var evolvesFrom: Pokemon?
+    @objc dynamic var evolutionChain: EvolutionChain?
     @objc dynamic var height = 0
     @objc dynamic var weight = 0
     @objc dynamic var baseExperience: Int = 0
     let order = RealmOptional<Int>()
     @objc dynamic var isDefault: Bool = false
     
+    let pokemonEvolution = LinkingObjects(fromType: PokemonEvolution.self, property: "evolvedPokemon")
+    let evolvesTo = LinkingObjects(fromType: Pokemon.self, property: "evolvesFrom")
     let types = LinkingObjects(fromType: PokemonType.self, property: "pokemon")
     let stats = LinkingObjects(fromType: PokemonStat.self, property: "pokemon")
     let moves = LinkingObjects(fromType: PokemonMove.self, property: "pokemon")

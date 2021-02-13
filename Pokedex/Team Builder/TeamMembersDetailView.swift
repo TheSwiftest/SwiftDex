@@ -262,7 +262,7 @@ struct TeamMemberEmptyDetailView: View {
                     .foregroundColor(Color(.systemFill))
                     .font(.system(size: 55))
             )
-            .aspectRatio(1.0, contentMode: .fill)
+            .aspectRatio(1.0, contentMode: .fit)
         .cornerRadius(10)
     }
 }
