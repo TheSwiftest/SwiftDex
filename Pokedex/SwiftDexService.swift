@@ -139,7 +139,7 @@ class SwiftDexService: ObservableObject {
         guard let text = text else { return selectedPokedex.pokemonSpeciesDexNumbers.sorted(byKeyPath: "pokedexNumber") }
         if text.isEmpty { return selectedPokedex.pokemonSpeciesDexNumbers.sorted(byKeyPath: "pokedexNumber") }
         
-        return selectedPokedex.pokemonSpeciesDexNumbers.filter("ANY pokemon.forms.names.pokemonName CONTAINS [c] '\(text)'").sorted(byKeyPath: "pokedexNumber")
+        return selectedPokedex.pokemonSpeciesDexNumbers.filter("ANY pokemon.forms.names.pokemonName CONTAINS [c] '\(text)' OR ANY pokemon.species.names.name CONTAINS [c] '\(text)'").sorted(byKeyPath: "pokedexNumber")
     }
     
     func pokemon(with name: String?) -> Pokemon? {

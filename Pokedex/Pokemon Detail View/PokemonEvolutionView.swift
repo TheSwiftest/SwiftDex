@@ -126,13 +126,13 @@ struct EvolutionStepTriggerSectionOne: View {
         }
         
         if let triggerItem = evolution.triggerItem {
-            triggerItem.image
+            triggerItem.sprite
                 .resizable()
                 .frame(width: 25, height: 25)
         }
         
         if let heldItem = evolution.heldItem {
-            heldItem.image
+            heldItem.sprite
                 .resizable()
                 .frame(width: 25, height: 25)
         }

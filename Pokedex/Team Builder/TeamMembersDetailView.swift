@@ -144,7 +144,7 @@ struct TeamMembersDetailView: View {
                         Spacer()
                         HStack {
                             Spacer()
-                            pokemon.item?.image
+                            pokemon.item?.sprite
                                 .resizable()
                                 .frame(width: 35, height: 35)
                                 .padding(.bottom, 2)

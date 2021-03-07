@@ -36,11 +36,11 @@ struct ContentView: View {
                         Image("tab_icon_battle_sim")
                         Text("Battle Sim")
                     }
-                SettingsView().environmentObject(swiftDexService)
-                    .tabItem {
-                        Image(systemName: "gearshape")
-                        Text("Settings")
-                    }
+//                SettingsView().environmentObject(swiftDexService)
+//                    .tabItem {
+//                        Image(systemName: "gearshape")
+//                        Text("Settings")
+//                    }
             }
             .zIndex(0)
             
@@ -116,7 +116,7 @@ struct ItemDetailView: View {
                     Text(item.flavorText(for: versionGroup))
                         .font(.caption)
                 }
-                item.image
+                item.sprite
                     .resizable()
                     .frame(width: 45, height: 45)
             }

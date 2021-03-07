@@ -485,7 +485,7 @@ class Item: Object, Identifiable {
         return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
     
-    var image: Image {
+    var sprite: Image {
         return Image("sprites/items/\(identifier)")
     }
     

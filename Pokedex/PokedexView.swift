@@ -276,7 +276,7 @@ struct ItemView: View {
     
     var body: some View {
         HStack {
-            item.image
+            item.sprite
                 .resizable()
                 .frame(width: 30, height: 30)
             
