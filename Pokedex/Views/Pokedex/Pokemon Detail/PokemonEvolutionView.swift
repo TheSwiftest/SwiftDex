@@ -15,7 +15,7 @@ struct PokemonEvolutionChainView_Previews: PreviewProvider {
 }
 
 struct PokemonEvolutionChainView: View {
-    
+
     let pokemon: Pokemon
 
     var body: some View {
@@ -23,11 +23,11 @@ struct PokemonEvolutionChainView: View {
             if pokemon.evolvesFrom != nil || pokemon.evolvesTo.count > 0 {
                 PokemonDetailSectionHeader(text: "Evolutions")
             }
-            
+
             if let evolvesFromPokemon = pokemon.evolvesFrom {
                 PokemonEvolutionStepView(fromPokemon: evolvesFromPokemon, toPokemon: pokemon)
             }
-            
+
             ForEach(pokemon.evolvesTo) { evolvesToPokemon in
                 PokemonEvolutionStepView(fromPokemon: pokemon, toPokemon: evolvesToPokemon)
             }
@@ -38,7 +38,7 @@ struct PokemonEvolutionChainView: View {
 struct PokemonEvolutionStepView: View {
     let fromPokemon: Pokemon
     let toPokemon: Pokemon
-    
+
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 8)
@@ -47,11 +47,11 @@ struct PokemonEvolutionStepView: View {
                 fromPokemon.sprite
                     .resizable()
                     .frame(width: 125, height: 125)
-                
+
                 if let evolution = toPokemon.pokemonEvolution.first {
                     PokemonEvolutionStepTriggerView(evolution: evolution)
                 }
-                
+
                 toPokemon.sprite
                     .resizable()
                     .frame(width: 125, height: 125)
@@ -62,7 +62,7 @@ struct PokemonEvolutionStepView: View {
 
 struct PokemonEvolutionStepTriggerView: View {
     let evolution: PokemonEvolution
-    
+
     var body: some View {
         VStack {
             Text(evolution.evolutionTrigger!.name)
@@ -76,7 +76,7 @@ struct PokemonEvolutionStepTriggerView: View {
 
 struct EvolutionStepTriggerSectionTwo: View {
     let evolution: PokemonEvolution
-    
+
     var body: some View {
         if let knownMove = evolution.knownMove {
             Text(knownMove.name)
@@ -85,31 +85,31 @@ struct EvolutionStepTriggerSectionTwo: View {
         if let knownMoveType = evolution.knownMoveType {
             Text(knownMoveType.name)
         }
-        
+
         if let relativePhysicalStats = evolution.relativePhysicalStats.value {
             Text("Phy Stats. \(relativePhysicalStats)")
         }
-        
+
         if let partySpecies = evolution.partySpecies {
             partySpecies.defaultForm.sprite
                 .resizable()
                 .frame(width: 50, height: 50)
         }
-        
+
         if let tradeSpecies = evolution.tradeSpecies {
             tradeSpecies.defaultForm.sprite
                 .resizable()
                 .frame(width: 50, height: 50)
         }
-        
+
         if let partyType = evolution.partyType {
             Text(partyType.name)
         }
-        
+
         if evolution.needsOverworldRain {
             Text("Raining")
         }
-        
+
         if evolution.turnUpsideDown {
             Text("Turn Upside Down")
         }
@@ -117,53 +117,53 @@ struct EvolutionStepTriggerSectionTwo: View {
 }
 
 struct EvolutionStepTriggerSectionOne: View {
-    
+
     let evolution: PokemonEvolution
-    
+
     var body: some View {
         if let minimumLevel = evolution.minimumLevel.value {
             Text("Min Lvl. \(minimumLevel)")
         }
-        
+
         if let triggerItem = evolution.triggerItem {
             triggerItem.sprite
                 .resizable()
                 .frame(width: 25, height: 25)
         }
-        
+
         if let heldItem = evolution.heldItem {
             heldItem.sprite
                 .resizable()
                 .frame(width: 25, height: 25)
         }
-        
+
         if let minimumHappiness = evolution.minimumHappiness.value {
             Text("Min Hap. \(minimumHappiness)")
         }
-        
+
         if let minimumBeauty = evolution.minimumBeauty.value {
             Text("Min Bea. \(minimumBeauty)")
         }
-        
+
         if !evolution.timeOfDay.isEmpty {
             Text("\(evolution.timeOfDay.capitalized)time")
         }
-        
+
         if let gender = evolution.gender {
             Text(gender.name)
         }
-        
+
         if let location = evolution.location {
             Text(location.name)
         }
-        
+
         if let minimumAffection = evolution.minimumAffection.value {
             Text("Min Aff. \(minimumAffection)")
         }
     }
 }
 
-//struct PokemonEvolutionChainView: View {
+// struct PokemonEvolutionChainView: View {
 //    
 //    let evolutionChain: EvolutionChain
 //    
@@ -226,9 +226,9 @@ struct EvolutionStepTriggerSectionOne: View {
 //            }
 //        }
 //    }
-//}
+// }
 //
-//struct EvolutionTriggerView: View {
+// struct EvolutionTriggerView: View {
 //    let imageName: String
 //    let text: String
 //    
@@ -241,9 +241,9 @@ struct EvolutionStepTriggerSectionOne: View {
 //                .lineLimit(1)
 //        }
 //    }
-//}
+// }
 //
-//struct EvolutionStepView: View {
+// struct EvolutionStepView: View {
 //    
 //    let pokemonId: Int
 //
@@ -258,4 +258,4 @@ struct EvolutionStepTriggerSectionOne: View {
 //                .frame(width: 70, height: 70)
 //        }
 //    }
-//}
+// }
