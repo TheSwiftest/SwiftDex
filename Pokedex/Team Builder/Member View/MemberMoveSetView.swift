@@ -46,7 +46,7 @@ struct TeamPokemonMoveSetView: View {
 struct TeamPokemonMoveView: View {
     @EnvironmentObject var swiftDexService: SwiftDexService
     
-    let pokemon: Pokemon
+    let pokemon: Pokemon?
     @Binding var move: Move?
     @State private var showMoveSelectionView = false
     
@@ -92,11 +92,11 @@ struct TeamPokemonMoveSelectionView: View {
     @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var swiftDexService: SwiftDexService
     
-    let pokemon: Pokemon
+    let pokemon: Pokemon?
     @Binding var selectedMove: Move?
     
     @State private var searchText: String = ""
-    @State private var showAllMoves: Bool = false
+    @State private var showAllMoves: Bool = true
 
     var body: some View {
         VStack {
@@ -105,7 +105,9 @@ struct TeamPokemonMoveSelectionView: View {
                     .font(.title)
                     .modifier(ClearButton(text: $searchText))
                 Picker("", selection: $showAllMoves) {
-                    Text("Pokémon Specific Moves").tag(false)
+                    if let _ = pokemon {
+                        Text("Pokémon Specific Moves").tag(false)
+                    }
                     Text("All Moves").tag(true)
                 }
                 .pickerStyle(SegmentedPickerStyle())

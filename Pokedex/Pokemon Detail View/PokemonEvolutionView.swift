@@ -10,50 +10,49 @@ import Kingfisher
 
 struct PokemonEvolutionChainView_Previews: PreviewProvider {
     static var previews: some View {
-        PokemonEvolutionChainView(species: SwiftDexService().pokemon(withId: 2)!.species!)
+        PokemonEvolutionChainView(pokemon: SwiftDexService().pokemon(withId: 2)!)
     }
 }
 
 struct PokemonEvolutionChainView: View {
     
-    let species: PokemonSpecies
+    let pokemon: Pokemon
 
     var body: some View {
         VStack {
-            if species.evolvesFromSpeciesId != nil || species.evolvesTo.count > 0 {
+            if pokemon.evolvesFrom != nil || pokemon.evolvesTo.count > 0 {
                 PokemonDetailSectionHeader(text: "Evolutions")
             }
             
-            if let evolvesFromSpecies = species.evolvesFromSpeciesId {
-                PokemonEvolutionStepView(fromSpecies: evolvesFromSpecies, toSpecies: species)
+            if let evolvesFromPokemon = pokemon.evolvesFrom {
+                PokemonEvolutionStepView(fromPokemon: evolvesFromPokemon, toPokemon: pokemon)
             }
-            if species.evolvesTo.count > 0 {
-                ForEach(species.evolvesTo) { evolvesToSpecies in
-                    PokemonEvolutionStepView(fromSpecies: species, toSpecies: evolvesToSpecies)
-                }
+            
+            ForEach(pokemon.evolvesTo) { evolvesToPokemon in
+                PokemonEvolutionStepView(fromPokemon: pokemon, toPokemon: evolvesToPokemon)
             }
         }
     }
 }
 
 struct PokemonEvolutionStepView: View {
-    let fromSpecies: PokemonSpecies
-    let toSpecies: PokemonSpecies
+    let fromPokemon: Pokemon
+    let toPokemon: Pokemon
     
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 8)
                 .foregroundColor(Color(.secondarySystemBackground))
             HStack {
-                fromSpecies.defaultForm.sprite
+                fromPokemon.sprite
                     .resizable()
                     .frame(width: 125, height: 125)
                 
-                if let evolution = toSpecies.pokemonEvolution.first {
+                if let evolution = toPokemon.pokemonEvolution.first {
                     PokemonEvolutionStepTriggerView(evolution: evolution)
                 }
                 
-                toSpecies.defaultForm.sprite
+                toPokemon.sprite
                     .resizable()
                     .frame(width: 125, height: 125)
             }
@@ -127,13 +126,13 @@ struct EvolutionStepTriggerSectionOne: View {
         }
         
         if let triggerItem = evolution.triggerItem {
-            triggerItem.image
+            triggerItem.sprite
                 .resizable()
                 .frame(width: 25, height: 25)
         }
         
         if let heldItem = evolution.heldItem {
-            heldItem.image
+            heldItem.sprite
                 .resizable()
                 .frame(width: 25, height: 25)
         }

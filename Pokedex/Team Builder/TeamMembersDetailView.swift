@@ -144,7 +144,7 @@ struct TeamMembersDetailView: View {
                         Spacer()
                         HStack {
                             Spacer()
-                            pokemon.item?.image
+                            pokemon.item?.sprite
                                 .resizable()
                                 .frame(width: 35, height: 35)
                                 .padding(.bottom, 2)
@@ -262,7 +262,7 @@ struct TeamMemberEmptyDetailView: View {
                     .foregroundColor(Color(.systemFill))
                     .font(.system(size: 55))
             )
-            .aspectRatio(1.0, contentMode: .fill)
+            .aspectRatio(1.0, contentMode: .fit)
         .cornerRadius(10)
     }
 }

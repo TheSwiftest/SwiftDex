@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PokemonAbilitiesView: View {
-    @Binding var pokemon: Pokemon
+    let pokemon: Pokemon
     
     private var color: Color {
         return pokemon.types.first(where: {$0.slot == 1})?.type?.color ?? .fire

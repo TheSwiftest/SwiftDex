@@ -28,9 +28,9 @@ struct PokemonBasicInfoView: View {
             VStack {
                 Group {
                     SpeciesBasicInfoView(species: species, id: pokemon.id, height: pokemon.height, weight: pokemon.weight, bodyShape: species.shape!.id, genus: species.names.first(where: {$0.localLanguageId == 9})!.genus, color: pokemon.types.first(where: {$0.slot == 1})!.type!.color)
-                    PokemonAbilitiesView(pokemon: $pokemon)
-                    PokemonStatsView(pokemon: $pokemon)
-                    PokemonEvolutionChainView(species: species)
+                    PokemonAbilitiesView(pokemon: pokemon)
+                    PokemonStatsView(pokemon: pokemon)
+                    PokemonEvolutionChainView(pokemon: pokemon)
                     PokemonAlternateFormsView(selectedPokemon: $pokemon, selectedForm: $pokemonForm, selectedVersionGroup: selectedVersionGroup)
                 }
                 .padding()
