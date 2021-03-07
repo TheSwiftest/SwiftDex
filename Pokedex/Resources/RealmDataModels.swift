@@ -2,9 +2,10 @@
 //  RealmDataModels.swift
 //  Realm Pokedex Gen
 //
-//  Created by TempUser on 1/28/21.
+//  Created by BrianCorbin on 1/28/21.
 //
 
+// swiftlint:disable file_length
 
 import Foundation
 import Realm
@@ -17,24 +18,24 @@ class Ability: Object, Identifiable {
     @objc dynamic var identifier = ""
     @objc dynamic var isMainSeries = false
     @objc dynamic var generation: Generation?
-    
+
     let changelogs = LinkingObjects(fromType: AbilityChangelog.self, property: "ability")
     let names = LinkingObjects(fromType: AbilityName.self, property: "ability")
     let prose = LinkingObjects(fromType: AbilityProse.self, property: "ability")
     let pokemonWithAbility = LinkingObjects(fromType: PokemonAbility.self, property: "ability")
-    
+
     override static func primaryKey() -> String? {
         return "id"
     }
-    
+
     var name: String {
         return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
-    
+
     var shortEffect: String {
         return prose.first(where: {$0.localLanguageId == 9})?.shortEffect ?? "No short effect"
     }
-    
+
     var effect: String {
         return prose.first(where: {$0.localLanguageId == 9})?.effect ?? "No effect"
     }
@@ -43,9 +44,9 @@ class Ability: Object, Identifiable {
 class AbilityChangelog: Object {
     @objc dynamic var id = 0
     @objc dynamic var ability: Ability?
-    
+
     let prose = LinkingObjects(fromType: AbilityChangelogProse.self, property: "abilityChangelog")
-    
+
     override static func primaryKey() -> String? {
         return "id"
     }
@@ -81,9 +82,9 @@ class Berry: Object {
     @objc dynamic var growthTime = 0
     @objc dynamic var soilDryness = 0
     @objc dynamic var smoothness = 0
-    
+
     let contestFlavors = LinkingObjects(fromType: BerryContestTypeFlavorValue.self, property: "berry")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -98,10 +99,10 @@ class BerryFirmnessName: Object {
 class BerryFirmness: Object {
     @objc dynamic var id = 0
     @objc dynamic var identifier = ""
-    
+
     let names = LinkingObjects(fromType: BerryFirmnessName.self, property: "berryFirmness")
     let berriesWithFirmness = LinkingObjects(fromType: Berry.self, property: "firmness")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -124,9 +125,9 @@ class Characteristic: Object {
     @objc dynamic var id = 0
     @objc dynamic var stat: Stat?
     @objc dynamic var geneMod5 = 0
-    
+
     let characteristicText = LinkingObjects(fromType: CharacteristicText.self, property: "characteristic")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -151,9 +152,9 @@ class ContestEffect: Object {
     @objc dynamic var id = 0
     @objc dynamic var appeal = 0
     @objc dynamic var jam = 0
-    
+
     let prose = LinkingObjects(fromType: ContestEffectProse.self, property: "contestEffect")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -171,11 +172,11 @@ class ContestTypeName: Object {
 class ContestType: Object {
     @objc dynamic var id = 0
     @objc dynamic var identifier = ""
-    
+
     let berryFlavorValues = LinkingObjects(fromType: BerryContestTypeFlavorValue.self, property: "contestType")
     let names = LinkingObjects(fromType: ContestTypeName.self, property: "contestType")
     let moves = LinkingObjects(fromType: Move.self, property: "contestType")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -191,13 +192,13 @@ class EggGroupProse: Object {
 class EggGroup: Object, Identifiable {
     @objc dynamic var id = 0
     @objc dynamic var identifier = ""
-    
+
     let prose = LinkingObjects(fromType: EggGroupProse.self, property: "eggGroup")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
-    
+
     var name: String {
         return prose.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
@@ -222,10 +223,10 @@ class EncounterConditionValue: Object {
     @objc dynamic var encounterCondition: EncounterCondition?
     @objc dynamic var identifier: String = ""
     @objc dynamic var isDefault: Bool = false
-    
+
     let prose = LinkingObjects(fromType: EncounterConditionValueProse.self, property: "encounterConditionValue")
     let encounters = LinkingObjects(fromType: EncounterConditionValueMap.self, property: "encounterConditionValue")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -241,10 +242,10 @@ class EncounterConditionProse: Object {
 class EncounterCondition: Object {
     @objc dynamic var id = 0
     @objc dynamic var identifier = ""
-    
+
     let prose = LinkingObjects(fromType: EncounterConditionProse.self, property: "encounterCondition")
     let encounterConditionValues = LinkingObjects(fromType: EncounterConditionValue.self, property: "encounterCondition")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -262,10 +263,10 @@ class EncounterMethod: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var identifier: String = ""
     @objc dynamic var order: Int = 0
-    
+
     let prose = LinkingObjects(fromType: EncounterMethodProse.self, property: "encounterMethod")
     let encounterSlots = LinkingObjects(fromType: EncounterSlot.self, property: "encounterMethod")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -278,9 +279,9 @@ class EncounterSlot: Object {
     @objc dynamic var encounterMethod: EncounterMethod?
     let slot = RealmOptional<Int>()
     @objc dynamic var rarity: Int = 0
-    
+
     let encounters = LinkingObjects(fromType: Encounter.self, property: "encounterSlot")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -295,9 +296,9 @@ class Encounter: Object {
     @objc dynamic var pokemon: Pokemon?
     @objc dynamic var minLevel = 0
     @objc dynamic var maxLevel: Int = 0
-    
+
     let encounterConditions = LinkingObjects(fromType: EncounterConditionValueMap.self, property: "encounter")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -307,9 +308,9 @@ class Encounter: Object {
 class EvolutionChain: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var babyTriggerItem: Item?
-    
+
     let pokemonInChain = LinkingObjects(fromType: Pokemon.self, property: "evolutionChain")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -325,13 +326,13 @@ class EvolutionTriggerProse: Object {
 class EvolutionTrigger: Object {
     @objc dynamic var id = 0
     @objc dynamic var identifier = ""
-    
+
     let prose = LinkingObjects(fromType: EvolutionTriggerProse.self, property: "evolutionTrigger")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
-    
+
     var name: String {
         return prose.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
@@ -347,11 +348,11 @@ class Experience: Object {
 class Gender: Object {
     @objc dynamic var id = 0
     @objc dynamic var identifier = ""
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
-    
+
     var name: String {
         return identifier
     }
@@ -369,18 +370,18 @@ class Generation: Object, Identifiable {
     @objc dynamic var id = 0
     @objc dynamic var mainRegion: Region?
     @objc dynamic var identifier: String = ""
-    
+
     let versionGroups = LinkingObjects(fromType: VersionGroup.self, property: "generation")
     let moves = LinkingObjects(fromType: Move.self, property: "generation")
     let locationGameIndices = LinkingObjects(fromType: LocationGameIndex.self, property: "generation")
     let itemGameIndices = LinkingObjects(fromType: ItemGameIndex.self, property: "generation")
     let names = LinkingObjects(fromType: GenerationName.self, property: "generation")
     let abilities = LinkingObjects(fromType: Ability.self, property: "generation")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
-    
+
     var name: String {
         return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
@@ -398,14 +399,14 @@ class GrowthRate: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var identifier = ""
     @objc dynamic var formula: String = ""
-    
+
     let prose = LinkingObjects(fromType: GrowthRateProse.self, property: "growthRate")
     let experienceForLevels = LinkingObjects(fromType: Experience.self, property: "growthRate")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
-    
+
     var name: String {
         return prose.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
@@ -416,14 +417,14 @@ class ItemCategory: Object {
     @objc dynamic var id = 0
     @objc dynamic var pocket: ItemPocket?
     @objc dynamic var identifier: String = ""
-    
+
     let items = LinkingObjects(fromType: Item.self, property: "category")
     let prose = LinkingObjects(fromType: ItemCategoryProse.self, property: "itemCategory")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
-    
+
     var name: String {
         return prose.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
@@ -453,9 +454,9 @@ class ItemFlagProse: Object {
 class ItemFlag: Object {
     @objc dynamic var id = 0
     @objc dynamic var identifier = ""
-    
+
     let prose = LinkingObjects(fromType: ItemFlagProse.self, property: "itemFlag")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -469,35 +470,35 @@ class Item: Object, Identifiable {
     @objc dynamic var cost: Int = 0
     let flingPower = RealmOptional<Int>()
     @objc dynamic var flingEffect: ItemFlingEffect?
-    
+
     let machines = LinkingObjects(fromType: Machine.self, property: "item")
     let names = LinkingObjects(fromType: ItemName.self, property: "item")
     let prose = LinkingObjects(fromType: ItemProse.self, property: "item")
     let gameIndices = LinkingObjects(fromType: ItemGameIndex.self, property: "item")
     let flavorTexts = LinkingObjects(fromType: ItemFlavorText.self, property: "item")
     let flags = LinkingObjects(fromType: ItemFlagMap.self, property: "item")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
-    
+
     var name: String {
         return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
-    
+
     var sprite: Image {
         return Image("sprites/items/\(identifier)")
     }
-    
+
     func flavorText(for versionGroup: VersionGroup?) -> String {
         return flavorTexts.first(where: {$0.languageId == 9 && $0.versionGroup!.id == versionGroup?.id ?? 18})?.flavorText.replacingOccurrences(of: "\n", with: " ") ?? "No Flavor Text"
-        
+
     }
-    
+
     var effectText: String {
         return prose.first(where: {$0.localLanguageId == 9})?.effect ?? "No item effect"
     }
-    
+
     var shortEffectText: String {
         return prose.first(where: {$0.localLanguageId == 9})?.shortEffect ?? "No short effect text"
     }
@@ -511,17 +512,17 @@ class ItemFlavorText: Object {
     @objc dynamic var flavorText: String = ""
 }
 
-// Mark: - ItemFlingEffect
+// MARK: - ItemFlingEffect
 class ItemFlingEffect: Object {
     @objc dynamic var id = 0
     @objc dynamic var identifier = ""
-    
+
     let prose = LinkingObjects(fromType: ItemFlingEffectProse.self, property: "itemFlingEffect")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
-    
+
     var effect: String {
         return prose.first(where: {$0.localLanguageId == 9})?.effect ?? identifier
     }
@@ -558,14 +559,14 @@ class ItemPocketName: Object {
 class ItemPocket: Object, Identifiable {
     @objc dynamic var id = 0
     @objc dynamic var identifier = ""
-    
+
     let itemCategories = LinkingObjects(fromType: ItemCategory.self, property: "pocket")
     let names = LinkingObjects(fromType: ItemPocketName.self, property: "itemPocket")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
-    
+
     var name: String {
         return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
@@ -588,7 +589,7 @@ class Language: Object {
     @objc dynamic var order = 0
 
     let names = LinkingObjects(fromType: LanguageName.self, property: "language")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -620,11 +621,11 @@ class LocationArea: Object {
     @objc dynamic var location: Location?
     @objc dynamic var gameIndex: Int = 0
     @objc dynamic var identifier: String = ""
-    
+
     let prose = LinkingObjects(fromType: LocationAreaProse.self, property: "locationArea")
     let encounterRates = LinkingObjects(fromType: LocationAreaEncounterRate.self, property: "locationArea")
     let encounters = LinkingObjects(fromType: Encounter.self, property: "locationArea")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -650,15 +651,15 @@ class Location: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var region: Region?
     @objc dynamic var identifier: String = ""
-    
+
     let names = LinkingObjects(fromType: LocationName.self, property: "location")
     let gameIndices = LinkingObjects(fromType: LocationGameIndex.self, property: "location")
     let areas = LinkingObjects(fromType: LocationArea.self, property: "location")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
-    
+
     var name: String {
         return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
@@ -682,10 +683,10 @@ class MoveBattleStyleProse: Object {
 class MoveBattleStyle: Object {
     @objc dynamic var id = 0
     @objc dynamic var identifier = ""
-    
+
     let prose = LinkingObjects(fromType: MoveBattleStyleProse.self, property: "moveBattleStyle")
     let naturePreferences = LinkingObjects(fromType: NatureBattleStylePreference.self, property: "moveBattleStyle")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -707,7 +708,7 @@ class Move: Object, Identifiable {
     @objc dynamic var contestType: ContestType?
     @objc dynamic var contestEffect: ContestEffect?
     @objc dynamic var superContestEffect: SuperContestEffect?
-    
+
     let names = LinkingObjects(fromType: MoveName.self, property: "move")
     let meta = LinkingObjects(fromType: MoveMeta.self, property: "move")
     let metaStatChanges = LinkingObjects(fromType: MoveMetaStatChange.self, property: "move")
@@ -724,11 +725,11 @@ class Move: Object, Identifiable {
     override static func primaryKey() -> String? {
         return "id"
     }
-    
+
     var name: String {
         return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
-    
+
 }
 
 // MARK: - MoveChangelog
@@ -748,25 +749,25 @@ class MoveChangelog: Object {
 class MoveDamageClass: Object, Identifiable {
     @objc dynamic var id = 0
     @objc dynamic var identifier = ""
-    
+
     let prose = LinkingObjects(fromType: MoveDamageClassProse.self, property: "moveDamageClass")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
-    
+
     var name: String {
         return prose.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
-    
+
     var color: Color {
         return Color("damage_class_\(identifier)")
     }
-    
+
     var backgroundColor: Color {
         return Color("damage_class_\(identifier)_bg")
     }
-    
+
     var icon: Image {
         return Image("damage_class_\(identifier)")
     }
@@ -791,9 +792,9 @@ class MoveEffectChangelog: Object {
     @objc dynamic var id = 0
     @objc dynamic var effect: MoveEffect?
     @objc dynamic var changedInVersionGroup: VersionGroup?
-    
+
     let prose = LinkingObjects(fromType: MoveEffectChangelogProse.self, property: "moveEffectChangelog")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -808,18 +809,18 @@ class MoveEffectProse: Object {
 
 class MoveEffect: Object {
     @objc dynamic var id: Int = 0
-    
+
     let prose = LinkingObjects(fromType: MoveEffectProse.self, property: "moveEffect")
     let changelogs = LinkingObjects(fromType: MoveEffectChangelog.self, property: "effect")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
-    
+
     var shortEffectDescription: String {
         return prose.first(where: {$0.localLanguageId == 9})?.shortEffect ?? "No short effect"
     }
-    
+
     var effectDescription: String {
         return prose.first(where: {$0.localLanguageId == 9})?.effect ?? "No effect description"
     }
@@ -841,10 +842,10 @@ class MoveFlagProse: Object {
 class MoveFlag: Object {
     @objc dynamic var id = 0
     @objc dynamic var identifier = ""
-    
+
     let prose = LinkingObjects(fromType: MoveFlagProse.self, property: "moveFlag")
     let moves = LinkingObjects(fromType: MoveFlagMap.self, property: "moveFlag")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -868,9 +869,9 @@ class MoveMetaAilmentName: Object {
 class MoveMetaAilment: Object {
     @objc dynamic var id = 0
     @objc dynamic var identifier = ""
-    
+
     let names = LinkingObjects(fromType: MoveMetaAilmentName.self, property: "moveMetaAilment")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -879,9 +880,9 @@ class MoveMetaAilment: Object {
 class MoveMetaCategory: Object {
     @objc dynamic var id = 0
     @objc dynamic var identifier = ""
-    
+
     let prose = LinkingObjects(fromType: MoveMetaCategoryProse.self, property: "moveMetaCategory")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -933,17 +934,17 @@ class MoveTargetProse: Object {
 class MoveTarget: Object {
     @objc dynamic var id = 0
     @objc dynamic var identifier = ""
-    
+
     let prose = LinkingObjects(fromType: MoveTargetProse.self, property: "moveTarget")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
-    
+
     var name: String {
         return prose.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
-    
+
     var targetDescription: String {
         return prose.first(where: {$0.localLanguageId == 9})?.targetDescription ?? "No target description"
     }
@@ -980,15 +981,15 @@ class Nature: Object, Identifiable {
     @objc dynamic var hatesFlavor: ContestType?
     @objc dynamic var likesFlavor: ContestType?
     @objc dynamic var gameIndex: Int = 0
-    
+
     let pokeathlonStatChanges = LinkingObjects(fromType: NaturePokeathlonStat.self, property: "nature")
     let names = LinkingObjects(fromType: NatureName.self, property: "nature")
     let moveBattleStylePreferences = LinkingObjects(fromType: NatureBattleStylePreference.self, property: "nature")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
-    
+
     var name: String {
         return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
@@ -1005,10 +1006,10 @@ class PalParkAreaName: Object {
 class PalParkArea: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var identifier: String = ""
-    
+
     let names = LinkingObjects(fromType: PalParkAreaName.self, property: "palParkArea")
     let species = LinkingObjects(fromType: PalParkAreaSpecies.self, property: "area")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -1033,10 +1034,10 @@ class PokeathlonStatName: Object {
 class PokeathlonStat: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var identifier: String = ""
-    
+
     let names = LinkingObjects(fromType: PokeathlonStatName.self, property: "pokeathlonStat")
     let changeFromNatures = LinkingObjects(fromType: NaturePokeathlonStat.self, property: "pokeathlonStat")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -1062,17 +1063,21 @@ class Pokedex: Object, Identifiable {
     @objc dynamic var region: Region?
     @objc dynamic var identifier: String = ""
     @objc dynamic var isMainSeries = false
-    
+
     let pokemonSpeciesDexNumbers = LinkingObjects(fromType: PokemonDexNumber.self, property: "pokedex")
     let versionGroups = LinkingObjects(fromType: PokedexVersionGroup.self, property: "pokedex")
     let prose = LinkingObjects(fromType: PokedexProse.self, property: "pokedex")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
-    
+
     var name: String {
-        return prose.first(where: {$0.localLanguageId == 9})?.name.replacingOccurrences(of: "Updated ", with: "").replacingOccurrences(of: "Original ", with: "").replacingOccurrences(of: "Extended ", with: "").replacingOccurrences(of: "New ", with: "") ?? identifier
+        return prose.first(where: {$0.localLanguageId == 9})?.name
+            .replacingOccurrences(of: "Updated ", with: "")
+            .replacingOccurrences(of: "Original ", with: "")
+            .replacingOccurrences(of: "Extended ", with: "")
+            .replacingOccurrences(of: "New ", with: "") ?? identifier
     }
 }
 
@@ -1095,10 +1100,10 @@ class PokemonColorName: Object {
 class PokemonColor: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var identifier: String = ""
-    
+
     let names = LinkingObjects(fromType: PokemonColorName.self, property: "pokemonColor")
     let speciesWithColor = LinkingObjects(fromType: PokemonSpecies.self, property: "color")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -1109,10 +1114,10 @@ class PokemonDexNumber: Object, Identifiable {
     @objc dynamic var pokemon: Pokemon?
     @objc dynamic var pokedex: Pokedex?
     @objc dynamic var pokedexNumber: Int = 0
-    
+
     var id: String {
         return "\(pokedex!.id)-\(pokedexNumber)-\(pokemon!.id)"
-        
+
     }
 }
 
@@ -1144,7 +1149,7 @@ class PokemonEvolution: Object {
     @objc dynamic var tradeSpecies: PokemonSpecies?
     @objc dynamic var needsOverworldRain = false
     @objc dynamic var turnUpsideDown = false
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -1186,11 +1191,11 @@ class PokemonForm: Object {
     @objc dynamic var isMega = false
     @objc dynamic var formOrder = 0
     @objc dynamic var order: Int = 0
-    
+
     let names = LinkingObjects(fromType: PokemonFormName.self, property: "pokemonForm")
     let generations = LinkingObjects(fromType: PokemonFormGeneration.self, property: "pokemonForm")
     let pokeathlonStats = LinkingObjects(fromType: PokemonFormPokeathlonStat.self, property: "pokemonForm")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -1214,9 +1219,9 @@ class PokemonHabitatName: Object {
 class PokemonHabitat: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var identifier: String = ""
-    
+
     let names = LinkingObjects(fromType: PokemonHabitatName.self, property: "pokemonHabitat")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -1241,10 +1246,10 @@ class PokemonMoveMethodProse: Object {
 class PokemonMoveMethod: Object, Identifiable {
     @objc dynamic var id = 0
     @objc dynamic var identifier = ""
-    
+
     let prose = LinkingObjects(fromType: PokemonMoveMethodProse.self, property: "pokemonMoveMethod")
     let versions = LinkingObjects(fromType: VersionGroupPokemonMoveMethod.self, property: "pokemonMoveMethod")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -1258,16 +1263,16 @@ class PokemonMove: Object {
     @objc dynamic var pokemonMoveMethod: PokemonMoveMethod?
     @objc dynamic var level: Int = 0
     let order = RealmOptional<Int>()
-    
+
     var name: String {
         return move!.names.first(where: {$0.localLanguageId == 9})!.name
     }
-    
-    func machineName(for versionGroup: VersionGroup) -> String?  {
+
+    func machineName(for versionGroup: VersionGroup) -> String? {
         if let machine = move!.machines.first(where: {$0.versionGroup?.id == versionGroup.id}) {
             return machine.item!.name
         }
-        
+
         return nil
     }
 }
@@ -1285,10 +1290,10 @@ class PokemonShapeProse: Object {
 class PokemonShape: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var identifier: String = ""
-    
+
     let prose = LinkingObjects(fromType: PokemonShapeProse.self, property: "pokemonShape")
     let pokemon = LinkingObjects(fromType: PokemonSpecies.self, property: "shape")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -1337,34 +1342,34 @@ class PokemonSpecies: Object, Identifiable {
     @objc dynamic var isMythical = false
     @objc dynamic var order: Int = 0
     let conquestOrder = RealmOptional<Int>()
-    
+
     let pokemon = LinkingObjects(fromType: Pokemon.self, property: "species")
     let prose = LinkingObjects(fromType: PokemonSpeciesProse.self, property: "pokemonSpecies")
     let flavorText = LinkingObjects(fromType: PokemonSpeciesFlavorText.self, property: "species")
     let names = LinkingObjects(fromType: PokemonSpeciesName.self, property: "pokemonSpecies")
     let eggGroups = LinkingObjects(fromType: PokemonEggGroup.self, property: "species")
     let palParkAreas = LinkingObjects(fromType: PalParkAreaSpecies.self, property: "species")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
-    
+
     var defaultForm: Pokemon {
         return pokemon.first(where: {$0.isDefault})!
     }
-    
+
     func pokemonForm(for region: Region?) -> Pokemon {
         guard let region = region else {
             return defaultForm
         }
-        
+
         guard let regionForm = pokemon.first(where: {$0.identifier == "\(identifier)-\(region.identifier)"}) else {
             return defaultForm
         }
-        
+
         return regionForm
     }
-    
+
     var name: String {
         return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
@@ -1397,7 +1402,7 @@ class Pokemon: Object, Identifiable {
     @objc dynamic var baseExperience: Int = 0
     let order = RealmOptional<Int>()
     @objc dynamic var isDefault: Bool = false
-    
+
     let pokemonEvolution = LinkingObjects(fromType: PokemonEvolution.self, property: "evolvedPokemon")
     let evolvesTo = LinkingObjects(fromType: Pokemon.self, property: "evolvesFrom")
     let types = LinkingObjects(fromType: PokemonType.self, property: "pokemon")
@@ -1409,86 +1414,86 @@ class Pokemon: Object, Identifiable {
     let abilities = LinkingObjects(fromType: PokemonAbility.self, property: "pokemon")
     let encounters = LinkingObjects(fromType: Encounter.self, property: "pokemon")
     let dexNumbers = LinkingObjects(fromType: PokemonDexNumber.self, property: "pokemon")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
-    
+
     var baseHP: Int {
         return stats.first(where: {$0.stat?.id == 1})?.baseStat ?? 0
     }
-    
+
     var baseATK: Int {
         return stats.first(where: {$0.stat?.id == 2})?.baseStat ?? 0
     }
-    
+
     var baseDEF: Int {
         return stats.first(where: {$0.stat?.id == 3})?.baseStat ?? 0
     }
-    
+
     var baseSATK: Int {
         return stats.first(where: {$0.stat?.id == 4})?.baseStat ?? 0
     }
-    
+
     var baseSDEF: Int {
         return stats.first(where: {$0.stat?.id == 5})?.baseStat ?? 0
     }
-    
+
     var baseSPE: Int {
         return stats.first(where: {$0.stat?.id == 6})?.baseStat ?? 0
     }
-    
+
     var color: Color {
         return types.first(where: {$0.slot == 1})!.type!.color
     }
-    
+
     var name: String {
         if let formName = defaultForm.names.first(where: {$0.localLanguageId == 9})?.pokemonName, !formName.isEmpty, !isDefault {
             return formName
         }
-        
+
         return species?.names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
-    
+
     var showdownName: String {
         if identifier.contains("-alola") || identifier.contains("-galar") || identifier.contains("-gmax") || identifier.contains("-mega") || identifier.contains("-eternamax") {
             return identifier
         }
-        
+
         return name
     }
-    
+
     var defaultForm: PokemonForm {
         return forms.first(where: {$0.isDefault})!
     }
-    
+
     var defaultFormName: String {
         let formName = forms.first(where: {$0.isDefault})!.names.first(where: {$0.localLanguageId == 9})?.formName ?? ""
         if formName.isEmpty { return "Normal"}
         return formName
     }
-    
+
     var sprite: Image {
         guard let speciesId = species?.id else {
             fatalError()
         }
-        
+
         if isDefault {
             return Image("sprites/pokemon/\(speciesId)")
         }
-        
+
         return Image("sprites/pokemon/\(speciesId)-\(defaultForm.formIdentifier)")
     }
-    
+
     var shinySprite: Image {
         guard let speciesId = species?.id else {
             fatalError()
         }
-        
+
         if isDefault {
             return Image("sprites/pokemon/shiny/\(speciesId)")
         }
-        
+
         return Image("sprites/pokemon/shiny/\(speciesId)-\(defaultForm.formIdentifier)")
     }
 }
@@ -1504,12 +1509,12 @@ class RegionName: Object {
 class Region: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var identifier: String = ""
-    
+
     let names = LinkingObjects(fromType: RegionName.self, property: "region")
     let versionGroups = LinkingObjects(fromType: VersionGroupRegion.self, property: "region")
     let locations = LinkingObjects(fromType: Location.self, property: "region")
     let generations = LinkingObjects(fromType: Generation.self, property: "mainRegion")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -1522,7 +1527,7 @@ class ShowdownFormat: Object, Identifiable {
     @objc dynamic var generation: Generation?
     @objc dynamic var category: ShowdownCategory?
     @objc dynamic var group: ShowdownFormatGroup?
-    
+
     override class func primaryKey() -> String? {
         return "identifier"
     }
@@ -1531,18 +1536,18 @@ class ShowdownFormat: Object, Identifiable {
 class ShowdownCategory: Object, Identifiable {
     @objc dynamic var id: Int = 0
     @objc dynamic var name: String = ""
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
-    
+
     let formats = LinkingObjects(fromType: ShowdownFormat.self, property: "category")
 }
 
 class ShowdownFormatGroup: Object, Identifiable {
     @objc dynamic var id: Int = 0
     @objc dynamic var name: String = ""
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -1562,19 +1567,19 @@ class Stat: Object {
     @objc dynamic var identifier: String = ""
     @objc dynamic var isBattleOnly: Bool = false
     let gameIndex = RealmOptional<Int>()
-    
+
     let names = LinkingObjects(fromType: StatName.self, property: "stat")
     let moveMetaStatChanges = LinkingObjects(fromType: MoveMetaStatChange.self, property: "stat")
     let characteristics = LinkingObjects(fromType: Characteristic.self, property: "stat")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
-    
+
     var icon: Image {
         return Image("ev_icon_\(identifier)")
     }
-    
+
     var color: Color {
         return Color("\(identifier)")
     }
@@ -1597,9 +1602,9 @@ class SuperContestEffectProse: Object {
 class SuperContestEffect: Object {
     @objc dynamic var id = 0
     @objc dynamic var appeal: Int = 0
-    
+
     let prose = LinkingObjects(fromType: SuperContestEffectProse.self, property: "superContestEffect")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -1633,27 +1638,27 @@ class Type: Object {
     @objc dynamic var generation: Generation?
     @objc dynamic var damageClass: MoveDamageClass?
     let order = RealmOptional<Int>()
-        
+
     let names = LinkingObjects(fromType: TypeName.self, property: "type")
     let gameIndices = LinkingObjects(fromType: TypeGameIndex.self, property: "type")
     let moves = LinkingObjects(fromType: Move.self, property: "type")
-    
+
     var color: Color {
         return Color(identifier)
     }
-    
+
     var icon: Image {
         return Image("icon_\(identifier)")
     }
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
-    
+
     var name: String {
         return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
     }
-    
+
     var typeData: TypeEffectiveness.TypeData {
         return TypeEffectiveness.TypeData(rawValue: id)!
     }
@@ -1676,14 +1681,14 @@ class VersionGroup: Object {
     @objc dynamic var identifier = ""
     @objc dynamic var generation: Generation?
     @objc dynamic var order = 0
-    
+
     let versionGroupRegions = LinkingObjects(fromType: VersionGroupRegion.self, property: "versionGroup")
     let pokemonMoveMethods = LinkingObjects(fromType: VersionGroupPokemonMoveMethod.self, property: "versionGroup")
     let versions = LinkingObjects(fromType: Version.self, property: "versionGroup")
     let pokedexes = LinkingObjects(fromType: PokedexVersionGroup.self, property: "versionGroup")
     let machines = LinkingObjects(fromType: Machine.self, property: "versionGroup")
     let encounterSlots = LinkingObjects(fromType: EncounterSlot.self, property: "versionGroup")
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
@@ -1701,15 +1706,15 @@ class Version: Object, Identifiable {
     @objc dynamic var id = 0
     @objc dynamic var identifier: String = ""
     @objc dynamic var versionGroup: VersionGroup?
-    
+
     let names = LinkingObjects(fromType: VersionName.self, property: "version")
     let pokemonGameIndices = LinkingObjects(fromType: PokemonGameIndex.self, property: "version")
     let encounters = LinkingObjects(fromType: Encounter.self, property: "version")
-    
+
     var color: Color {
         return Color("\(identifier)_version")
     }
-    
+
     override class func primaryKey() -> String? {
         return "id"
     }
