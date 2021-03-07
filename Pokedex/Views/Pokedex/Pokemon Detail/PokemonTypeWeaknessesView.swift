@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PokemonTypeWeaknessesView: View {
-
     let types: [PokemonType]
 
     private func effectiveness(of damageType: TypeEffectiveness.TypeData) -> TypeEffectiveness.Effectiveness {

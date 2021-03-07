@@ -5,8 +5,8 @@
 //  Created by BrianCorbin on 2/6/21.
 //
 
-import SwiftUI
 import Kingfisher
+import SwiftUI
 
 struct TeamSummaryView_Previews: PreviewProvider {
     static var previews: some View {
@@ -86,6 +86,5 @@ struct TeamMemberSummaryView: View {
                 }
             }
         }
-
     }
 }

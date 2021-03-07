@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PokemonMovesView: View {
-
     let selectedPokemon: Pokemon
 
     @State var selectedLearnMethod: PokemonMoveMethod
@@ -18,7 +17,7 @@ struct PokemonMovesView: View {
     @Binding var showMoveDetailView: Bool
 
     private var moveLearnMethodsForSelectedVersion: [PokemonMoveMethod] {
-        return selectedVersion.versionGroup!.pokemonMoveMethods.filter("pokemonMoveMethod.id <= 4").compactMap({$0.pokemonMoveMethod})
+        return selectedVersion.versionGroup!.pokemonMoveMethods.filter("pokemonMoveMethod.id <= 4").compactMap({ $0.pokemonMoveMethod })
     }
 
     private var versionColor: Color {
@@ -26,7 +25,7 @@ struct PokemonMovesView: View {
     }
 
     private var versionName: String {
-        return selectedVersion.names.first(where: {$0.localLanguageId == 9})?.name ?? "All Versions"
+        return selectedVersion.names.first(where: { $0.localLanguageId == 9 })?.name ?? "All Versions"
     }
 
     private var movesToDisplay: [PokemonMove] {
@@ -38,7 +37,7 @@ struct PokemonMovesView: View {
         }
 
         if selectedLearnMethod.id == 4 {
-            return movesToDisplay.compactMap({$0}).sorted { (moveA, moveB) -> Bool in
+            return movesToDisplay.compactMap({ $0 }).sorted { moveA, moveB -> Bool in
                 let machineNameA = moveA.machineName(for: selectedVersion.versionGroup!)!
                 let machineNameB = moveB.machineName(for: selectedVersion.versionGroup!)!
 
@@ -50,7 +49,7 @@ struct PokemonMovesView: View {
             }
         }
 
-        return movesToDisplay.compactMap({$0})
+        return movesToDisplay.compactMap({ $0 })
     }
 
     var body: some View {
@@ -58,11 +57,11 @@ struct PokemonMovesView: View {
             VStack {
                 Picker("Learn Methods", selection: $selectedLearnMethod) {
                     ForEach(moveLearnMethodsForSelectedVersion) { method in
-                        Text(method.prose.first(where: {$0.localLanguageId == 9})!.name).tag(method)
+                        Text(method.prose.first(where: { $0.localLanguageId == 9 })!.name).tag(method)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
-                Text(selectedLearnMethod.prose.first(where: {$0.localLanguageId == 9})!.pokemonMoveMethodProseDescription)
+                Text(selectedLearnMethod.prose.first(where: { $0.localLanguageId == 9 })!.pokemonMoveMethodProseDescription)
                     .font(.caption2)
                     .foregroundColor(.secondary)
                     .minimumScaleFactor(0.5)
@@ -93,7 +92,6 @@ struct PokemonMovesView: View {
 }
 
 struct MoveView: View {
-
     let move: Move
     let pokemonMove: PokemonMove?
     let versionGroup: VersionGroup?
@@ -108,11 +106,11 @@ struct MoveView: View {
         }
 
         if moveMethod.id == 4 {
-            guard let moveVersionGroup = pokemonMove.versionGroup, let machine = move.machines.first(where: {$0.versionGroup!.id == moveVersionGroup.id}), let machineItem = machine.item else {
+            guard let moveVersionGroup = pokemonMove.versionGroup, let machine = move.machines.first(where: { $0.versionGroup!.id == moveVersionGroup.id }), let machineItem = machine.item else {
                 return nil
             }
 
-            return machineItem.names.first(where: {$0.localLanguageId == 9})!.name
+            return machineItem.names.first(where: { $0.localLanguageId == 9 })!.name
         }
 
         return nil

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PokemonStatsView: View {
-
     let pokemon: Pokemon
 
     private let maxBaseStats = [255, 190, 250, 194, 250, 200]

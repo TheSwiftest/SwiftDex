@@ -5,8 +5,8 @@
 //  Created by BrianCorbin on 2/6/21.
 //
 
-import SwiftUI
 import Kingfisher
+import SwiftUI
 
 struct TeamDetailView_Previews: PreviewProvider {
     static var previews: some View {
@@ -20,9 +20,8 @@ struct Shake: GeometryEffect {
     var animatableData: CGFloat
 
     func effectValue(size: CGSize) -> ProjectionTransform {
-        ProjectionTransform(CGAffineTransform(translationX:
-            amount * sin(animatableData * .pi * CGFloat(shakesPerUnit)),
-            y: 0))
+        ProjectionTransform(CGAffineTransform(translationX: amount * sin(animatableData * .pi * CGFloat(shakesPerUnit)),
+                                              y: 0))
     }
 }
 
@@ -59,18 +58,17 @@ struct TeamDetailView: View {
                         }
                     }
 
-                    if team.pokemon.count == 0 {
+                    if team.pokemon.isEmpty {
                         withAnimation {
                             shakePokemonCount += 1
                         }
                     }
 
-                    if !team.name.isEmpty && team.pokemon.count > 0 {
+                    if !team.name.isEmpty && !team.pokemon.isEmpty {
                         pokemonShowdownService.saveTeam(team)
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
-
             }
             .padding(.horizontal)
             ScrollView {
@@ -97,7 +95,7 @@ struct TeamDetailView: View {
                                 .cornerRadius(8)
                         })
                         .sheet(isPresented: $showFormatSelectionView, content: {
-                            TeamFormatSelectionView(formats: swiftDexService.showdownFormats.compactMap({$0}), selectedFormat: $team.format, showView: $showFormatSelectionView)
+                            TeamFormatSelectionView(formats: swiftDexService.showdownFormats.compactMap({ $0 }), selectedFormat: $team.format, showView: $showFormatSelectionView)
                         })
 
                         Spacer()
@@ -144,7 +142,7 @@ struct TeamFormatSelectionView: View {
     @State private var searchText: String = ""
 
     private var formatsFiltered: [ShowdownFormat] {
-        return formats.filter({searchText.isEmpty ? true : $0.identifier.localizedCaseInsensitiveContains(searchText)})
+        return formats.filter({ searchText.isEmpty ? true : $0.identifier.localizedCaseInsensitiveContains(searchText) })
     }
 
     var body: some View {
@@ -176,12 +174,10 @@ struct TeamFormatSelectionView: View {
             }
             .background(Color(.secondarySystemBackground))
         }
-
     }
 }
 
 struct TeamStatsAvgView: View {
-
     let baseHp, baseAtk, baseDef, baseSatk, baseSdef, baseSpe: Int
     let totHp, totAtk, totDef, totSatk, totSdef, totSpe: Int
 

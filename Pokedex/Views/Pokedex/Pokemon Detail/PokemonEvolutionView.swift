@@ -5,8 +5,8 @@
 //  Created by TempUser on 1/25/21.
 //
 
-import SwiftUI
 import Kingfisher
+import SwiftUI
 
 struct PokemonEvolutionChainView_Previews: PreviewProvider {
     static var previews: some View {
@@ -15,12 +15,11 @@ struct PokemonEvolutionChainView_Previews: PreviewProvider {
 }
 
 struct PokemonEvolutionChainView: View {
-
     let pokemon: Pokemon
 
     var body: some View {
         VStack {
-            if pokemon.evolvesFrom != nil || pokemon.evolvesTo.count > 0 {
+            if pokemon.evolvesFrom != nil || !pokemon.evolvesTo.isEmpty {
                 PokemonDetailSectionHeader(text: "Evolutions")
             }
 
@@ -117,7 +116,6 @@ struct EvolutionStepTriggerSectionTwo: View {
 }
 
 struct EvolutionStepTriggerSectionOne: View {
-
     let evolution: PokemonEvolution
 
     var body: some View {

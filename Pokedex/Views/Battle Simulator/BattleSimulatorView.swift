@@ -69,7 +69,7 @@ struct BattleSimulatorView: View {
         var modifier: CGFloat = 1.0
 
         // STAB Bonus
-        if let moveType = move.type, attackingPokemon.pokemon.types.map({$0.type}).contains(moveType) {
+        if let moveType = move.type, attackingPokemon.pokemon.types.map({ $0.type }).contains(moveType) {
             if attackingPokemon.ability?.identifier == "adaptability" {
                 modifier *= 2.0
             } else {
@@ -122,10 +122,12 @@ struct BattleSimulatorView: View {
         }
 
         // Fluffy Special Case
+        // swiftlint:disable:next contains_over_filter_is_empty
         if defendingPokemon.ability?.identifier == "fluffy" && !move.flags.filter("moveFlag.identifier == 'contact'").isEmpty && move.type?.typeData != .fire {
             modifier *= 0.5
         }
 
+        // swiftlint:disable:next contains_over_filter_is_empty
         if defendingPokemon.ability?.identifier == "fluffy" && move.flags.filter("moveFlag.identifier == 'contact'").isEmpty && move.type?.typeData == .fire {
             modifier *= 2.0
         }
@@ -158,6 +160,7 @@ struct BattleSimulatorView: View {
             modifier *= 0.75
         }
 
+        // swiftlint:disable:next contains_over_filter_is_empty
         if defendingPokemon.ability?.identifier == "punk-rock" && !move.flags.filter("moveFlag.identifier == 'sound'").isEmpty {
             modifier *= 0.5
         }
@@ -279,11 +282,11 @@ struct BattlePokemonDetailView: View {
     }
 
     private var items: [Item] {
-        return swiftDexService.items.compactMap({$0})
+        return swiftDexService.items.compactMap({ $0 })
     }
 
     private var natures: [Nature] {
-        return swiftDexService.natures.compactMap({$0})
+        return swiftDexService.natures.compactMap({ $0 })
     }
 
     var body: some View {
@@ -293,10 +296,10 @@ struct BattlePokemonDetailView: View {
                 VStack(spacing: 20) {
                     TeamPokemonNicknameAndGenderView(genders: [swiftDexService.male, swiftDexService.female], nickname: $teamPokemon.nickname,
                                                      gender: $teamPokemon.gender, color: teamPokemon.pokemon.color)
-                    TeamPokemonAbilitiesView(pokemonAbilities: teamPokemon.pokemon.abilities.compactMap({$0}), color: teamPokemon.pokemon.color, ability: $teamPokemon.ability)
+                    TeamPokemonAbilitiesView(pokemonAbilities: teamPokemon.pokemon.abilities.compactMap({ $0 }), color: teamPokemon.pokemon.color, ability: $teamPokemon.ability)
                     TeamPokemonLevelAndHappinessView(level: $teamPokemon.level, happiness: $teamPokemon.happiness, color: teamPokemon.pokemon.color, shiny: $teamPokemon.shiny)
                     TeamPokemonNatureAndItemView(availableNatures: natures, availableItems: items, nature: $teamPokemon.nature, item: $teamPokemon.item)
-                    TeamPokemonStatsView(pokemonStats: teamPokemon.pokemon.stats.compactMap({$0}), nature: teamPokemon.nature, evs: teamPokemon.evs, ivs: teamPokemon.ivs, level: teamPokemon.level)
+                    TeamPokemonStatsView(pokemonStats: teamPokemon.pokemon.stats.compactMap({ $0 }), nature: teamPokemon.nature, evs: teamPokemon.evs, ivs: teamPokemon.ivs, level: teamPokemon.level)
                     TeamPokemonEVsView(evs: $teamPokemon.evs, color: teamPokemon.pokemon.color)
                     TeamPokemonIVsView(ivs: $teamPokemon.ivs, color: teamPokemon.pokemon.color)
                 }
@@ -310,7 +313,6 @@ struct BattlePokemonDetailView: View {
 }
 
 struct BattleSimModifiersView: View {
-
     @Binding var defenderAtFullHealth: Bool
     @Binding var wonderRoom: Bool
     @Binding var criticalHit: Bool
@@ -391,7 +393,6 @@ struct BattleSimWeatherView: View {
 }
 
 struct BattleSimDamageView: View {
-
     let maxDamage: Int
     let minDamage: Int
     let avgDamage: Int
@@ -567,7 +568,6 @@ struct BattleSimAttackingMoveView: View {
 }
 
 struct BattleSimPokemonView: View {
-
     @EnvironmentObject var swiftDexService: SwiftDexService
     @EnvironmentObject var pokemonShowdownService: PokemonShowdownService
 

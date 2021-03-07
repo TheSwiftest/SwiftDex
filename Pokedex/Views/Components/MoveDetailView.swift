@@ -12,7 +12,7 @@ struct MoveDetailView: View {
     let versionGroup: VersionGroup
 
     private var flavorText: String {
-        return move.flavorTexts.first(where: {$0.languageId == 9 && $0.versionGroup!.id == versionGroup.id})?.flavorText.replacingOccurrences(of: "\n", with: " ") ?? "No flavor text for this move"
+        return move.flavorTexts.first(where: { $0.languageId == 9 && $0.versionGroup!.id == versionGroup.id })?.flavorText.replacingOccurrences(of: "\n", with: " ") ?? "No flavor text for this move"
     }
 
     private var moveEffectText: String {

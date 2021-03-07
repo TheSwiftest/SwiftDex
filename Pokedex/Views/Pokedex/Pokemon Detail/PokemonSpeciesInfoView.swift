@@ -16,7 +16,6 @@ struct PokemonBasicInfoView_Previews: PreviewProvider {
 }
 
 struct PokemonBasicInfoView: View {
-
     @Binding var pokemon: Pokemon
     @Binding var pokemonForm: PokemonForm
     let selectedVersionGroup: VersionGroup
@@ -30,8 +29,8 @@ struct PokemonBasicInfoView: View {
             VStack {
                 Group {
                     SpeciesBasicInfoView(species: species, id: pokemon.id, height: pokemon.height, weight: pokemon.weight,
-                                         bodyShape: species.shape!.id, genus: species.names.first(where: {$0.localLanguageId == 9})!.genus,
-                                         color: pokemon.types.first(where: {$0.slot == 1})!.type!.color)
+                                         bodyShape: species.shape!.id, genus: species.names.first(where: { $0.localLanguageId == 9 })!.genus,
+                                         color: pokemon.types.first(where: { $0.slot == 1 })!.type!.color)
                     PokemonAbilitiesView(pokemon: pokemon)
                     PokemonStatsView(pokemon: pokemon)
                     PokemonEvolutionChainView(pokemon: pokemon)
@@ -102,7 +101,6 @@ struct SpeciesInfoTextView: View {
 }
 
 struct SpeciesInfoImageView: View {
-
     let image: Image
     let imageSize: CGFloat
     let subtitle: String

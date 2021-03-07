@@ -5,8 +5,8 @@
 //  Created by BrianCorbin on 2/6/21.
 //
 
-import SwiftUI
 import Kingfisher
+import SwiftUI
 
 struct TeamMembersDetailView_Previews: PreviewProvider {
     static var previews: some View {
@@ -34,7 +34,7 @@ struct DragRelocateDelegate: DropDelegate {
             let to = listData.firstIndex(of: item)!
             if listData[to].id != current!.id {
                 listData.move(fromOffsets: IndexSet(integer: from),
-                    toOffset: to > from ? to + 1 : to)
+                              toOffset: to > from ? to + 1 : to)
             }
         }
     }
@@ -86,7 +86,7 @@ struct TeamMembersDetailView: View {
                             }
                             .simultaneously(with:
                                             LongPressGesture()
-                                            .updating($longPressPokemonState, body: { (currentState, gestureState, _) in
+                                            .updating($longPressPokemonState, body: { currentState, gestureState, _ in
                                                 gestureState = PokemonLongPressState(detectingLongPress: currentState, pokemonPressing: pokemon)
                                             })
                                             .onEnded { _ in
@@ -129,7 +129,6 @@ struct TeamMembersDetailView: View {
                                         .padding(.trailing, 4)
                                 })
                             }
-
                         }
                         Spacer()
                     }

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct VersionGroupSelectionView: View {
-
     let generations: [Generation]
     let pokemonFormRestriction: PokemonForm?
 
@@ -16,12 +15,11 @@ struct VersionGroupSelectionView: View {
     @Binding var selectedVersion: Version
 
     private var validGenerations: [Generation] {
-
         if let formRestriction = pokemonFormRestriction {
-            return generations.filter({$0.id >= formRestriction.introducedInVersionGroup!.generation!.id})
+            return generations.filter({ $0.id >= formRestriction.introducedInVersionGroup!.generation!.id })
         }
 
-        return generations.sorted(by: {$0.id > $1.id})
+        return generations.sorted(by: { $0.id > $1.id })
     }
 
     var body: some View {
@@ -48,7 +46,7 @@ struct GenerationVersionsSelectionView: View {
 
     var body: some View {
         VStack {
-            Text(generation.names.first(where: { $0.localLanguageId == 9})!.name)
+            Text(generation.names.first(where: { $0.localLanguageId == 9 })!.name)
             ForEach(generation.versionGroups.filter("id != 12 && id != 13 && id != 19"), id: \.id) { versionGroup in
                 HStack {
                     ForEach(versionGroup.versions, id: \.id) { version in
@@ -56,7 +54,7 @@ struct GenerationVersionsSelectionView: View {
                             .frame(height: 30)
                             .foregroundColor(version.color)
                             .overlay(
-                                Text(version.names.first(where: {$0.localLanguageId == 9})?.name ?? version.identifier)
+                                Text(version.names.first(where: { $0.localLanguageId == 9 })?.name ?? version.identifier)
                                     .font(.headline)
                                     .foregroundColor(.white)
                             )

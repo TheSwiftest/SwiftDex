@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PokemonEVYieldsView: View {
-
     let stats: [PokemonStat]
 
     var body: some View {

@@ -33,7 +33,7 @@ import SwiftUI
 // }
 
 class TypeEffectiveness {
-    static private let effectivenessTable: [TypeEffectiveness.TypeData: [TypeEffectiveness.TypeData: TypeEffectiveness.Effectiveness]] = [
+    private static let effectivenessTable: [TypeEffectiveness.TypeData: [TypeEffectiveness.TypeData: TypeEffectiveness.Effectiveness]] = [
         .normal: [.normal: .normal, .fighting: .normal, .flying: .normal, .poison: .normal, .ground: .normal, .rock: .half, .bug: .normal, .ghost: .none, .steel: .half,
                   .fire: .normal, .water: .normal, .grass: .normal, .electric: .normal, .psychic: .normal, .ice: .normal, .dragon: .normal, .dark: .normal, .fairy: .normal],
         .fighting: [.normal: .double, .fighting: .normal, .flying: .half, .poison: .half, .ground: .normal, .rock: .double, .bug: .half, .ghost: .none, .steel: .double,
@@ -79,7 +79,7 @@ class TypeEffectiveness {
     enum TypeData: Int {
         case normal = 1, fighting, flying, poison, ground, rock, bug, ghost, steel, fire,
              water, grass, electric, psychic, ice, dragon, dark, fairy
-        case unknown = 10001, shadow = 10002
+        case unknown = 10_001, shadow = 10_002
 
         func color() -> Color {
             switch self {

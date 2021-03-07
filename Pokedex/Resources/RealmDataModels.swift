@@ -7,11 +7,11 @@
 
 // swiftlint:disable file_length
 
+import AVFoundation
 import Foundation
 import Realm
 import RealmSwift
 import SwiftUI
-import AVFoundation
 
 class Ability: Object, Identifiable {
     @objc dynamic var id = 0
@@ -29,15 +29,15 @@ class Ability: Object, Identifiable {
     }
 
     var name: String {
-        return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
+        return names.first(where: { $0.localLanguageId == 9 })?.name ?? identifier
     }
 
     var shortEffect: String {
-        return prose.first(where: {$0.localLanguageId == 9})?.shortEffect ?? "No short effect"
+        return prose.first(where: { $0.localLanguageId == 9 })?.shortEffect ?? "No short effect"
     }
 
     var effect: String {
-        return prose.first(where: {$0.localLanguageId == 9})?.effect ?? "No effect"
+        return prose.first(where: { $0.localLanguageId == 9 })?.effect ?? "No effect"
     }
 }
 
@@ -200,7 +200,7 @@ class EggGroup: Object, Identifiable {
     }
 
     var name: String {
-        return prose.first(where: {$0.localLanguageId == 9})?.name ?? identifier
+        return prose.first(where: { $0.localLanguageId == 9 })?.name ?? identifier
     }
 }
 
@@ -334,7 +334,7 @@ class EvolutionTrigger: Object {
     }
 
     var name: String {
-        return prose.first(where: {$0.localLanguageId == 9})?.name ?? identifier
+        return prose.first(where: { $0.localLanguageId == 9 })?.name ?? identifier
     }
 }
 
@@ -383,7 +383,7 @@ class Generation: Object, Identifiable {
     }
 
     var name: String {
-        return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
+        return names.first(where: { $0.localLanguageId == 9 })?.name ?? identifier
     }
 }
 
@@ -408,7 +408,7 @@ class GrowthRate: Object {
     }
 
     var name: String {
-        return prose.first(where: {$0.localLanguageId == 9})?.name ?? identifier
+        return prose.first(where: { $0.localLanguageId == 9 })?.name ?? identifier
     }
 }
 
@@ -426,7 +426,7 @@ class ItemCategory: Object {
     }
 
     var name: String {
-        return prose.first(where: {$0.localLanguageId == 9})?.name ?? identifier
+        return prose.first(where: { $0.localLanguageId == 9 })?.name ?? identifier
     }
 }
 
@@ -483,7 +483,7 @@ class Item: Object, Identifiable {
     }
 
     var name: String {
-        return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
+        return names.first(where: { $0.localLanguageId == 9 })?.name ?? identifier
     }
 
     var sprite: Image {
@@ -491,16 +491,15 @@ class Item: Object, Identifiable {
     }
 
     func flavorText(for versionGroup: VersionGroup?) -> String {
-        return flavorTexts.first(where: {$0.languageId == 9 && $0.versionGroup!.id == versionGroup?.id ?? 18})?.flavorText.replacingOccurrences(of: "\n", with: " ") ?? "No Flavor Text"
-
+        return flavorTexts.first(where: { $0.languageId == 9 && $0.versionGroup!.id == versionGroup?.id ?? 18 })?.flavorText.replacingOccurrences(of: "\n", with: " ") ?? "No Flavor Text"
     }
 
     var effectText: String {
-        return prose.first(where: {$0.localLanguageId == 9})?.effect ?? "No item effect"
+        return prose.first(where: { $0.localLanguageId == 9 })?.effect ?? "No item effect"
     }
 
     var shortEffectText: String {
-        return prose.first(where: {$0.localLanguageId == 9})?.shortEffect ?? "No short effect text"
+        return prose.first(where: { $0.localLanguageId == 9 })?.shortEffect ?? "No short effect text"
     }
 }
 
@@ -524,7 +523,7 @@ class ItemFlingEffect: Object {
     }
 
     var effect: String {
-        return prose.first(where: {$0.localLanguageId == 9})?.effect ?? identifier
+        return prose.first(where: { $0.localLanguageId == 9 })?.effect ?? identifier
     }
 }
 
@@ -568,7 +567,7 @@ class ItemPocket: Object, Identifiable {
     }
 
     var name: String {
-        return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
+        return names.first(where: { $0.localLanguageId == 9 })?.name ?? identifier
     }
 }
 
@@ -661,7 +660,7 @@ class Location: Object {
     }
 
     var name: String {
-        return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
+        return names.first(where: { $0.localLanguageId == 9 })?.name ?? identifier
     }
 }
 
@@ -727,9 +726,8 @@ class Move: Object, Identifiable {
     }
 
     var name: String {
-        return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
+        return names.first(where: { $0.localLanguageId == 9 })?.name ?? identifier
     }
-
 }
 
 // MARK: - MoveChangelog
@@ -757,7 +755,7 @@ class MoveDamageClass: Object, Identifiable {
     }
 
     var name: String {
-        return prose.first(where: {$0.localLanguageId == 9})?.name ?? identifier
+        return prose.first(where: { $0.localLanguageId == 9 })?.name ?? identifier
     }
 
     var color: Color {
@@ -818,11 +816,11 @@ class MoveEffect: Object {
     }
 
     var shortEffectDescription: String {
-        return prose.first(where: {$0.localLanguageId == 9})?.shortEffect ?? "No short effect"
+        return prose.first(where: { $0.localLanguageId == 9 })?.shortEffect ?? "No short effect"
     }
 
     var effectDescription: String {
-        return prose.first(where: {$0.localLanguageId == 9})?.effect ?? "No effect description"
+        return prose.first(where: { $0.localLanguageId == 9 })?.effect ?? "No effect description"
     }
 }
 
@@ -942,11 +940,11 @@ class MoveTarget: Object {
     }
 
     var name: String {
-        return prose.first(where: {$0.localLanguageId == 9})?.name ?? identifier
+        return prose.first(where: { $0.localLanguageId == 9 })?.name ?? identifier
     }
 
     var targetDescription: String {
-        return prose.first(where: {$0.localLanguageId == 9})?.targetDescription ?? "No target description"
+        return prose.first(where: { $0.localLanguageId == 9 })?.targetDescription ?? "No target description"
     }
 }
 
@@ -991,7 +989,7 @@ class Nature: Object, Identifiable {
     }
 
     var name: String {
-        return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
+        return names.first(where: { $0.localLanguageId == 9 })?.name ?? identifier
     }
 }
 
@@ -1073,7 +1071,7 @@ class Pokedex: Object, Identifiable {
     }
 
     var name: String {
-        return prose.first(where: {$0.localLanguageId == 9})?.name
+        return prose.first(where: { $0.localLanguageId == 9 })?.name
             .replacingOccurrences(of: "Updated ", with: "")
             .replacingOccurrences(of: "Original ", with: "")
             .replacingOccurrences(of: "Extended ", with: "")
@@ -1117,7 +1115,6 @@ class PokemonDexNumber: Object, Identifiable {
 
     var id: String {
         return "\(pokedex!.id)-\(pokedexNumber)-\(pokemon!.id)"
-
     }
 }
 
@@ -1265,11 +1262,11 @@ class PokemonMove: Object {
     let order = RealmOptional<Int>()
 
     var name: String {
-        return move!.names.first(where: {$0.localLanguageId == 9})!.name
+        return move!.names.first(where: { $0.localLanguageId == 9 })!.name
     }
 
     func machineName(for versionGroup: VersionGroup) -> String? {
-        if let machine = move!.machines.first(where: {$0.versionGroup?.id == versionGroup.id}) {
+        if let machine = move!.machines.first(where: { $0.versionGroup?.id == versionGroup.id }) {
             return machine.item!.name
         }
 
@@ -1355,7 +1352,7 @@ class PokemonSpecies: Object, Identifiable {
     }
 
     var defaultForm: Pokemon {
-        return pokemon.first(where: {$0.isDefault})!
+        return pokemon.first(where: { $0.isDefault })!
     }
 
     func pokemonForm(for region: Region?) -> Pokemon {
@@ -1363,7 +1360,7 @@ class PokemonSpecies: Object, Identifiable {
             return defaultForm
         }
 
-        guard let regionForm = pokemon.first(where: {$0.identifier == "\(identifier)-\(region.identifier)"}) else {
+        guard let regionForm = pokemon.first(where: { $0.identifier == "\(identifier)-\(region.identifier)" }) else {
             return defaultForm
         }
 
@@ -1371,7 +1368,7 @@ class PokemonSpecies: Object, Identifiable {
     }
 
     var name: String {
-        return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
+        return names.first(where: { $0.localLanguageId == 9 })?.name ?? identifier
     }
 }
 
@@ -1420,39 +1417,39 @@ class Pokemon: Object, Identifiable {
     }
 
     var baseHP: Int {
-        return stats.first(where: {$0.stat?.id == 1})?.baseStat ?? 0
+        return stats.first(where: { $0.stat?.id == 1 })?.baseStat ?? 0
     }
 
     var baseATK: Int {
-        return stats.first(where: {$0.stat?.id == 2})?.baseStat ?? 0
+        return stats.first(where: { $0.stat?.id == 2 })?.baseStat ?? 0
     }
 
     var baseDEF: Int {
-        return stats.first(where: {$0.stat?.id == 3})?.baseStat ?? 0
+        return stats.first(where: { $0.stat?.id == 3 })?.baseStat ?? 0
     }
 
     var baseSATK: Int {
-        return stats.first(where: {$0.stat?.id == 4})?.baseStat ?? 0
+        return stats.first(where: { $0.stat?.id == 4 })?.baseStat ?? 0
     }
 
     var baseSDEF: Int {
-        return stats.first(where: {$0.stat?.id == 5})?.baseStat ?? 0
+        return stats.first(where: { $0.stat?.id == 5 })?.baseStat ?? 0
     }
 
     var baseSPE: Int {
-        return stats.first(where: {$0.stat?.id == 6})?.baseStat ?? 0
+        return stats.first(where: { $0.stat?.id == 6 })?.baseStat ?? 0
     }
 
     var color: Color {
-        return types.first(where: {$0.slot == 1})!.type!.color
+        return types.first(where: { $0.slot == 1 })!.type!.color
     }
 
     var name: String {
-        if let formName = defaultForm.names.first(where: {$0.localLanguageId == 9})?.pokemonName, !formName.isEmpty, !isDefault {
+        if let formName = defaultForm.names.first(where: { $0.localLanguageId == 9 })?.pokemonName, !formName.isEmpty, !isDefault {
             return formName
         }
 
-        return species?.names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
+        return species?.names.first(where: { $0.localLanguageId == 9 })?.name ?? identifier
     }
 
     var showdownName: String {
@@ -1464,18 +1461,18 @@ class Pokemon: Object, Identifiable {
     }
 
     var defaultForm: PokemonForm {
-        return forms.first(where: {$0.isDefault})!
+        return forms.first(where: { $0.isDefault })!
     }
 
     var defaultFormName: String {
-        let formName = forms.first(where: {$0.isDefault})!.names.first(where: {$0.localLanguageId == 9})?.formName ?? ""
-        if formName.isEmpty { return "Normal"}
+        let formName = forms.first(where: { $0.isDefault })!.names.first(where: { $0.localLanguageId == 9 })?.formName ?? ""
+        if formName.isEmpty { return "Normal" }
         return formName
     }
 
     var sprite: Image {
         guard let speciesId = species?.id else {
-            fatalError()
+            return Image("")
         }
 
         if isDefault {
@@ -1487,7 +1484,7 @@ class Pokemon: Object, Identifiable {
 
     var shinySprite: Image {
         guard let speciesId = species?.id else {
-            fatalError()
+            return Image("")
         }
 
         if isDefault {
@@ -1656,7 +1653,7 @@ class Type: Object {
     }
 
     var name: String {
-        return names.first(where: {$0.localLanguageId == 9})?.name ?? identifier
+        return names.first(where: { $0.localLanguageId == 9 })?.name ?? identifier
     }
 
     var typeData: TypeEffectiveness.TypeData {

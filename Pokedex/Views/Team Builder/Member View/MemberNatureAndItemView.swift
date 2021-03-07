@@ -10,7 +10,7 @@ import SwiftUI
 struct MemberNatureView_Previews: PreviewProvider {
     static var previews: some View {
         NatureView(nature: SwiftDexService().nature(with: "Bold")!)
-        TeamPokemonNatureSelectionView(natures: SwiftDexService().natures.compactMap({$0}), selectedNature: .constant(nil))
+        TeamPokemonNatureSelectionView(natures: SwiftDexService().natures.compactMap({ $0 }), selectedNature: .constant(nil))
     }
 }
 
@@ -30,7 +30,7 @@ struct TeamPokemonNatureSelectionView: View {
                 .padding()
             ScrollView {
                 LazyVStack(spacing: 2) {
-                    ForEach(natures.filter({searchText.isEmpty ? true : $0.identifier.localizedCaseInsensitiveContains(searchText)})) { nature in
+                    ForEach(natures.filter({ searchText.isEmpty ? true : $0.identifier.localizedCaseInsensitiveContains(searchText) })) { nature in
                         NatureView(nature: nature)
                             .onTapGesture {
                                 selectedNature = nature
@@ -101,7 +101,7 @@ struct TeamPokemonItemSelectionView: View {
                 .padding()
             ScrollView {
                 LazyVStack(spacing: 2) {
-                    ForEach(items.filter({searchText.isEmpty ? true : $0.identifier.localizedCaseInsensitiveContains(searchText)})) { item in
+                    ForEach(items.filter({ searchText.isEmpty ? true : $0.identifier.localizedCaseInsensitiveContains(searchText) })) { item in
                         ItemView(item: item, versionGroup: nil)
                             .onTapGesture {
                                 self.selectedItem = item
@@ -190,7 +190,6 @@ struct TeamPokemonNatureAndItemView: View {
 }
 
 struct NatureStatFlavorView: View {
-
     let increased: Bool
     let identifier: String
 

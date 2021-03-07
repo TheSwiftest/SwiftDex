@@ -17,7 +17,7 @@ struct TeamPokemonStatsView: View {
     @State private var selectedType: Int = 0
 
     private var totalHp: Int {
-        guard let baseHp = pokemonStats.first(where: {$0.stat?.id == 1})?.baseStat else {
+        guard let baseHp = pokemonStats.first(where: { $0.stat?.id == 1 })?.baseStat else {
             return 0
         }
 

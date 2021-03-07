@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct VersionGroupSelectionView: View {
-
     @EnvironmentObject var swiftDexService: SwiftDexService
 
     var body: some View {
@@ -17,7 +16,7 @@ struct VersionGroupSelectionView: View {
                 Text("All Versions")
                 ForEach(swiftDexService.generations, id: \.id) { generation in
                     VStack {
-                        Text(generation.names.first(where: { $0.localLanguageId == 9})!.name)
+                        Text(generation.names.first(where: { $0.localLanguageId == 9 })!.name)
                         ForEach(generation.versionGroups, id: \.id) { versionGroup in
                             Text(versionGroup.identifier)
                         }

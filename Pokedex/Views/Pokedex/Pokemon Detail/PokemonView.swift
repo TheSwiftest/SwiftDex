@@ -31,7 +31,7 @@ struct PokemonView: View {
     }
 
     private var color: Color {
-        return selectedPokemon.types.first(where: {$0.slot == 1})?.type?.color ?? .fire
+        return selectedPokemon.types.first(where: { $0.slot == 1 })?.type?.color ?? .fire
     }
 
     var body: some View {
@@ -69,7 +69,6 @@ struct PokemonView: View {
                         }
                         .accentColor(color)
                     }
-
                 }
                 .zIndex(0)
 

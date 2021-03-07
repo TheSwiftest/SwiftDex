@@ -25,7 +25,7 @@ class PokemonShowdownService: ObservableObject {
     }
 
     func saveTeam(_ team: Team) {
-        if let indexOfTeam = teams.firstIndex(where: {$0.id == team.id}) {
+        if let indexOfTeam = teams.firstIndex(where: { $0.id == team.id }) {
             teams.remove(at: indexOfTeam)
             teams.insert(team, at: indexOfTeam)
         } else {
@@ -39,18 +39,18 @@ class PokemonShowdownService: ObservableObject {
         do {
             let teamsData = try JSONEncoder().encode(teams)
             UserDefaults.standard.setValue(teamsData, forKey: "teams")
-        } catch let error {
+        } catch {
             print(error.localizedDescription)
         }
     }
 
     func deleteTeam(_ team: Team) {
-        teams.removeAll(where: {$0.id == team.id})
+        teams.removeAll(where: { $0.id == team.id })
 
         do {
             let teamsData = try JSONEncoder().encode(teams)
             UserDefaults.standard.setValue(teamsData, forKey: "teams")
-        } catch let error {
+        } catch {
             print(error.localizedDescription)
         }
     }
@@ -59,7 +59,7 @@ class PokemonShowdownService: ObservableObject {
         if let teamsData = UserDefaults.standard.data(forKey: "teams") {
             do {
                 return try JSONDecoder().decode([Team].self, from: teamsData)
-            } catch let error {
+            } catch {
                 print(error.localizedDescription)
             }
         }
@@ -78,6 +78,7 @@ class PokemonShowdownService: ObservableObject {
     }
 
     // MARK: - DO NOT FUCKING TOUCH THIS
+    // swiftlint:disable:next function_body_length
     private func loadPokemon(from text: String) -> TeamPokemon? {
         var pokemonData = [String: Any]()
         pokemonData["EVs"] = [0, 0, 0, 0, 0, 0]
@@ -202,7 +203,7 @@ class PokemonShowdownService: ObservableObject {
             let formatIdentifier = components.removeFirst().trimmingCharacters(in: ["[", "]"])
             let name = components.joined(separator: " ")
 
-            let format = swiftDexService.showdownFormats.first(where: {$0.identifier == formatIdentifier})
+            let format = swiftDexService.showdownFormats.first(where: { $0.identifier == formatIdentifier })
 
             var team = Team(name: name, format: format, pokemon: [])
             for data in pokemonData {
@@ -298,7 +299,7 @@ class PokemonShowdownService: ObservableObject {
     }
 
     func convertTeamToShowdownFormat(_ team: Team) -> String {
-        let pokemon = team.pokemon.map({convertPokemonToShowdownFormat($0)})
+        let pokemon = team.pokemon.map({ convertPokemonToShowdownFormat($0) })
         return pokemon.joined(separator: "\n\n")
     }
 

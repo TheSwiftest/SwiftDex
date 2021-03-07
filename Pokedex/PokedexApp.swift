@@ -9,7 +9,6 @@ import SwiftUI
 
 @main
 struct PokedexApp: App {
-
     let swiftDexService = SwiftDexService()
     let pokemonShowdownService = PokemonShowdownService()
 

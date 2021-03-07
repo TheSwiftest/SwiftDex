@@ -5,8 +5,8 @@
 //  Created by BrianCorbin on 1/24/21.
 //
 
-import SwiftUI
 import Kingfisher
+import SwiftUI
 
 struct PokemonSummaryView_Previews: PreviewProvider {
     static var previews: some View {
@@ -28,7 +28,6 @@ struct PokemonSummaryView_Previews: PreviewProvider {
 }
 
 struct PokemonSummaryView: View {
-
     let pokemonDexNumber: PokemonDexNumber
     let pokemon: Pokemon
     let showingContent: Bool
@@ -40,7 +39,7 @@ struct PokemonSummaryView: View {
     }
 
     private var types: [Type] {
-        return pokemon.types.sorted(byKeyPath: "slot", ascending: true).compactMap({$0.type})
+        return pokemon.types.sorted(byKeyPath: "slot", ascending: true).compactMap({ $0.type })
     }
 
     private var pokedexNumber: String {
@@ -48,7 +47,7 @@ struct PokemonSummaryView: View {
     }
 
     private var color: Color {
-        return pokemon.types.first(where: {$0.slot == 1})?.type?.color ?? .fire
+        return pokemon.types.first(where: { $0.slot == 1 })?.type?.color ?? .fire
     }
 
     var body: some View {
@@ -88,7 +87,7 @@ struct PokemonSummaryView: View {
                                         type.icon
                                             .frame(width: 25, height: 25)
                                             .opacity(0.55)
-                                        Text(type.names.first(where: {$0.localLanguageId == 9})!.name.uppercased())
+                                        Text(type.names.first(where: { $0.localLanguageId == 9 })!.name.uppercased())
                                             .font(.system(.subheadline))
                                             .fontWeight(.semibold)
                                             .opacity(0.55)
@@ -98,7 +97,6 @@ struct PokemonSummaryView: View {
                                 }
                             }
                         }
-
                     }
 
                     pokemon.sprite
@@ -118,7 +116,6 @@ struct PokemonSummaryView: View {
 }
 
 struct PokemonSummaryAdditionInfo: View {
-
     @Binding var showVersionSelectionView: Bool
     @Binding var selectedVersion: Version
 
@@ -132,7 +129,7 @@ struct PokemonSummaryAdditionInfo: View {
                 .overlay(
                     HStack(spacing: 5) {
                         Group {
-                            Text("\(selectedVersion.names.first(where: {$0.localLanguageId == 9})!.name) Version")
+                            Text("\(selectedVersion.names.first(where: { $0.localLanguageId == 9 })!.name) Version")
                                 .fontWeight(.semibold)
                             Image(systemName: "chevron.compact.down")
                         }

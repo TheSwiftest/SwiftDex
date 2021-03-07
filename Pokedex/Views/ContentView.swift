@@ -5,8 +5,8 @@
 //  Created by BrianCorbin on 1/24/21.
 //
 
-import SwiftUI
 import Kingfisher
+import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var pokemonShowdownService: PokemonShowdownService
@@ -57,7 +57,6 @@ struct ContentView: View {
                 GeometryReader { geo in
                     MoveDetailView(move: selectedMove, versionGroup: swiftDexService.selectedVersionGroup)
                         .modifier(ExpandableBottomSheet(containerHeight: geo.size.height, showing: $showSelectedMoveDetail))
-
                 }
                 .zIndex(2)
                 .edgesIgnoringSafeArea(.bottom)

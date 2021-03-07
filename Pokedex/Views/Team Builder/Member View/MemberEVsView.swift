@@ -29,7 +29,6 @@ struct TeamPokemonEVsView: View {
 
     var body: some View {
         VStack(spacing: 10) {
-
             VStack(spacing: 5) {
                 PokemonDetailSectionHeader(text: "EVs")
                 Text("Remaining Points: \(evsRemaining)")

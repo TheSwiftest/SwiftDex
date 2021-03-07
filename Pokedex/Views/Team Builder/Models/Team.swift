@@ -21,89 +21,89 @@ struct Team: Identifiable, Equatable, Codable {
     }
 
     var baseHpAvg: Int {
-        if pokemon.count == 0 {
+        if pokemon.isEmpty {
             return 0
         }
 
-        return pokemon.map({$0.pokemon.baseHP}).reduce(0, +) / pokemon.count
+        return pokemon.map({ $0.pokemon.baseHP }).reduce(0, +) / pokemon.count
     }
     var baseAtkAvg: Int {
-        if pokemon.count == 0 {
+        if pokemon.isEmpty {
             return 0
         }
 
-        return pokemon.map({$0.pokemon.baseATK}).reduce(0, +) / pokemon.count
+        return pokemon.map({ $0.pokemon.baseATK }).reduce(0, +) / pokemon.count
     }
     var baseDefAvg: Int {
-        if pokemon.count == 0 {
+        if pokemon.isEmpty {
             return 0
         }
 
-        return pokemon.map({$0.pokemon.baseDEF}).reduce(0, +) / pokemon.count
+        return pokemon.map({ $0.pokemon.baseDEF }).reduce(0, +) / pokemon.count
     }
     var baseSatkAvg: Int {
-        if pokemon.count == 0 {
+        if pokemon.isEmpty {
             return 0
         }
 
-        return pokemon.map({$0.pokemon.baseSATK}).reduce(0, +) / pokemon.count
+        return pokemon.map({ $0.pokemon.baseSATK }).reduce(0, +) / pokemon.count
     }
     var baseSdefAvg: Int {
-        if pokemon.count == 0 {
+        if pokemon.isEmpty {
             return 0
         }
 
-        return pokemon.map({$0.pokemon.baseSDEF}).reduce(0, +) / pokemon.count
+        return pokemon.map({ $0.pokemon.baseSDEF }).reduce(0, +) / pokemon.count
     }
     var baseSpeAvg: Int {
-        if pokemon.count == 0 {
+        if pokemon.isEmpty {
             return 0
         }
 
-        return pokemon.map({$0.pokemon.baseSPE}).reduce(0, +) / pokemon.count
+        return pokemon.map({ $0.pokemon.baseSPE }).reduce(0, +) / pokemon.count
     }
 
     var totHpAvg: Int {
-        if pokemon.count == 0 {
+        if pokemon.isEmpty {
             return 0
         }
 
-        return pokemon.map({$0.totHp}).reduce(0, +) / pokemon.count
+        return pokemon.map({ $0.totHp }).reduce(0, +) / pokemon.count
     }
     var totAtkAvg: Int {
-        if pokemon.count == 0 {
+        if pokemon.isEmpty {
             return 0
         }
 
-        return pokemon.map({$0.totAtk}).reduce(0, +) / pokemon.count
+        return pokemon.map({ $0.totAtk }).reduce(0, +) / pokemon.count
     }
     var totDefAvg: Int {
-        if pokemon.count == 0 {
+        if pokemon.isEmpty {
             return 0
         }
 
-        return pokemon.map({$0.totDef}).reduce(0, +) / pokemon.count
+        return pokemon.map({ $0.totDef }).reduce(0, +) / pokemon.count
     }
     var totSatkAvg: Int {
-        if pokemon.count == 0 {
+        if pokemon.isEmpty {
             return 0
         }
 
-        return pokemon.map({$0.totSatk}).reduce(0, +) / pokemon.count
+        return pokemon.map({ $0.totSatk }).reduce(0, +) / pokemon.count
     }
     var totSdefAvg: Int {
-        if pokemon.count == 0 {
+        if pokemon.isEmpty {
             return 0
         }
 
-        return pokemon.map({$0.totSdef}).reduce(0, +) / pokemon.count
+        return pokemon.map({ $0.totSdef }).reduce(0, +) / pokemon.count
     }
     var totSpeAvg: Int {
-        if pokemon.count == 0 {
+        if pokemon.isEmpty {
             return 0
         }
 
-        return pokemon.map({$0.totSpe}).reduce(0, +) / pokemon.count
+        return pokemon.map({ $0.totSpe }).reduce(0, +) / pokemon.count
     }
 
     init(name: String = "", format: ShowdownFormat? = nil, pokemon: [TeamPokemon] = []) {
@@ -127,7 +127,7 @@ struct Team: Identifiable, Equatable, Codable {
         self.pokemon = try container.decode([TeamPokemon].self, forKey: .pokemon)
 
         if let formatIdentifier = try? container.decode(String.self, forKey: .format) {
-            self.format = swiftDexService.showdownFormats.first(where: {$0.identifier == formatIdentifier})!
+            self.format = swiftDexService.showdownFormats.first(where: { $0.identifier == formatIdentifier })!
         } else {
             self.format = swiftDexService.showdownFormats.first!
         }
@@ -139,9 +139,8 @@ struct Team: Identifiable, Equatable, Codable {
     }
 
     private func hasValidPokemon(for searchText: String) -> Bool {
-        return pokemon.map({$0.pokemon.name.localizedCaseInsensitiveContains(searchText)}).contains(true)
+        return pokemon.map({ $0.pokemon.name.localizedCaseInsensitiveContains(searchText) }).contains(true)
     }
-
 }
 
 struct TeamPokemon: Identifiable, Equatable, Codable {
@@ -169,11 +168,11 @@ struct TeamPokemon: Identifiable, Equatable, Codable {
     }
 
     var availableMoves: [Move] {
-        return pokemon.moves.filter("versionGroup.id == 18").distinct(by: ["move.id"]).sorted(byKeyPath: "move.identifier").compactMap({$0.move})
+        return pokemon.moves.filter("versionGroup.id == 18").distinct(by: ["move.id"]).sorted(byKeyPath: "move.identifier").compactMap({ $0.move })
     }
 
     var totHp: Int {
-        guard let baseHp = pokemon.stats.first(where: {$0.stat?.id == 1})?.baseStat else {
+        guard let baseHp = pokemon.stats.first(where: { $0.stat?.id == 1 })?.baseStat else {
             return 0
         }
 
@@ -181,7 +180,7 @@ struct TeamPokemon: Identifiable, Equatable, Codable {
     }
 
     var totAtk: Int {
-        guard let stat = pokemon.stats.first(where: {$0.stat?.id == 2}) else {
+        guard let stat = pokemon.stats.first(where: { $0.stat?.id == 2 }) else {
             return 0
         }
 
@@ -189,7 +188,7 @@ struct TeamPokemon: Identifiable, Equatable, Codable {
     }
 
     var totDef: Int {
-        guard let stat = pokemon.stats.first(where: {$0.stat?.id == 3}) else {
+        guard let stat = pokemon.stats.first(where: { $0.stat?.id == 3 }) else {
             return 0
         }
 
@@ -197,7 +196,7 @@ struct TeamPokemon: Identifiable, Equatable, Codable {
     }
 
     var totSatk: Int {
-        guard let stat = pokemon.stats.first(where: {$0.stat?.id == 4}) else {
+        guard let stat = pokemon.stats.first(where: { $0.stat?.id == 4 }) else {
             return 0
         }
 
@@ -205,7 +204,7 @@ struct TeamPokemon: Identifiable, Equatable, Codable {
     }
 
     var totSdef: Int {
-        guard let stat = pokemon.stats.first(where: {$0.stat?.id == 5}) else {
+        guard let stat = pokemon.stats.first(where: { $0.stat?.id == 5 }) else {
             return 0
         }
 
@@ -213,7 +212,7 @@ struct TeamPokemon: Identifiable, Equatable, Codable {
     }
 
     var totSpe: Int {
-        guard let stat = pokemon.stats.first(where: {$0.stat?.id == 6}) else {
+        guard let stat = pokemon.stats.first(where: { $0.stat?.id == 6 }) else {
             return 0
         }
 

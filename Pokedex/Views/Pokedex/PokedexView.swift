@@ -5,8 +5,8 @@
 //  Created by BrianCorbin on 1/31/21.
 //
 
-import SwiftUI
 import Kingfisher
+import SwiftUI
 
 enum DexCategory: String, Hashable {
     case pokémon, moves, items, abilities
@@ -22,16 +22,15 @@ enum DexCategory: String, Hashable {
 
     static func all(except: DexCategory? = nil) -> [DexCategory] {
         var included = [DexCategory]()
-        if except != .pokémon { included.append(.pokémon)}
-        if except != .moves { included.append(.moves)}
-        if except != .items { included.append(.items)}
-        if except != .abilities { included.append(.abilities)}
+        if except != .pokémon { included.append(.pokémon) }
+        if except != .moves { included.append(.moves) }
+        if except != .items { included.append(.items) }
+        if except != .abilities { included.append(.abilities) }
         return included
     }
 }
 
 struct PokedexView: View {
-
     @EnvironmentObject var swiftDexService: SwiftDexService
 
     @Binding var selectedMove: Move?
@@ -46,19 +45,19 @@ struct PokedexView: View {
     @State private var selectedDexCategory: DexCategory = .pokémon
 
     @State private var showDexSelectionViews: Bool = false
-    @State private var dexCategorySelectedViewSourceFrame: CGRect = CGRect.zero
+    @State private var dexCategorySelectedViewSourceFrame = CGRect.zero
 
     @State private var showVersionSelectionSheet: Bool = false
 
-    @State private var pokedexSelectedViewSourceFrame: CGRect = CGRect.zero
+    @State private var pokedexSelectedViewSourceFrame = CGRect.zero
     @State private var showPokedexSelectionView: Bool = false
 
     @State private var selectedPocket: ItemPocket?
-    @State private var selectedPocketViewSourceFrame: CGRect = CGRect.zero
+    @State private var selectedPocketViewSourceFrame = CGRect.zero
     @State private var showItemPocketSelectionView: Bool = false
 
     @State private var selectedMoveDamageClass: MoveDamageClass?
-    @State private var selectedMoveDamageViewSourceFrame: CGRect = CGRect.zero
+    @State private var selectedMoveDamageViewSourceFrame = CGRect.zero
     @State private var showMoveDamageClassSelectionsView: Bool = false
 
     func pokemonIsInSearchText(dexNumber: PokemonDexNumber) -> Bool {
@@ -108,7 +107,7 @@ struct PokedexView: View {
                                         .foregroundColor(version.color)
                                         .frame(height: 30)
                                         .overlay(
-                                            Text(version.names.first(where: {$0.localLanguageId == 9})!.name)
+                                            Text(version.names.first(where: { $0.localLanguageId == 9 })!.name)
                                                 .padding(.horizontal)
                                                 .minimumScaleFactor(0.5)
                                                 .foregroundColor(.white)
@@ -177,7 +176,6 @@ struct PokedexView: View {
                                             self.pokemonDexNumberToShow = speciesDexNumber
                                         }
                                 }
-
                             }
                             .padding(.top, 10)
                             .sheet(item: $pokemonDexNumberToShow) { pokemonDexNumber in
@@ -198,7 +196,6 @@ struct PokedexView: View {
                                 }
                             }
                             .padding(.top, 2)
-
                         }
 
                         if selectedDexCategory == .items {
@@ -244,12 +241,12 @@ struct PokedexView: View {
             GeometryReader { _ in
                 DexCategorySelectionView(selectedDexCategory: $selectedDexCategory, showView: $showDexSelectionViews, sourceFrame: $dexCategorySelectedViewSourceFrame, searchText: $searchText)
                 VersionGroupPokedexesSelectionView(sourceFrame: $pokedexSelectedViewSourceFrame, showView: $showPokedexSelectionView)
-                ItemPocketsSelectionView(itemPocketsOrdered: swiftDexService.itemPockets().compactMap({$0}),
+                ItemPocketsSelectionView(itemPocketsOrdered: swiftDexService.itemPockets().compactMap({ $0 }),
                                          showView: $showItemPocketSelectionView,
                                          selectedPocket: $selectedPocket,
                                          sourceFrame: $selectedPocketViewSourceFrame,
                                          searchText: $searchText)
-                MoveDamageClassSelectionsView(damageClassesOrdered: swiftDexService.damageClasses().compactMap({$0}),
+                MoveDamageClassSelectionsView(damageClassesOrdered: swiftDexService.damageClasses().compactMap({ $0 }),
                                               showView: $showMoveDamageClassSelectionsView,
                                               selectedDamageClass: $selectedMoveDamageClass,
                                               sourceFrame: $selectedMoveDamageViewSourceFrame,
@@ -315,7 +312,7 @@ struct MoveDamageClassSelectionsView: View {
     @Binding var searchText: String
 
     var damageClasses: [MoveDamageClass] {
-        return damageClassesOrdered.filter({$0.id != selectedDamageClass?.id})
+        return damageClassesOrdered.filter({ $0.id != selectedDamageClass?.id })
     }
 
     var body: some View {
@@ -347,7 +344,6 @@ struct MoveDamageClassSelectionsView: View {
             .shadow(radius: 5)
             .scaleEffect(showView ? 1.3 : 1, anchor: .topTrailing)
             .animation(.default)
-
         }
         .offset(x: sourceFrame.minX, y: showView ? sourceFrame.maxY + 5 : sourceFrame.minY)
     }
@@ -393,7 +389,7 @@ struct ItemPocketsSelectionView: View {
     @Binding var searchText: String
 
     var itemPockets: [ItemPocket] {
-        return itemPocketsOrdered.filter({$0.id != selectedPocket?.id})
+        return itemPocketsOrdered.filter({ $0.id != selectedPocket?.id })
     }
 
     var body: some View {
@@ -425,7 +421,6 @@ struct ItemPocketsSelectionView: View {
             .shadow(radius: 5)
             .scaleEffect(showView ? 1.3 : 1, anchor: .topTrailing)
             .animation(.default)
-
         }
         .offset(x: sourceFrame.minX, y: showView ? sourceFrame.maxY + 5 : sourceFrame.minY)
     }
@@ -448,7 +443,6 @@ struct PokedexSelectionView: View {
 }
 
 struct DexCategoryView: View {
-
     @Binding var dexCategory: DexCategory
     @Binding var expanded: Bool
     @Binding var selectedDexCategory: DexCategory
@@ -522,7 +516,7 @@ struct DexCategorySelectionView: View {
     private let dexCategoriesOrdered: [DexCategory] = [.pokémon, .moves, .items, .abilities]
 
     private func dexCategories() -> [DexCategory] {
-        return dexCategoriesOrdered.filter({$0 != selectedDexCategory})
+        return dexCategoriesOrdered.filter({ $0 != selectedDexCategory })
     }
 
     var body: some View {
@@ -540,7 +534,6 @@ struct DexCategorySelectionView: View {
             .shadow(radius: 5)
             .scaleEffect(showView ? 1.4 : 1, anchor: .topLeading)
             .animation(.default)
-
         }
         .offset(x: sourceFrame.minX, y: showView ? sourceFrame.maxY + 5 : sourceFrame.minY)
     }

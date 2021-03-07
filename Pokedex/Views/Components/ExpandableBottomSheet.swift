@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ExpandableBottomSheet: ViewModifier {
-
     enum ViewState {
         case full, half
     }
@@ -69,10 +68,10 @@ struct ExpandableBottomSheet: ViewModifier {
         }
         .gesture(
             DragGesture()
-                .updating($dragTranslation, body: { (value, state, _) in
+                .updating($dragTranslation, body: { value, state, _ in
                     state = value.translation.height
                 })
-                .onEnded({ (value) in
+                .onEnded({ value in
                     if viewState == .half {
                         if value.translation.height < -containerHeight * 0.25 {
                             positionOffset = -containerHeight / 2 + 50
@@ -89,7 +88,6 @@ struct ExpandableBottomSheet: ViewModifier {
 }
 
 struct HandleBar: View {
-
     var body: some View {
         Rectangle()
             .frame(width: 50, height: 5)
@@ -109,7 +107,6 @@ struct ScrollOffsetKey: PreferenceKey {
 }
 
 struct BlankView: View {
-
     var bgColor: Color
 
     var body: some View {

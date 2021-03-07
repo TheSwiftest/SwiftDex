@@ -5,17 +5,15 @@
 //  Created by BrianCorbin on 2/8/21.
 //
 
-import SwiftUI
 import Kingfisher
+import SwiftUI
 
 struct TeamPokemonSummaryView: View {
-
     let pokemon: Pokemon
     let shiny: Bool
 
     private var nationalPokedexNumber: String {
-
-        return"#\(String(format: "%03d", pokemon.species!.defaultForm.dexNumbers.first(where: {$0.pokedex?.id == 1})!.pokedexNumber))"
+        return"#\(String(format: "%03d", pokemon.species!.defaultForm.dexNumbers.first(where: { $0.pokedex?.id == 1 })!.pokedexNumber))"
     }
 
     var body: some View {
@@ -57,7 +55,6 @@ struct TeamPokemonSummaryView: View {
                             }
                         }
                     }
-
                 }
 
                 (shiny ? pokemon.shinySprite : pokemon.sprite)

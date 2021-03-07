@@ -5,11 +5,10 @@
 //  Created by BrianCorbin on 1/30/21.
 //
 
-import SwiftUI
 import Kingfisher
+import SwiftUI
 
 struct PokemonAlternateFormsView: View {
-
     @Binding var selectedPokemon: Pokemon
     @Binding var selectedForm: PokemonForm
     let selectedVersionGroup: VersionGroup
@@ -19,13 +18,13 @@ struct PokemonAlternateFormsView: View {
     }
 
     var validDefaultPokemonForms: [PokemonForm] {
-        return species.pokemon.compactMap({$0.defaultForm}).filter { (form) -> Bool in
+        return species.pokemon.compactMap({ $0.defaultForm }).filter { form -> Bool in
             return form.introducedInVersionGroup!.generation!.id <= selectedVersionGroup.generation!.id
         }
     }
 
     var validPokemon: [Pokemon] {
-        return validDefaultPokemonForms.compactMap({$0.pokemon})
+        return validDefaultPokemonForms.compactMap({ $0.pokemon })
     }
 
     var body: some View {
@@ -49,7 +48,7 @@ struct PokemonAlternateFormsView: View {
                                 )
                                 .onTapGesture {
                                     self.selectedPokemon = pokemon
-                                    self.selectedForm = pokemon.forms.first(where: {$0.isDefault})!
+                                    self.selectedForm = pokemon.forms.first(where: { $0.isDefault })!
                                 }
                                 .cornerRadius(23)
                         }

@@ -17,16 +17,16 @@ struct TeamPokemonAbilitiesView: View {
             PokemonDetailSectionHeader(text: "Ability")
 
             HStack {
-                if let slot1Abilitiy = pokemonAbilities.first(where: {$0.slot == 1}) {
+                if let slot1Abilitiy = pokemonAbilities.first(where: { $0.slot == 1 }) {
                     TeamPokemonAbilityView(pokemonAbility: slot1Abilitiy, color: color, selectedAbility: $ability)
                 }
 
-                if let slot2Ability = pokemonAbilities.first(where: {$0.slot == 2}) {
+                if let slot2Ability = pokemonAbilities.first(where: { $0.slot == 2 }) {
                     TeamPokemonAbilityView(pokemonAbility: slot2Ability, color: color, selectedAbility: $ability)
                 }
             }
 
-            if let slot3Ability = pokemonAbilities.first(where: {$0.slot == 3}) {
+            if let slot3Ability = pokemonAbilities.first(where: { $0.slot == 3 }) {
                 TeamPokemonAbilityView(pokemonAbility: slot3Ability, color: color, selectedAbility: $ability)
             }
         }
@@ -34,13 +34,12 @@ struct TeamPokemonAbilitiesView: View {
 }
 
 struct TeamPokemonAbilityView: View {
-
     let pokemonAbility: PokemonAbility
     let color: Color
     @Binding var selectedAbility: Ability?
 
     private var abilityName: String {
-        return pokemonAbility.ability!.names.first(where: {$0.localLanguageId == 9})?.name ?? pokemonAbility.ability!.identifier
+        return pokemonAbility.ability!.names.first(where: { $0.localLanguageId == 9 })?.name ?? pokemonAbility.ability!.identifier
     }
 
     var body: some View {

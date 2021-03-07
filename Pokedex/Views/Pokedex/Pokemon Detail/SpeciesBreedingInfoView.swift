@@ -16,9 +16,9 @@ struct PokemonBreedingView: View {
                 Group {
                     SpeciesExtraInfoView(catchRate: pokemon.species!.captureRate, baseHappiness: pokemon.species!.baseHappiness, baseExperience: pokemon.baseExperience,
                                          growthRate: pokemon.species!.growthRate!.name, eggCycles: pokemon.species!.hatchCounter, genderRate: pokemon.species!.genderRate)
-                    PokemonEggGroupsView(eggGroups: pokemon.species!.eggGroups.compactMap({$0.eggGroup}), color: pokemon.color)
-                    PokemonEVYieldsView(stats: pokemon.stats.compactMap({$0}))
-                    PokemonTypeWeaknessesView(types: pokemon.types.compactMap({$0}))
+                    PokemonEggGroupsView(eggGroups: pokemon.species!.eggGroups.compactMap({ $0.eggGroup }), color: pokemon.color)
+                    PokemonEVYieldsView(stats: pokemon.stats.compactMap({ $0 }))
+                    PokemonTypeWeaknessesView(types: pokemon.types.compactMap({ $0 }))
                 }
                 .padding()
             }
@@ -27,7 +27,6 @@ struct PokemonBreedingView: View {
 }
 
 struct SpeciesExtraInfoView: View {
-
     let catchRate: Int
     let baseHappiness: Int
     let baseExperience: Int
@@ -111,7 +110,6 @@ struct SpeciesExtraInfoView: View {
 }
 
 struct PokemonEggGroupsView: View {
-
     let eggGroups: [EggGroup]
     let color: Color
 
@@ -134,7 +132,6 @@ struct PokemonEggGroupsView: View {
                                 .padding(.trailing, 10)
                         }
                     }
-
                 }
             }
         }

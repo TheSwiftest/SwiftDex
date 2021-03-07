@@ -112,7 +112,7 @@ struct TeamPokemonMoveSelectionView: View {
                     .font(.title)
                     .modifier(ClearButton(text: $searchText))
                 Picker("", selection: $showAllMoves) {
-                    if let _ = pokemon {
+                    if pokemon != nil {
                         Text("Pokémon Specific Moves").tag(false)
                     }
                     Text("All Moves").tag(true)

@@ -5,8 +5,8 @@
 //  Created by BrianCorbin on 2/3/21.
 //
 
-import SwiftUI
 import Kingfisher
+import SwiftUI
 
 struct TeamBuilderView_Previews: PreviewProvider {
     static var previews: some View {
@@ -22,25 +22,25 @@ struct TeamBuilderView: View {
     @State private var selectedTeam: Team?
 
     @State private var selectedGeneration: Generation?
-    @State private var generationSelectionSourceFrame: CGRect = CGRect.zero
+    @State private var generationSelectionSourceFrame = CGRect.zero
     @State private var showGenerationSelectionsView: Bool = false
 
     @State private var selectedCategory: ShowdownCategory?
-    @State private var formatSelectionSourceFrame: CGRect = CGRect.zero
+    @State private var formatSelectionSourceFrame = CGRect.zero
     @State private var showFormatSelectionsView: Bool = false
 
     var teamsFiltered: [Team] {
         var results = pokemonShowdownService.teams
 
         if let generation = selectedGeneration {
-            results = results.filter({$0.format.generation?.id == generation.id})
+            results = results.filter({ $0.format.generation?.id == generation.id })
         }
 
         if let category = selectedCategory {
-            results = results.filter({$0.format.category?.id == category.id})
+            results = results.filter({ $0.format.category?.id == category.id })
         }
 
-        results = results.filter({$0.isValid(for: searchText)})
+        results = results.filter({ $0.isValid(for: searchText) })
 
         return results
     }
@@ -59,7 +59,7 @@ struct TeamBuilderView: View {
                                           selectedGenerationSourceFrame: $generationSelectionSourceFrame)
                         .environmentObject(swiftDexService).environmentObject(pokemonShowdownService)
 
-                    if pokemonShowdownService.teams.count > 0 {
+                    if !pokemonShowdownService.teams.isEmpty {
                         ScrollView(showsIndicators: false) {
                             LazyVStack(spacing: 15) {
                                 ForEach(teamsFiltered) { team in
@@ -99,7 +99,6 @@ struct TeamBuilderView: View {
                             Spacer()
                         }.background(Color(.secondarySystemBackground))
                     }
-
                 }
                 .fullScreenCover(item: $selectedTeam) { selectedTeam in
                     TeamDetailView(team: selectedTeam).environmentObject(pokemonShowdownService)
@@ -115,7 +114,7 @@ struct TeamBuilderView: View {
                 }
 
                 GeometryReader { _ in
-                    CategorySelectionsView(categories: swiftDexService.showdownCategories(for: selectedGeneration).compactMap {$0},
+                    CategorySelectionsView(categories: swiftDexService.showdownCategories(for: selectedGeneration).compactMap { $0 },
                                            showView: $showFormatSelectionsView,
                                            selectedCategory: $selectedCategory,
                                            sourceFrame: $formatSelectionSourceFrame,
@@ -133,12 +132,10 @@ struct TeamBuilderView: View {
                 .edgesIgnoringSafeArea(.top)
             }
         }
-
     }
 }
 
 struct TeamBuilderHeaderView: View {
-
     @EnvironmentObject var swiftDexService: SwiftDexService
     @EnvironmentObject var pokemonShowdownService: PokemonShowdownService
 
@@ -183,7 +180,7 @@ struct TeamBuilderHeaderView: View {
                             }
                         },
                         ActionSheet.Button.cancel()
-                        ])
+                    ])
                 })
             }
 
@@ -246,7 +243,7 @@ struct GenerationSelectionsView: View {
     @Binding var searchText: String
 
     var generationsFiltered: [Generation] {
-        return generations.filter({$0.id != selectedGeneration?.id})
+        return generations.filter({ $0.id != selectedGeneration?.id })
     }
 
     var body: some View {
@@ -255,7 +252,7 @@ struct GenerationSelectionsView: View {
                 ForEach(generationsFiltered) { generation in
                     GenerationSelectionView(selectedGeneration: generation)
                         .frame(width: sourceFrame.width, height: sourceFrame.height)
-                        .offset(y: showView ? CGFloat(generationsFiltered.firstIndex(where: {$0.id == generation.id})! * 35) : 0)
+                        .offset(y: showView ? CGFloat(generationsFiltered.firstIndex(where: { $0.id == generation.id })! * 35) : 0)
                         .onTapGesture {
                             selectedGeneration = generation
                             searchText = ""
@@ -278,7 +275,6 @@ struct GenerationSelectionsView: View {
             .shadow(radius: 5)
             .scaleEffect(showView ? 1.3 : 1, anchor: .topLeading)
             .animation(.default)
-
         }
         .offset(x: sourceFrame.minX, y: showView ? sourceFrame.maxY + 5 : sourceFrame.minY)
     }
@@ -308,7 +304,7 @@ struct CategorySelectionsView: View {
     @Binding var searchText: String
 
     var categoriesFiltered: [ShowdownCategory] {
-        return categories.filter({$0.id != selectedCategory?.id})
+        return categories.filter({ $0.id != selectedCategory?.id })
     }
 
     var body: some View {
@@ -317,7 +313,7 @@ struct CategorySelectionsView: View {
                 ForEach(categoriesFiltered) { category in
                     CategorySelectionView(selectedCategory: category)
                         .frame(width: sourceFrame.width, height: sourceFrame.height)
-                        .offset(y: showView ? CGFloat(categoriesFiltered.firstIndex(where: {$0.id == category.id})! * 35) : 0)
+                        .offset(y: showView ? CGFloat(categoriesFiltered.firstIndex(where: { $0.id == category.id })! * 35) : 0)
                         .onTapGesture {
                             selectedCategory = category
                             searchText = ""
@@ -340,7 +336,6 @@ struct CategorySelectionsView: View {
             .shadow(radius: 5)
             .scaleEffect(showView ? 1.3 : 1, anchor: .topTrailing)
             .animation(.default)
-
         }
         .offset(x: sourceFrame.minX, y: showView ? sourceFrame.maxY + 5 : sourceFrame.minY)
     }

@@ -5,10 +5,12 @@
 //  Created by BrianCorbin on 1/30/21.
 //
 
-import Foundation
-import SwiftUI
-import RealmSwift
 import AVFoundation
+import Foundation
+import RealmSwift
+import SwiftUI
+
+// swiftlint:disable first_where
 
 class SwiftDexService: ObservableObject {
     private var avPlayer = AVPlayer()
@@ -104,12 +106,12 @@ class SwiftDexService: ObservableObject {
     }
 
     func moves(matching text: String?, for pokemon: Pokemon?) -> [Move] {
-        guard let pokemon = pokemon else { return moves(matching: text).compactMap({$0}) }
+        guard let pokemon = pokemon else { return moves(matching: text).compactMap({ $0 }) }
 
         let results = pokemon.moves.filter("versionGroup.id == 18").distinct(by: ["move.id"])
         guard let text = text, !text.isEmpty else { return results.compactMap({ $0.move }) }
 
-        return results.filter("ANY move.names.name CONTAINS [c] '\(text)'").compactMap({$0.move})
+        return results.filter("ANY move.names.name CONTAINS [c] '\(text)'").compactMap({ $0.move })
     }
 
     func playCry(for species: PokemonSpecies) {
@@ -178,7 +180,7 @@ class SwiftDexService: ObservableObject {
             itemGameIndices = itemGameIndices.filter("item.category.id == \(itemCategory.id)")
         }
 
-        return itemGameIndices.compactMap({$0.item})
+        return itemGameIndices.compactMap({ $0.item })
     }
 
     func damageClasses() -> Results<MoveDamageClass> {
@@ -200,13 +202,13 @@ class SwiftDexService: ObservableObject {
     }
 
     func abilitiesForVersionGroup() -> [Ability] {
-        return realm.objects(Ability.self).filter("generation.id <= \(selectedVersionGroup.generation!.id)").compactMap({$0})
+        return realm.objects(Ability.self).filter("generation.id <= \(selectedVersionGroup.generation!.id)").compactMap({ $0 })
     }
 
     func pokedexesForVersionGroup() -> [Pokedex] {
-        var pokedexes: [Pokedex] = selectedVersionGroup.pokedexes.sorted(byKeyPath: "pokedex.id", ascending: true).compactMap({$0.pokedex})
+        var pokedexes: [Pokedex] = selectedVersionGroup.pokedexes.sorted(byKeyPath: "pokedex.id", ascending: true).compactMap({ $0.pokedex })
         pokedexes.insert(nationalPokedex, at: 0)
-        pokedexes.removeAll(where: {$0.id == selectedPokedex.id})
+        pokedexes.removeAll(where: { $0.id == selectedPokedex.id })
         return pokedexes
     }
 
@@ -219,7 +221,7 @@ class SwiftDexService: ObservableObject {
     }
 
     var generations: [Generation] {
-        return realm.objects(Generation.self).map({$0})
+        return Array(realm.objects(Generation.self))
     }
 
     var versionGroups: Results<VersionGroup> {
@@ -231,6 +233,6 @@ class SwiftDexService: ObservableObject {
     }
 
     var moveLearnMethodsForSelectedVersionGroup: [PokemonMoveMethod] {
-        return selectedVersionGroup.pokemonMoveMethods.filter("pokemonMoveMethod.id<=4").sorted(byKeyPath: "pokemonMoveMethod.id", ascending: true).compactMap({$0.pokemonMoveMethod})
+        return selectedVersionGroup.pokemonMoveMethods.filter("pokemonMoveMethod.id<=4").sorted(byKeyPath: "pokemonMoveMethod.id", ascending: true).compactMap({ $0.pokemonMoveMethod })
     }
 }

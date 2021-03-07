@@ -52,10 +52,10 @@ struct TeamPokemonIVsView: View {
             })
             .actionSheet(isPresented: $showIVPresetSelectionSheet, content: {
                 ActionSheet(title: Text("Select A Preset"), message: nil, buttons: [
-                    ActionSheet.Button.default(Text("Min Atk")) {ivs = presets[0]},
-                    ActionSheet.Button.default(Text("Min Atk & Spe")) {ivs = presets[1]},
-                    ActionSheet.Button.default(Text("Max All")) {ivs = presets[2]},
-                    ActionSheet.Button.default(Text("Min Spe")) {ivs = presets[3]},
+                    ActionSheet.Button.default(Text("Min Atk")) { ivs = presets[0] },
+                    ActionSheet.Button.default(Text("Min Atk & Spe")) { ivs = presets[1] },
+                    ActionSheet.Button.default(Text("Max All")) { ivs = presets[2] },
+                    ActionSheet.Button.default(Text("Min Spe")) { ivs = presets[3] },
                     ActionSheet.Button.cancel()
                 ])
             })

@@ -71,6 +71,5 @@ struct TeamPokemonLevelAndHappinessView: View {
                     .frame(maxWidth: .infinity)
             }
         }
-
     }
 }
