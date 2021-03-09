@@ -103,7 +103,7 @@ struct TeamPokemonMoveSelectionView: View {
     @Binding var selectedMove: Move?
 
     @State private var searchText: String = ""
-    @State private var showAllMoves: Bool = true
+    @State private var showAllMoves = true
 
     var body: some View {
         VStack {

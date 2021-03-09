@@ -16,8 +16,8 @@ struct PokemonView: View {
     @State var selectedPokemon: Pokemon
     @State var selectedPokemonForm: PokemonForm
     @State var showingContent: Bool
-    @State var showVersionSelectionView: Bool = false
-    @State private var showMoveDetailView: Bool = false
+    @State var showVersionSelectionView = false
+    @State private var showMoveDetailView = false
     @State private var selectedMove: Move?
 
     init(pokemonDexNumber: PokemonDexNumber, selectedVersionGroup: VersionGroup, showingContent: Bool = false) {

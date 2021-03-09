@@ -14,195 +14,10 @@ struct BattleSimulatorView_Previews: PreviewProvider {
 }
 
 struct BattleSimulatorView: View {
-    fileprivate enum Weather {
-        case none, rain, harshSunlight
-    }
-
-    private let movesAffectingMinimizedDefender: [String] = [
-        "astonish", "body-slam", "dragon-rush", "extrasensory", "flying-press", "heat-crash", "heavy-slam", "needle-arm", "phantom-force", "shadow-force", "stomp"
-    ]
-
-    private let movesAffectingDiveDefender: [String] = [
-        "surf", "whirlpool"
-    ]
-
-    private let movesAffectingDigDefender: [String] = [
-        "earthquake"
-    ]
-
     @EnvironmentObject var swiftDexService: SwiftDexService
     @EnvironmentObject var pokemonShowdownService: PokemonShowdownService
 
-    @State private var attackingPokemon: TeamPokemon?
-    @State private var defendingPokemon: TeamPokemon?
-
-    @State private var selectedMove: Move?
-    @State private var wonderRoom: Bool = false
-    @State private var criticalHit: Bool = false
-    @State private var attackerBurned: Bool = false
-    @State private var defenderMinimized: Bool = false
-    @State private var defenderUsingDig: Bool = false
-    @State private var defenderUsingDive: Bool = false
-    @State private var auroraVeilActive: Bool = false
-    @State private var lightScreenActive: Bool = false
-    @State private var reflectActive: Bool = false
-    @State private var defenderAtFullHealth: Bool = true
-    @State private var weather: Weather = .none
-    @State private var allyHasFriendGuard: Bool = false
-    @State private var otherMods: CGFloat = 1.0
-
-    private var maxDamage: Int {
-        guard let attackingPokemon = attackingPokemon, let defendingPokemon = defendingPokemon, let move = selectedMove else {
-            return 0
-        }
-
-        let attackStat = move.damageClass?.id == 2 ? attackingPokemon.totAtk : attackingPokemon.totSatk
-        let defenseStat = move.damageClass?.id == 2 ? defendingPokemon.totDef : defendingPokemon.totSdef
-
-        var result = ((2 * attackingPokemon.level) / 5) + 2
-        result *= move.power.value ?? 0
-        result *= attackStat
-        result /= defenseStat
-        result /= 50
-        result += 2
-
-        var modifier: CGFloat = 1.0
-
-        // STAB Bonus
-        if let moveType = move.type, attackingPokemon.pokemon.types.map({ $0.type }).contains(moveType) {
-            if attackingPokemon.ability?.identifier == "adaptability" {
-                modifier *= 2.0
-            } else {
-                modifier *= 1.5
-            }
-        }
-
-        // Weather Bonus
-        if let moveType = move.type {
-            if (moveType.typeData == .water && weather == .rain) || (moveType.typeData == .fire && weather == .harshSunlight) {
-                modifier *= 1.5
-            }
-
-            if (moveType.typeData == .water && weather == .harshSunlight) || (moveType.typeData == .fire && weather == .rain) {
-                modifier *= 0.5
-            }
-        }
-
-        // Critical Hit
-        if criticalHit {
-            modifier *= 1.5
-        }
-
-        // Attacker Burned
-        if attackerBurned && move.damageClass?.identifier == "physical" && attackingPokemon.ability?.identifier != "guts" {
-            modifier *= 0.5
-        }
-
-        // Type Effectiveness Bonus
-        var effectiveness = TypeEffectiveness.Effectiveness.normal
-
-        if let moveType = move.type?.typeData {
-            for type in defendingPokemon.pokemon.types {
-                effectiveness = effectiveness.combined(with: type.type!.typeData.damageEffectiveness(from: moveType))
-            }
-        }
-
-        // Special Cases
-        if (defenderMinimized && (movesAffectingMinimizedDefender.contains(move.identifier))) ||
-            (defenderUsingDig && (movesAffectingDigDefender.contains(move.identifier))) ||
-            (defenderUsingDive && (movesAffectingDiveDefender.contains(move.identifier))) {
-            modifier *= 2
-        }
-
-        // AuroraVeil, LightScreen, Reflect Special Cases
-        if (auroraVeilActive || (lightScreenActive && move.damageClass?.identifier == "special") || (reflectActive && move.damageClass?.identifier == "physical"))
-            && !criticalHit && attackingPokemon.ability?.identifier != "infiltrator"
-            && defendingPokemon.ability?.identifier != "screen-cleaner" {
-            modifier *= 0.5
-        }
-
-        // Fluffy Special Case
-        // swiftlint:disable:next contains_over_filter_is_empty
-        if defendingPokemon.ability?.identifier == "fluffy" && !move.flags.filter("moveFlag.identifier == 'contact'").isEmpty && move.type?.typeData != .fire {
-            modifier *= 0.5
-        }
-
-        // swiftlint:disable:next contains_over_filter_is_empty
-        if defendingPokemon.ability?.identifier == "fluffy" && move.flags.filter("moveFlag.identifier == 'contact'").isEmpty && move.type?.typeData == .fire {
-            modifier *= 2.0
-        }
-
-        if defendingPokemon.ability?.identifier == "filter" && effectiveness.rawValue > 1.0 {
-            modifier *= 0.75
-        }
-
-        if allyHasFriendGuard {
-            modifier *= 0.75
-        }
-
-        if defendingPokemon.ability?.identifier == "ice-scales" && move.damageClass?.identifier == "special" {
-            modifier *= 0.5
-        }
-
-        if defendingPokemon.ability?.identifier == "multiscale" && defenderAtFullHealth {
-            modifier *= 0.5
-        }
-
-        if defendingPokemon.ability?.identifier == "shadow-shield" && defenderAtFullHealth {
-            modifier *= 0.5
-        }
-
-        if attackingPokemon.ability?.identifier == "neuroforce" && effectiveness.rawValue > 1.0 {
-            modifier *= 1.25
-        }
-
-        if defendingPokemon.ability?.identifier == "prism-armor" && effectiveness.rawValue > 1.0 {
-            modifier *= 0.75
-        }
-
-        // swiftlint:disable:next contains_over_filter_is_empty
-        if defendingPokemon.ability?.identifier == "punk-rock" && !move.flags.filter("moveFlag.identifier == 'sound'").isEmpty {
-            modifier *= 0.5
-        }
-
-        if attackingPokemon.ability?.identifier == "sniper" && criticalHit {
-            modifier *= 1.5
-        }
-
-        if defendingPokemon.ability?.identifier == "solid-rock" && effectiveness.rawValue > 1.0 {
-            modifier *= 0.75
-        }
-
-        if attackingPokemon.ability?.identifier == "tinted-lens" && effectiveness.rawValue < 1.0 {
-            modifier *= 2.0
-        }
-
-        if defendingPokemon.item?.identifier == "chilan-berry" && move.type?.typeData == .normal {
-            modifier *= 0.5
-        }
-
-        if attackingPokemon.item?.identifier == "expert-belt" && effectiveness.rawValue > 1.0 {
-            modifier *= 1.2
-        }
-
-        if attackingPokemon.item?.identifier == "life-orb" {
-            modifier *= 1.3
-        }
-
-        modifier *= CGFloat(effectiveness.rawValue)
-
-        modifier *= otherMods
-
-        return Int(CGFloat(result) * modifier)
-    }
-
-    private var minDamage: Int {
-        return Int(CGFloat(maxDamage) * 0.85)
-    }
-
-    private var avgDamage: Int {
-        return (maxDamage + minDamage) / 2
-    }
+    @ObservedObject private var viewModel = BattleSimulatorViewModel()
 
     var body: some View {
         ScrollView {
@@ -211,27 +26,27 @@ struct BattleSimulatorView: View {
                     VStack {
                         Text("Attacker")
                             .font(.title2)
-                        BattleSimPokemonView(pokemon: $attackingPokemon).environmentObject(swiftDexService).environmentObject(pokemonShowdownService)
+                        BattleSimPokemonView(pokemon: $viewModel.attackingPokemon).environmentObject(swiftDexService).environmentObject(pokemonShowdownService)
                     }
                     VStack {
                         Text("Defender")
                             .font(.title2)
-                        BattleSimPokemonView(pokemon: $defendingPokemon).environmentObject(swiftDexService).environmentObject(pokemonShowdownService)
+                        BattleSimPokemonView(pokemon: $viewModel.defendingPokemon).environmentObject(swiftDexService).environmentObject(pokemonShowdownService)
                     }
                 }
 
-                BattleSimAttackingMoveView(selectedMove: $selectedMove, attackingPokemon: attackingPokemon, defendingPokemon: defendingPokemon).environmentObject(swiftDexService)
+                BattleSimAttackingMoveView(selectedMove: $viewModel.selectedMove, attackingPokemon: viewModel.attackingPokemon, defendingPokemon: viewModel.defendingPokemon).environmentObject(swiftDexService)
 
-                BattleSimDamageView(maxDamage: maxDamage, minDamage: minDamage, avgDamage: avgDamage,
-                                    attackingPokemon: attackingPokemon, defendingPokemon: defendingPokemon, selectedMove: selectedMove)
+                BattleSimDamageView(maxDamage: viewModel.maxDamage, minDamage: viewModel.minDamage, avgDamage: viewModel.avgDamage,
+                                    attackingPokemon: viewModel.attackingPokemon, defendingPokemon: viewModel.defendingPokemon, selectedMove: viewModel.selectedMove)
 
-                BattleSimWeatherView(weather: $weather)
+                BattleSimWeatherView(weather: $viewModel.weather)
 
-                BattleSimModifiersView(defenderAtFullHealth: $defenderAtFullHealth, wonderRoom: $wonderRoom, criticalHit: $criticalHit,
-                                       attackerBurned: $attackerBurned, defenderMinimized: $defenderMinimized,
-                                       defenderDigging: $defenderUsingDig, defenderDiving: $defenderUsingDive,
-                                       reflectActive: $reflectActive, lightScreenActive: $lightScreenActive,
-                                       auroraVeilActive: $auroraVeilActive, allyHasFriendGuard: $allyHasFriendGuard)
+                BattleSimModifiersView(defenderAtFullHealth: $viewModel.defenderAtFullHealth, wonderRoom: $viewModel.wonderRoom, criticalHit: $viewModel.criticalHit,
+                                       attackerBurned: $viewModel.attackerBurned, defenderMinimized: $viewModel.defenderMinimized,
+                                       defenderDigging: $viewModel.defenderUsingDig, defenderDiving: $viewModel.defenderUsingDive,
+                                       reflectActive: $viewModel.reflectActive, lightScreenActive: $viewModel.lightScreenActive,
+                                       auroraVeilActive: $viewModel.auroraVeilActive, allyHasFriendGuard: $viewModel.allyHasFriendGuard)
             }
             .padding()
         }
@@ -373,7 +188,7 @@ struct BattleSimModifiersView: View {
 }
 
 struct BattleSimWeatherView: View {
-    @Binding fileprivate var weather: BattleSimulatorView.Weather
+    @Binding var weather: BattleSimulatorViewModel.Weather
 
     var body: some View {
         VStack {
@@ -382,9 +197,9 @@ struct BattleSimWeatherView: View {
                 .bold()
             HStack {
                 Picker(selection: $weather, label: Text("Picker"), content: {
-                    Text("None").tag(BattleSimulatorView.Weather.none)
-                    Text("Rainy").tag(BattleSimulatorView.Weather.rain)
-                    Text("Sunny").tag(BattleSimulatorView.Weather.harshSunlight)
+                    Text("None").tag(BattleSimulatorViewModel.Weather.none)
+                    Text("Rainy").tag(BattleSimulatorViewModel.Weather.rain)
+                    Text("Sunny").tag(BattleSimulatorViewModel.Weather.harshSunlight)
                 })
                 .pickerStyle(SegmentedPickerStyle())
             }
@@ -572,9 +387,9 @@ struct BattleSimPokemonView: View {
     @EnvironmentObject var pokemonShowdownService: PokemonShowdownService
 
     @Binding var pokemon: TeamPokemon?
-    @State private var showPokemonEditView: Bool = false
-    @State private var showPokemonSelectionSheet: Bool = false
-    @State private var selectingPokemon: Bool = false
+    @State private var showPokemonEditView = false
+    @State private var showPokemonSelectionSheet = false
+    @State private var selectingPokemon = false
 
     var body: some View {
         if let pokemon = pokemon {

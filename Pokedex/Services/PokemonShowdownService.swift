@@ -79,7 +79,7 @@ class PokemonShowdownService: ObservableObject {
 
     // MARK: - DO NOT FUCKING TOUCH THIS
     // swiftlint:disable:next function_body_length
-    private func loadPokemon(from text: String) -> TeamPokemon? {
+    func loadPokemon(from text: String) -> TeamPokemon? {
         var pokemonData = [String: Any]()
         pokemonData["EVs"] = [0, 0, 0, 0, 0, 0]
         pokemonData["IVs"] = [31, 31, 31, 31, 31, 31]

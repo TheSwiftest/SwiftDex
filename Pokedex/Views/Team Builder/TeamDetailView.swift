@@ -36,9 +36,9 @@ struct TeamDetailView: View {
     @State private var shakeTeamName: Int = 0
     @State private var shakePokemonCount: Int = 0
 
-    @State private var showDeleteConfirmationAlert: Bool = false
+    @State private var showDeleteConfirmationAlert = false
 
-    @State private var showFormatSelectionView: Bool = false
+    @State private var showFormatSelectionView = false
 
     init(team: Team) {
         _team = State(initialValue: team)
@@ -181,7 +181,7 @@ struct TeamStatsAvgView: View {
     let baseHp, baseAtk, baseDef, baseSatk, baseSdef, baseSpe: Int
     let totHp, totAtk, totDef, totSatk, totSdef, totSpe: Int
 
-    @State private var showTotals: Bool = false
+    @State private var showTotals = false
 
     var body: some View {
         VStack {

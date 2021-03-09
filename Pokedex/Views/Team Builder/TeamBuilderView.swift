@@ -23,11 +23,11 @@ struct TeamBuilderView: View {
 
     @State private var selectedGeneration: Generation?
     @State private var generationSelectionSourceFrame = CGRect.zero
-    @State private var showGenerationSelectionsView: Bool = false
+    @State private var showGenerationSelectionsView = false
 
     @State private var selectedCategory: ShowdownCategory?
     @State private var formatSelectionSourceFrame = CGRect.zero
-    @State private var showFormatSelectionsView: Bool = false
+    @State private var showFormatSelectionsView = false
 
     var teamsFiltered: [Team] {
         var results = pokemonShowdownService.teams

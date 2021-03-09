@@ -222,7 +222,7 @@ class EncounterConditionValue: Object {
     @objc dynamic var id = 0
     @objc dynamic var encounterCondition: EncounterCondition?
     @objc dynamic var identifier: String = ""
-    @objc dynamic var isDefault: Bool = false
+    @objc dynamic var isDefault = false
 
     let prose = LinkingObjects(fromType: EncounterConditionValueProse.self, property: "encounterConditionValue")
     let encounters = LinkingObjects(fromType: EncounterConditionValueMap.self, property: "encounterConditionValue")
@@ -1398,7 +1398,7 @@ class Pokemon: Object, Identifiable {
     @objc dynamic var weight = 0
     @objc dynamic var baseExperience: Int = 0
     let order = RealmOptional<Int>()
-    @objc dynamic var isDefault: Bool = false
+    @objc dynamic var isDefault = false
 
     let pokemonEvolution = LinkingObjects(fromType: PokemonEvolution.self, property: "evolvedPokemon")
     let evolvesTo = LinkingObjects(fromType: Pokemon.self, property: "evolvesFrom")
@@ -1562,7 +1562,7 @@ class Stat: Object {
     @objc dynamic var id: Int = 0
     @objc dynamic var damageClass: MoveDamageClass?
     @objc dynamic var identifier: String = ""
-    @objc dynamic var isBattleOnly: Bool = false
+    @objc dynamic var isBattleOnly = false
     let gameIndex = RealmOptional<Int>()
 
     let names = LinkingObjects(fromType: StatName.self, property: "stat")

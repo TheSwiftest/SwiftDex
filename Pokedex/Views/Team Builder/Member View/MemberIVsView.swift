@@ -11,7 +11,7 @@ struct TeamPokemonIVsView: View {
     @Binding var ivs: [Int]
     let color: Color
 
-    @State private var showIVPresetSelectionSheet: Bool = false
+    @State private var showIVPresetSelectionSheet = false
 
     private let presets: [[Int]] = [
         [31, 0, 31, 31, 31, 31],

@@ -12,9 +12,9 @@ struct ContentView: View {
     @EnvironmentObject var pokemonShowdownService: PokemonShowdownService
     @EnvironmentObject var swiftDexService: SwiftDexService
     @State private var selectedMove: Move?
-    @State private var showSelectedMoveDetail: Bool = false
+    @State private var showSelectedMoveDetail = false
     @State private var selectedItem: Item?
-    @State private var showSelectedItemDetail: Bool = false
+    @State private var showSelectedItemDetail = false
 
     var body: some View {
         ZStack {

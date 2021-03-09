@@ -44,21 +44,21 @@ struct PokedexView: View {
 
     @State private var selectedDexCategory: DexCategory = .pokémon
 
-    @State private var showDexSelectionViews: Bool = false
+    @State private var showDexSelectionViews = false
     @State private var dexCategorySelectedViewSourceFrame = CGRect.zero
 
-    @State private var showVersionSelectionSheet: Bool = false
+    @State private var showVersionSelectionSheet = false
 
     @State private var pokedexSelectedViewSourceFrame = CGRect.zero
-    @State private var showPokedexSelectionView: Bool = false
+    @State private var showPokedexSelectionView = false
 
     @State private var selectedPocket: ItemPocket?
     @State private var selectedPocketViewSourceFrame = CGRect.zero
-    @State private var showItemPocketSelectionView: Bool = false
+    @State private var showItemPocketSelectionView = false
 
     @State private var selectedMoveDamageClass: MoveDamageClass?
     @State private var selectedMoveDamageViewSourceFrame = CGRect.zero
-    @State private var showMoveDamageClassSelectionsView: Bool = false
+    @State private var showMoveDamageClassSelectionsView = false
 
     func pokemonIsInSearchText(dexNumber: PokemonDexNumber) -> Bool {
         return searchText.isEmpty ? true : dexNumber.pokemon!.name.localizedCaseInsensitiveContains(searchText)

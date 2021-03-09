@@ -58,12 +58,12 @@ struct TeamMembersDetailView: View {
     @EnvironmentObject var pokemonShowdownService: PokemonShowdownService
     @Binding var team: Team
 
-    @State private var editingTeamMembers: Bool = false
+    @State private var editingTeamMembers = false
     @State private var rotationAmount: Double = 0
     @GestureState private var longPressPokemonState = PokemonLongPressState(detectingLongPress: false, pokemonPressing: nil)
     @State private var selectedTeamPokemon: TeamPokemon?
-    @State private var showPokemonSelectionView: Bool = false
-    @State private var showPokemonSelectionActionSheet: Bool = false
+    @State private var showPokemonSelectionView = false
+    @State private var showPokemonSelectionActionSheet = false
 
     var body: some View {
         LazyVGrid(columns: [GridItem(.flexible(), spacing: 15), GridItem(.flexible(), spacing: 15), GridItem(.flexible(), spacing: 15)], spacing: 15) {

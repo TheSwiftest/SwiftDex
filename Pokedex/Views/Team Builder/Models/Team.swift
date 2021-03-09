@@ -157,7 +157,7 @@ struct TeamPokemon: Identifiable, Equatable, Codable {
     var fourthMove: Move?
     var happiness: Int = 255
     var level: Int = 50
-    var shiny: Bool = false
+    var shiny = false
     var item: Item?
     var evs: [Int] = [0, 0, 0, 0, 0, 0]
     var nature: Nature?
