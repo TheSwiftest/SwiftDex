@@ -9,8 +9,13 @@ import SwiftUI
 
 @main
 struct PokedexApp: App {
-    let swiftDexService = SwiftDexService()
-    let pokemonShowdownService = PokemonShowdownService()
+    let swiftDexService: SwiftDexService
+    let pokemonShowdownService: PokemonShowdownService
+
+    init() {
+        swiftDexService = SwiftDexService()
+        pokemonShowdownService = PokemonShowdownService(swiftDexService: swiftDexService)
+    }
 
     var body: some Scene {
         WindowGroup {

@@ -175,7 +175,7 @@ struct TeamBuilderHeaderView: View {
                             selectedTeam = Team()
                         },
                         ActionSheet.Button.default(Text("Import From Clipboard")) {
-                            if let newTeam = PokemonShowdownService().importTeamFromClipboard() {
+                            if let newTeam = pokemonShowdownService.importTeamFromClipboard() {
                                 selectedTeam = newTeam
                             }
                         },

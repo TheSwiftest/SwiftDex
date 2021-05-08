@@ -18,9 +18,12 @@ class PokemonShowdownService: ObservableObject {
         "Spe": 5
     ]
 
+    private let swiftDexService: SwiftDexService
+
     @Published var teams: [Team] = []
 
-    init() {
+    init(swiftDexService: SwiftDexService? = nil) {
+        self.swiftDexService = swiftDexService ?? SwiftDexService()
         self.teams = loadTeams()
     }
 
@@ -151,7 +154,6 @@ class PokemonShowdownService: ObservableObject {
         }
 
         pokemonData["moves"] = moves
-        let swiftDexService = SwiftDexService()
 
         let movesData = pokemonData["moves"] as? [String?] ?? []
 

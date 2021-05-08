@@ -53,7 +53,6 @@ class BattleSimulatorTests: XCTestCase {
         
         let maxDamage = battleSimulatorViewModel.maxDamage
         let minDamage = battleSimulatorViewModel.minDamage
-        let avgDamage = battleSimulatorViewModel.avgDamage
         
         XCTAssert(maxDamage == 198, "Max damage should be exactly 198; is \(maxDamage)")
         XCTAssert(minDamage == 168, "Min damage should be exactly 168; is \(minDamage)")

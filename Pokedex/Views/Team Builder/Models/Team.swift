@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-let swiftDexService = SwiftDexService()
+ let swiftDexService = SwiftDexService()
 
 struct Team: Identifiable, Equatable, Codable {
     var id = UUID()

@@ -45,11 +45,13 @@ class SwiftDexService: ObservableObject {
     }
 
     func gender(with id: Int?) -> Gender? {
+        logger.trace("id: \(String(describing: id))")
         guard let id = id else { return nil }
         return realm.objects(Gender.self).filter("id == \(id)").first
     }
 
     init() {
+        logger.trace("")
         let mostRecentVersionGroup = realm.object(ofType: VersionGroup.self, forPrimaryKey: 18)!
         self.selectedVersionGroup = mostRecentVersionGroup
         self.selectedPokedex = realm.object(ofType: Pokedex.self, forPrimaryKey: 1)!
@@ -96,57 +98,65 @@ class SwiftDexService: ObservableObject {
             name = "Hidden Power"
         }
 
-        return realm.objects(MoveName.self).filter("name == '\(name)'").first?.move
+        return realm.objects(MoveName.self).filter("name == \"\(name)\"").first?.move
     }
 
     func moves(matching text: String?) -> Results<Move> {
+        logger.trace("text: \(String(describing: text))")
         guard let text = text else { return allMoves }
         if text.isEmpty { return allMoves }
-        return allMoves.filter("ANY names.name CONTAINS [c] '\(text)'")
+        return allMoves.filter("ANY names.name CONTAINS [c] \"\(text)\"")
     }
 
     func moves(matching text: String?, for pokemon: Pokemon?) -> [Move] {
+        logger.trace("text: \(String(describing: text)), pokemon.id: \(String(describing: pokemon?.id))")
         guard let pokemon = pokemon else { return moves(matching: text).compactMap({ $0 }) }
 
         let results = pokemon.moves.filter("versionGroup.id == 18").distinct(by: ["move.id"])
         guard let text = text, !text.isEmpty else { return results.compactMap({ $0.move }) }
 
-        return results.filter("ANY move.names.name CONTAINS [c] '\(text)'").compactMap({ $0.move })
+        return results.filter("ANY move.names.name CONTAINS [c] \"\(text)\"").compactMap({ $0.move })
     }
 
     func playCry(for species: PokemonSpecies) {
+        logger.trace("species.id: \(species.id)")
         let playerItem = AVPlayerItem(url: URL(string: "https://pokemoncries.com/cries/\(species.id).mp3")!)
         avPlayer = AVPlayer(playerItem: playerItem)
         avPlayer.play()
     }
 
     func nature(with name: String?) -> Nature? {
+        logger.trace("name: \(String(describing: name))")
         guard let name = name else { return nil }
-        return realm.objects(NatureName.self).filter("name == '\(name)'").first?.nature
+        return realm.objects(NatureName.self).filter("name == \"\(name)\"").first?.nature
     }
 
     func item(with name: String?) -> Item? {
+        logger.trace("name: \(String(describing: name))")
         guard let name = name else { return nil }
-        return realm.objects(ItemName.self).filter("name == '\(name)'").first?.item
+        return realm.objects(ItemName.self).filter("name == \"\(name)\"").first?.item
     }
 
     func pokemon(matching text: String?) -> Results<Pokemon> {
+        logger.trace("text: \(String(describing: text))")
         guard let text = text else { return allPokemon.sorted(byKeyPath: "species.id") }
 
         if text.isEmpty { return allPokemon.sorted(byKeyPath: "species.id") }
 
-        return realm.objects(Pokemon.self).filter("ANY species.names.name CONTAINS [c] '\(text)' OR ANY forms.names.pokemonName CONTAINS [c] '\(text)'").sorted(byKeyPath: "species.id")
+        return realm.objects(Pokemon.self).filter("ANY species.names.name CONTAINS [c] \"\(text)\" OR ANY forms.names.pokemonName CONTAINS [c] \"\(text)\"").sorted(byKeyPath: "species.id")
     }
 
     func pokemonDexNumbers(matching text: String?) -> Results<PokemonDexNumber> {
+        logger.trace("text: \(String(describing: text))")
         guard let text = text else { return selectedPokedex.pokemonSpeciesDexNumbers.sorted(byKeyPath: "pokedexNumber") }
         if text.isEmpty { return selectedPokedex.pokemonSpeciesDexNumbers.sorted(byKeyPath: "pokedexNumber") }
 
-        return selectedPokedex.pokemonSpeciesDexNumbers.filter("ANY pokemon.forms.names.pokemonName CONTAINS [c] '\(text)' OR ANY pokemon.species.names.name CONTAINS [c] '\(text)'")
+        return selectedPokedex.pokemonSpeciesDexNumbers.filter("ANY pokemon.forms.names.pokemonName CONTAINS [c] \"\(text)\" OR ANY pokemon.species.names.name CONTAINS [c] \"\(text)\"")
             .sorted(byKeyPath: "pokedexNumber")
     }
 
     func pokemon(with name: String?) -> Pokemon? {
+        logger.trace("name: \(String(describing: name))")
         guard let name = name else { return nil }
         if name.isEmpty { return nil }
         if let pokemon = realm.objects(PokemonFormName.self).filter("pokemonName == '\(name)'").first?.pokemonForm?.pokemon {
@@ -165,11 +175,13 @@ class SwiftDexService: ObservableObject {
     }
 
     func ability(with name: String?) -> Ability? {
+        logger.trace("name: \(String(describing: name))")
         guard let name = name else { return nil }
         return realm.objects(AbilityName.self).filter("name == '\(name)'").first?.ability
     }
 
     func itemsForCurrentVersionGroup(in itemPocket: ItemPocket?, andOf itemCategory: ItemCategory?) -> [Item] {
+        logger.trace("itemPocket.id: \(String(describing: itemPocket?.id)), itemCategory.id: \(String(describing: itemCategory?.id))")
         var itemGameIndices = selectedVersionGroup.generation!.itemGameIndices.sorted(byKeyPath: "item.category.pocket.id", ascending: true)
 
         if let itemPocket = itemPocket {
@@ -184,14 +196,17 @@ class SwiftDexService: ObservableObject {
     }
 
     func damageClasses() -> Results<MoveDamageClass> {
+        logger.trace("")
         return realm.objects(MoveDamageClass.self)
     }
 
     func itemPockets() -> Results<ItemPocket> {
+        logger.trace("")
         return realm.objects(ItemPocket.self)
     }
 
     func movesForVersionGroup(of moveDamageClass: MoveDamageClass?) -> Results<Move> {
+        logger.trace("moveDamageClass.id: \(String(describing: moveDamageClass?.id)) - selectedVersionGroup.id: \(selectedVersionGroup.id) - selectedGenerationId: \(String(describing: selectedVersionGroup.generation?.id))")
         var moves = realm.objects(Move.self).filter("generation.id <= \(selectedVersionGroup.generation!.id)")
 
         if let moveDamageClass = moveDamageClass {
@@ -202,10 +217,12 @@ class SwiftDexService: ObservableObject {
     }
 
     func abilitiesForVersionGroup() -> [Ability] {
+        logger.trace("selectedVersionGroup.id: \(selectedVersionGroup.id)")
         return realm.objects(Ability.self).filter("generation.id <= \(selectedVersionGroup.generation!.id)").compactMap({ $0 })
     }
 
     func pokedexesForVersionGroup() -> [Pokedex] {
+        logger.trace("selectedVersionGroup.id: \(selectedVersionGroup.id)")
         var pokedexes: [Pokedex] = selectedVersionGroup.pokedexes.sorted(byKeyPath: "pokedex.id", ascending: true).compactMap({ $0.pokedex })
         pokedexes.insert(nationalPokedex, at: 0)
         pokedexes.removeAll(where: { $0.id == selectedPokedex.id })
