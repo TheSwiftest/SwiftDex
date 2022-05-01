@@ -8,9 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var swiftDexService = SwiftDexService()
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        TabView {
+            PokedexView(pokemon: swiftDexService.pokemonFiltered, pokemonInfo: swiftDexService.infoForPokemon(with:), generations: swiftDexService.generations, moveDamageClasses: swiftDexService.moveDamageClasses, moves: swiftDexService.movesFiltered, selectedVersionGroup: $swiftDexService.selectedVersionGroup, selectedVersion: $swiftDexService.selectedVersion, selectedPokedex: $swiftDexService.selectedPokedex, searchText: $swiftDexService.filterSearchText)
+                .tabItem {
+                    Image("icon/tab/dex")
+                    Text("SwiftDex")
+                }
+        }
     }
 }
 
