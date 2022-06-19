@@ -153,5 +153,7 @@ struct MoveSummaryInfoView_Previews: PreviewProvider {
     static var previews: some View {
         MoveSummaryInfoView(moveLearnInfo: PokemonMoveLearnInfo(moveLearnMethod: testMoveLearnMethods[0], level: 1, order: nil), moveInfo: tackle)
             .previewLayout(.sizeThatFits)
+        MoveSummaryInfoView(moveLearnInfo: nil, moveInfo: tackle)
+            .previewLayout(.sizeThatFits)
     }
 }

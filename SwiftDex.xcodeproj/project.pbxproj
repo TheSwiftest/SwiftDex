@@ -233,6 +233,7 @@
 				E88FB0E8280136320030021F /* PokedexFilterView.swift */,
 				E88FB0DD2800A52A0030021F /* DexCategoryView.swift */,
 				E88FB0EE28089F6C0030021F /* PokemonListView.swift */,
+				E89A19C6285F9A1800EBFFDA /* Items */,
 				E88FB0DC27FCAE590030021F /* Pokemon */,
 				E88FB0D927FCADAA0030021F /* Moves */,
 			);
@@ -269,7 +270,6 @@
 			children = (
 				E840B35527FBB01F00630F87 /* MovesInfoView.swift */,
 				E840B35727FBB0A000630F87 /* MoveLearnMethodsSelectionView.swift */,
-				E840B35927FBB32800630F87 /* MoveSummaryInfoView.swift */,
 			);
 			path = Moves;
 			sourceTree = "<group>";
@@ -277,6 +277,7 @@
 		E88FB0D927FCADAA0030021F /* Moves */ = {
 			isa = PBXGroup;
 			children = (
+				E840B35927FBB32800630F87 /* MoveSummaryInfoView.swift */,
 				E88FB0DA27FCADB50030021F /* MoveDetailView.swift */,
 			);
 			name = Moves;
@@ -319,6 +320,13 @@
 				E88FB0EA2801ECB90030021F /* SwiftDexService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		E89A19C6285F9A1800EBFFDA /* Items */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Items;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
