@@ -40,7 +40,7 @@ struct PokedexFilterView: View {
                             )
                     }
                 }
-                .frame(width: geo.size.width * 0.65)
+                .frame(width: selectedDexCategory == .abilities ? geo.size.width : geo.size.width * 0.65)
                 .cornerRadius(8)
                 .onTapGesture {
                     showVersionSelectionView = true

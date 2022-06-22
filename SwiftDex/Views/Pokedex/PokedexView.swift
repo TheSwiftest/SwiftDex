@@ -29,7 +29,7 @@ struct PokedexView: View {
     @State private var showDexCategorySelectionView = false
     @State private var dexCategorySelectedViewSourceFrame = CGRect.zero
     
-    @State private var pokemonToShow: Pokemon?
+    @State private var pokemonToShow: PokemonDexNumber?
     @State private var moveToShow: Move?
 
     @State private var pokedexSelectedViewSourceFrame = CGRect.zero
@@ -54,8 +54,8 @@ struct PokedexView: View {
                     ScrollView {
                         if selectedDexCategory == .pokémon {
                             PokemonListView(pokemonDexNumbers: pokemon, pokemonToShow: $pokemonToShow)
-                                .sheet(item: $pokemonToShow) { pokemon in
-                                    PokemonInfoView(pokemon: pokemon, pokedexNumber: 1, version: selectedVersion, speciesVariations: speciesVariationsForPokemon(pokemon), alternateForms: alternateFormsForPokemon(pokemon), moveLearnMethods: Array(selectedVersionGroup.pokemonMoveMethods.filter({$0.pokemonMoveMethod!.id <= 4})).map({$0.pokemonMoveMethod!}), pokemonMoves: movesForPokemon(pokemon))
+                                .sheet(item: $pokemonToShow) { pokemonDexNumber in
+                                    PokemonInfoView(pokemon: pokemonDexNumber.pokemon!, pokedexNumber: pokemonDexNumber.pokedexNumber, version: selectedVersion, speciesVariations: speciesVariationsForPokemon(pokemonDexNumber.pokemon!), alternateForms: alternateFormsForPokemon(pokemonDexNumber.pokemon!), moveLearnMethods: Array(selectedVersionGroup.pokemonMoveMethods.filter({$0.pokemonMoveMethod!.id <= 4})).map({$0.pokemonMoveMethod!}), pokemonMoves: movesForPokemon(pokemonDexNumber.pokemon!))
                                 }
                         }
                         
@@ -73,8 +73,7 @@ struct PokedexView: View {
                             }
                         }
                     }
-                    
-                    Spacer()
+                    .background(Color(.secondarySystemBackground))
                 }
             }
             

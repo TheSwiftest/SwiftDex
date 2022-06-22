@@ -40,7 +40,7 @@ class SwiftDexService: ObservableObject {
             query = query.filter("pokedex.id == \(pokedex.id)")
         } else {
             query = query.filter("pokedex.id == 1")
-            query = query.filter("ANY pokemon.versionGameIndices.version.versionGroup.id <= \(self.selectedVersionGroup.id)")
+            query = query.filter("ANY pokemon.forms.introducedInVersionGroup.id <= \(self.selectedVersionGroup.id)")
         }
         
         if !filterSearchText.isEmpty {
@@ -97,5 +97,85 @@ class SwiftDexService: ObservableObject {
         let query = realm.objects(PokemonMove.self).filter("pokemon.id == \(pokemon.id) AND versionGroup.id == \(selectedVersionGroup.id)")
         
         return Array(query)
+    }
+}
+
+// Team Builder and Battle Sim helpers
+extension SwiftDexService {
+    var female: Gender {
+        return realm.object(ofType: Gender.self, forPrimaryKey: 1)!
+    }
+
+    var male: Gender {
+        return realm.object(ofType: Gender.self, forPrimaryKey: 2)!
+    }
+    
+    var genderless: Gender {
+        return realm.object(ofType: Gender.self, forPrimaryKey: 3)!
+    }
+    
+    func gender(with id: Int?) -> Gender? {
+        guard let id = id else { return nil }
+        return realm.objects(Gender.self).filter("id == \(id)").first
+    }
+    
+    var showdownFormats: Results<ShowdownFormat> {
+        return realm.objects(ShowdownFormat.self)
+    }
+    
+    func showdownCategories(for generation: Generation?) -> Results<ShowdownCategory> {
+        guard let generation = generation else { return showdownCategories }
+        return showdownCategories.filter("ANY formats.generation.id == \(generation.id)")
+    }
+
+    var showdownCategories: Results<ShowdownCategory> {
+        return realm.objects(ShowdownCategory.self)
+    }
+    
+    func move(with name: String?) -> Move? {
+        guard var name = name else { return nil }
+
+        if name.starts(with: "Hidden Power") {
+            name = "Hidden Power"
+        }
+
+        return realm.objects(MoveName.self).filter("name == \"\(name)\"").first?.move
+    }
+    
+    func nature(with name: String?) -> Nature? {
+        guard let name = name else { return nil }
+        return realm.objects(NatureName.self).filter("name == \"\(name)\"").first?.nature
+    }
+
+    func item(with name: String?) -> Item? {
+        guard let name = name else { return nil }
+        return realm.objects(ItemName.self).filter("name == \"\(name)\"").first?.item
+    }
+    
+    func pokemon(withId id: Int) -> Pokemon? {
+        return realm.object(ofType: Pokemon.self, forPrimaryKey: id)
+    }
+    
+    func pokemon(with name: String?) -> Pokemon? {
+        guard let name = name else { return nil }
+        if name.isEmpty { return nil }
+        if let pokemon = realm.objects(PokemonFormName.self).filter("pokemonName == '\(name)'").first?.pokemonForm?.pokemon {
+            return pokemon
+        }
+
+        if let pokemon = realm.objects(PokemonSpeciesName.self).filter("name == '\(name)'").first?.pokemonSpecies?.defaultForm {
+            return pokemon
+        }
+
+        if let pokemon = realm.objects(Pokemon.self).filter("identifier == '\(name.lowercased())'").first {
+            return pokemon
+        }
+
+        return nil
+    }
+
+    func ability(with name: String?) -> Ability? {
+        guard let name = name else { return nil }
+        return realm.objects(AbilityName.self).filter("name == '\(name)'").first?.ability
     }
 }

@@ -1219,7 +1219,7 @@ class PokemonStat: Object {
 class PokemonType: Object {
     @Persisted var pokemon: Pokemon?
     @Persisted var type: Type?
-    @Persisted var slot: Int = 0
+    @Persisted var slot: Int
 }
 
 class PokemonTypePast: Object {
@@ -1230,7 +1230,7 @@ class PokemonTypePast: Object {
 }
 
 class Pokemon: Object, Identifiable {
-    @Persisted(primaryKey: true) var id: Int = 0
+    @Persisted(primaryKey: true) var id: Int
     @Persisted var identifier: String
     @Persisted var species: PokemonSpecies?
     @Persisted var height: Int
@@ -1308,17 +1308,49 @@ class Pokemon: Object, Identifiable {
     var slot3Ability: PokemonAbility? {
         return abilities.first(where: {$0.slot == 3})
     }
+    
+    var baseHP: Int {
+        return stats.first(where: { $0.stat?.id == 1 })?.baseStat ?? 0
+    }
+
+    var baseATK: Int {
+        return stats.first(where: { $0.stat?.id == 2 })?.baseStat ?? 0
+    }
+
+    var baseDEF: Int {
+        return stats.first(where: { $0.stat?.id == 3 })?.baseStat ?? 0
+    }
+
+    var baseSATK: Int {
+        return stats.first(where: { $0.stat?.id == 4 })?.baseStat ?? 0
+    }
+
+    var baseSDEF: Int {
+        return stats.first(where: { $0.stat?.id == 5 })?.baseStat ?? 0
+    }
+
+    var baseSPE: Int {
+        return stats.first(where: { $0.stat?.id == 6 })?.baseStat ?? 0
+    }
+    
+    var showdownName: String {
+        if identifier.contains("-alola") || identifier.contains("-galar") || identifier.contains("-gmax") || identifier.contains("-mega") || identifier.contains("-eternamax") {
+            return identifier
+        }
+
+        return name
+    }
 }
 
 class RegionName: Object {
     @Persisted var region: Region?
-    @Persisted var localLanguageId: Int = 0
-    @Persisted var name: String = ""
+    @Persisted var localLanguageId: Int
+    @Persisted var name: String
 }
 
 class Region: Object {
-    @Persisted(primaryKey: true) var id: Int = 0
-    @Persisted var identifier: String = ""
+    @Persisted(primaryKey: true) var id: Int
+    @Persisted var identifier: String
 
     let names = LinkingObjects(fromType: RegionName.self, property: "region")
     let versionGroups = LinkingObjects(fromType: VersionGroupRegion.self, property: "region")
@@ -1326,17 +1358,37 @@ class Region: Object {
     let generations = LinkingObjects(fromType: Generation.self, property: "mainRegion")
 }
 
+class ShowdownFormat: Object, Identifiable {
+    var id: String { return identifier }
+    @Persisted(primaryKey: true) var identifier: String
+    @Persisted var generation: Generation?
+    @Persisted var category: ShowdownCategory?
+    @Persisted var group: ShowdownFormatGroup?
+}
+
+class ShowdownCategory: Object, Identifiable {
+    @Persisted(primaryKey: true) var id: Int
+    @Persisted var name: String
+    
+    @Persisted(originProperty: "category") var formats: LinkingObjects<ShowdownFormat>
+}
+
+class ShowdownFormatGroup: Object, Identifiable {
+    @Persisted(primaryKey: true) var id: Int
+    @Persisted var name: String
+}
+
 class StatName: Object {
     @Persisted var stat: Stat?
-    @Persisted var localLanguageId: Int = 0
-    @Persisted var name: String = ""
+    @Persisted var localLanguageId: Int
+    @Persisted var name: String
 }
 
 class Stat: Object {
     @Persisted(primaryKey: true) var id: Int = 0
     @Persisted var damageClass: MoveDamageClass?
-    @Persisted var identifier: String = ""
-    @Persisted var isBattleOnly = false
+    @Persisted var identifier: String
+    @Persisted var isBattleOnly: Bool
     @Persisted var gameIndex: Int?
     
     @Persisted(originProperty: "stat") var names: LinkingObjects<StatName>

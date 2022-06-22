@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PokemonListView: View {
     let pokemonDexNumbers: [PokemonDexNumber]
-    @Binding var pokemonToShow: Pokemon?
+    @Binding var pokemonToShow: PokemonDexNumber?
     
     var body: some View {
         LazyVStack(spacing: 10) {
@@ -17,7 +17,7 @@ struct PokemonListView: View {
                 PokemonSummaryView(pokemon: pokemonDexNumber.pokemon!, pokedexNumber: pokemonDexNumber.pokedexNumber, showVersionView: false, showVersionSelectionView: .constant(false))
                     .padding(.horizontal, 10)
                     .onTapGesture {
-                        pokemonToShow = pokemonDexNumber.pokemon!
+                        pokemonToShow = pokemonDexNumber
                     }
             }
         }
