@@ -7,29 +7,20 @@
 
 import SwiftUI
 
-struct PokemonBasicInfo {
-    let speciesInfo: SpeciesInfo
-    let abilitySlot1: PokemonAbilityInfo
-    let abilitySlot2: PokemonAbilityInfo?
-    let abilitySlot3: PokemonAbilityInfo?
-    let stats: [PokemonStatInfo]
-    let speciesVariations: [PokemonSummary]
-    let forms: [PokemonForm]
-}
-
 struct PokemonBasicInfoView: View {
-    let basicInfo: PokemonBasicInfo
-    let color: Color
-    @Binding var selectedPokemon: PokemonSummary?
-    
+    let pokemon: Pokemon
+    let speciesVariations: [Pokemon]
+    let alternateForms: [PokemonForm]
+
     var body: some View {
         ScrollView {
             VStack {
                 Group {
-                    SpeciesInfoView(speciesInfo: basicInfo.speciesInfo, color: color)
-                    PokemonAbilitiesInfoView(slot1Ability: basicInfo.abilitySlot1, slot2Ability: basicInfo.abilitySlot2, slot3Ability: basicInfo.abilitySlot3, color: color)
-                    PokemonStatsInfoView(stats: basicInfo.stats, color: color)
-                    SpeciesVariationsView(speciesVariations: basicInfo.speciesVariations, selectedPokemon: $selectedPokemon)
+                    SpeciesInfoView(id: pokemon.id, height: pokemon.height, weight: pokemon.weight, bodyShape: pokemon.bodyShape, genus: pokemon.genus, color: pokemon.color)
+                    PokemonAbilitiesInfoView(slot1Ability: pokemon.slot1Ability, slot2Ability: pokemon.slot2Ability, slot3Ability: pokemon.slot3Ability, color: pokemon.color)
+                    PokemonStatsInfoView(stats: Array(pokemon.stats), color: pokemon.color)
+                    SpeciesVariationsView(variations: speciesVariations)
+                    AlternateFormsView(forms: alternateForms)
                 }
                 .padding()
             }
@@ -39,6 +30,6 @@ struct PokemonBasicInfoView: View {
 
 struct PokemonBasicInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        PokemonBasicInfoView(basicInfo: venusaurBasicInfo, color: .grass, selectedPokemon: .constant(venusaurSummary))
+        PokemonBasicInfoView(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!, speciesVariations: [], alternateForms: [])
     }
 }

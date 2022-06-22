@@ -7,20 +7,15 @@
 
 import SwiftUI
 
-struct EggGroupInfo {
-    let id: Int
-    let name: String
-}
-
 struct EggGroupsInfoView: View {
-    let eggGroups: [EggGroupInfo]
+    let eggGroups: [EggGroup]
     let color: Color
 
     var body: some View {
         VStack {
             PokemonDetailSectionHeader(text: "Egg Groups")
             HStack {
-                ForEach(eggGroups, id: \.id) { eggGroup in
+                ForEach(eggGroups) { eggGroup in
                     ZStack {
                         Rectangle()
                             .frame(height: 34)
@@ -43,7 +38,7 @@ struct EggGroupsInfoView: View {
 
 struct EggGroupsInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        EggGroupsInfoView(eggGroups: testEggGroups, color: .grass)
+        EggGroupsInfoView(eggGroups: PokemonBreedingInfo(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!).eggGroups, color: .grass)
             .previewLayout(.sizeThatFits)
     }
 }

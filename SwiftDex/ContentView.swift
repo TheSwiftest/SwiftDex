@@ -12,11 +12,12 @@ struct ContentView: View {
     
     var body: some View {
         TabView {
-            PokedexView(pokemon: swiftDexService.pokemonFiltered, pokemonInfo: swiftDexService.infoForPokemon(with:), generations: swiftDexService.generations, moveDamageClasses: swiftDexService.moveDamageClasses, moves: swiftDexService.movesFiltered, selectedVersionGroup: $swiftDexService.selectedVersionGroup, selectedVersion: $swiftDexService.selectedVersion, selectedPokedex: $swiftDexService.selectedPokedex, searchText: $swiftDexService.filterSearchText)
+            PokedexView(pokemon: swiftDexService.pokemonDexNumbers, generations: swiftDexService.generations, moveDamageClasses: swiftDexService.moveDamageClasses, moves: swiftDexService.moves, selectedVersionGroup: $swiftDexService.selectedVersionGroup, selectedVersion: $swiftDexService.selectedVersion, selectedPokedex: $swiftDexService.selectedPokedex, selectedMoveDamageClass: $swiftDexService.selectedMoveDamageClass, searchText: $swiftDexService.filterSearchText, speciesVariationsForPokemon: swiftDexService.speciesVariations(for:), alternateFormsForPokemon: swiftDexService.alternateForms(for:), movesForPokemon: swiftDexService.moves(for:))
                 .tabItem {
                     Image("icon/tab/dex")
                     Text("SwiftDex")
                 }
+                
         }
     }
 }

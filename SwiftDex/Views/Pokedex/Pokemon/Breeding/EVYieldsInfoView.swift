@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EVYieldsInfoView: View {
-    let stats: [PokemonStatInfo]
+    let stats: [PokemonStat]
 
     var body: some View {
         VStack {
@@ -24,9 +24,9 @@ struct EVYieldsInfoView: View {
 }
 
 struct EVYieldInfoView: View {
-    
-    let stat: PokemonStatInfo
-    
+
+    let stat: PokemonStat
+
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 18.5)
@@ -43,7 +43,7 @@ struct EVYieldInfoView: View {
                                     .frame(width: 34, height: 34)
                                     .foregroundColor(Color(.white))
                             )
-                        Text("\(stat.effortValue)")
+                        Text("\(stat.effort)")
                             .frame(minHeight: 0, maxHeight: .infinity)
                             .font(.headline)
                         Spacer()
@@ -55,10 +55,10 @@ struct EVYieldInfoView: View {
 
 struct EVYieldsInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        EVYieldsInfoView(stats: bulbasaurStats)
+        EVYieldsInfoView(stats: PokemonBreedingInfo(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!).stats)
             .previewLayout(.sizeThatFits)
-        
-        EVYieldInfoView(stat: PokemonStatInfo(identifier: "hp", name: "HP", value: 60, effortValue: 1))
+
+        EVYieldInfoView(stat: PokemonBreedingInfo(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!).stats.first!)
             .previewLayout(.sizeThatFits)
     }
 }

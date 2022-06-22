@@ -7,32 +7,17 @@
 
 import SwiftUI
 
-struct PokemonStatInfo {
-    let identifier: String
-    let name: String
-    let value: Int
-    let effortValue: Int
-    
-    var icon: Image {
-        return Image("icon/ev/\(identifier)")
-    }
-
-    var color: Color {
-        return Color("color/ev/\(identifier)")
-    }
-}
-
 struct PokemonStatsInfoView: View {
-    let stats: [PokemonStatInfo]
+    let stats: [PokemonStat]
     let color: Color
 
-    private let maxBaseStats = [255, 190, 250, 194, 250, 200]
+    private let maxBaseStats = [255, 190, 250, 200, 194, 250]
 
     var body: some View {
         VStack {
             PokemonDetailSectionHeader(text: "Base Stats")
-            ForEach(stats.indices, id: \.self) { index in
-                PokemonStatInfoView(name: stats[index].name, color: color, baseStat: stats[index].value, max: maxBaseStats[index])
+            ForEach(stats.sorted(by: {$0.gameIndex! < $1.gameIndex!}), id: \.self) { pokemonStat in
+                PokemonStatInfoView(name: pokemonStat.identifier.uppercased(), color: color, baseStat: pokemonStat.baseStat, max: maxBaseStats[pokemonStat.gameIndex! - 1])
             }
         }
     }
@@ -74,7 +59,7 @@ struct PokemonStatInfoView: View {
 
 struct PokemonStatsInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        PokemonStatsInfoView(stats: bulbasaurStats,
+        PokemonStatsInfoView(stats: Array(testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!.stats),
                              color: .grass)
             .previewLayout(.sizeThatFits)
         PokemonStatInfoView(name: "HP", color: .grass, baseStat: 60, max: 255)

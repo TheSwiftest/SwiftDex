@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct PokemonSummaryView: View {
-    let summary: PokemonSummary
+    let pokemon: Pokemon
+    let pokedexNumber: Int
     let showVersionView: Bool
     
     @Binding var showVersionSelectionView: Bool
     
     private var pokedexNumberFormatted: String {
-        return "#\(String(format: "%03d", summary.pokedexNumber))"
+        return "#\(String(format: "%03d", pokedexNumber))"
     }
     
     var body: some View {
@@ -24,7 +25,7 @@ struct PokemonSummaryView: View {
                     HStack {
                         Text(pokedexNumberFormatted)
                             .font(.title2)
-                        Text(summary.name)
+                        Text(pokemon.name)
                             .font(.title2)
                             .bold()
                             .lineLimit(1)
@@ -36,35 +37,35 @@ struct PokemonSummaryView: View {
                         .padding(.bottom, 15)
                         .padding(.top, 10)
                     HStack(spacing: 15) {
-                        ForEach(summary.types, id: \.typeData) { type in
-                            PokemonSummaryTypeView(type: type)
+                        ForEach(pokemon.types, id: \.type) { type in
+                            PokemonSummaryTypeView(type: type.type!)
                         }
                     }
                 }
                 
-                summary.sprite
+                pokemon.sprite
                     .resizable()
                     .scaledToFill()
                     .frame(width: 96, height: 96)
                     .cornerRadius(23)
             }
             
-            if showVersionView {
-                PokemonSummaryVersionView(name: summary.versionName, showVersionSelectionView: $showVersionSelectionView)
-            }
+//            if showVersionView {
+//                PokemonSummaryVersionView(name: summary.versionName, showVersionSelectionView: $showVersionSelectionView)
+//            }
         }
         .padding(.leading)
         .padding(.vertical, 6)
-        .background(summary.types[0].typeData.color())
+        .background(pokemon.color)
         .cornerRadius(4)
         .shadow(radius: 5)
     }
 }
 
 struct PokemonSummaryTypeView: View {
-    
-    let type: PokemonSummary.PokemonType
-    
+
+    let type: Type
+
     var body: some View {
         ZStack {
             Rectangle()
@@ -73,7 +74,7 @@ struct PokemonSummaryTypeView: View {
                 .opacity(0.55)
                 .frame(height: 30)
             HStack {
-                type.typeData.icon()
+                type.icon
                     .frame(width: 25, height: 25)
                     .opacity(0.55)
                 Text(type.name.uppercased())
@@ -87,44 +88,43 @@ struct PokemonSummaryTypeView: View {
     }
 }
 
-struct PokemonSummaryVersionView: View {
-    
-    let name: String
-    
-    @Binding var showVersionSelectionView: Bool
-    
-    var body: some View {
-        HStack {
-            Rectangle()
-                .foregroundColor(Color(hex: "D8D8D8"))
-                .cornerRadius(4)
-                .opacity(0.55)
-                .frame(height: 30)
-                .overlay(
-                    HStack(spacing: 5) {
-                        Group {
-                            Text("\(name) Version")
-                                .fontWeight(.semibold)
-                            Image(systemName: "chevron.compact.down")
-                        }
-                        .font(.system(.subheadline))
-                        .opacity(0.55)
-                    }
-                )
-                .onTapGesture {
-                    showVersionSelectionView = true
-                }
-        }
-        .padding(.trailing)
-    }
-}
+//struct PokemonSummaryVersionView: View {
+//
+//    let name: String
+//
+//    @Binding var showVersionSelectionView: Bool
+//
+//    var body: some View {
+//        HStack {
+//            Rectangle()
+//                .foregroundColor(Color(hex: "D8D8D8"))
+//                .cornerRadius(4)
+//                .opacity(0.55)
+//                .frame(height: 30)
+//                .overlay(
+//                    HStack(spacing: 5) {
+//                        Group {
+//                            Text("\(name) Version")
+//                                .fontWeight(.semibold)
+//                            Image(systemName: "chevron.compact.down")
+//                        }
+//                        .font(.system(.subheadline))
+//                        .opacity(0.55)
+//                    }
+//                )
+//                .onTapGesture {
+//                    showVersionSelectionView = true
+//                }
+//        }
+//        .padding(.trailing)
+//    }
+//}
 
 struct PokemonSummaryView_Previews: PreviewProvider {
     static var previews: some View {
-        PokemonSummaryView(summary: bulbasaurSummary, showVersionView: false, showVersionSelectionView: .constant(false))
-            .previewLayout(.sizeThatFits)
-        
-        PokemonSummaryView(summary: bulbasaurSummary, showVersionView: true, showVersionSelectionView: .constant(false))
-            .previewLayout(.sizeThatFits)
+        Group {
+            PokemonSummaryView(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!, pokedexNumber: 1, showVersionView: false, showVersionSelectionView: .constant(false))
+        }
+        .previewLayout(.sizeThatFits)
     }
 }

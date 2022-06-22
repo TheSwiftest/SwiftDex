@@ -8,38 +8,44 @@
 import SwiftUI
 
 struct PokemonInfoView: View {
-    let pokemonInfo: PokemonInfo
-    @Binding var selectedPokemon: PokemonSummary?
+    let pokemon: Pokemon
+    let pokedexNumber: Int
+    let version: Version
+    
+    let speciesVariations: [Pokemon]
+    let alternateForms: [PokemonForm]
+    let moveLearnMethods: [PokemonMoveMethod]
+    let pokemonMoves: [PokemonMove]
     
     @State private var showVersionSelectionView: Bool = false
     
     var body: some View {
         VStack(spacing: 5) {
-            PokemonSummaryView(summary: pokemonInfo.summary, showVersionView: true, showVersionSelectionView: $showVersionSelectionView)
+            PokemonSummaryView(pokemon: pokemon, pokedexNumber: pokedexNumber, showVersionView: true, showVersionSelectionView: $showVersionSelectionView)
             TabView {
-                PokemonBasicInfoView(basicInfo: pokemonInfo.basicInfo, color: pokemonInfo.color, selectedPokemon: $selectedPokemon)
+                PokemonBasicInfoView(pokemon: pokemon, speciesVariations: speciesVariations, alternateForms: alternateForms)
                     .tabItem {
                         Image(systemName: "info.circle")
                         Text("Info")
                     }
-                MovesInfoView(info: pokemonInfo.moveInfo)
+                MovesInfoView(moveLearnMethods: moveLearnMethods, pokemonMoves: pokemonMoves)
                     .tabItem {
                         Image("icon/tab/moves")
                         Text("Moves")
                     }
-                PokemonBreedingInfoView(breedingInfo: pokemonInfo.breedingInfo, color: pokemonInfo.color)
+                PokemonBreedingInfoView(breedingInfo: PokemonBreedingInfo(pokemon: pokemon), color: pokemon.color)
                     .tabItem {
                         Image("icon/tab/breeding")
                         Text("Breeding")
                     }
             }
-            .accentColor(pokemonInfo.color)
+            .accentColor(pokemon.color)
         }
     }
 }
 
 struct PokemonInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        PokemonInfoView(pokemonInfo: bulbasaurPokemonInfo, selectedPokemon: .constant(bulbasaurSummary))
+        PokemonInfoView(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!, pokedexNumber: 1, version: testRealm.object(ofType: Version.self, forPrimaryKey: 1)!, speciesVariations: [], alternateForms: [], moveLearnMethods: Array(testRealm.objects(PokemonMoveMethod.self).filter({$0.id <= 4})), pokemonMoves: Array(testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!.moves.filter({$0.versionGroup!.id == 4})))
     }
 }

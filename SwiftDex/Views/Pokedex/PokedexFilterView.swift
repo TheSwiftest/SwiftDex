@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct PokedexFilterView: View {
-    let generations: [GenerationInfo]
-    let moveDamageClasses: [MoveDamageClassInfo]
-    @Binding var selectedVersionGroup: VersionGroupInfo
-    @Binding var selectedVersion: VersionInfo
-    let selectedPokedex: PokedexInfo
-    let selectedMoveDamageClass: MoveDamageClassInfo?
+    let generations: [Generation]
+    let moveDamageClasses: [MoveDamageClass]
+    @Binding var selectedVersionGroup: VersionGroup
+    @Binding var selectedVersion: Version
+    let selectedPokedex: Pokedex?
+    let selectedMoveDamageClass: MoveDamageClass?
     
     let selectedDexCategory: DexCategory
     
@@ -48,7 +48,7 @@ struct PokedexFilterView: View {
                 
                 if selectedDexCategory == .pokémon {
                     GeometryReader { pokedexSelectionViewGeo in
-                        PokedexSelectedView(name: selectedPokedex.name)
+                        PokedexSelectedView(name: selectedPokedex?.name ?? "National")
                             .onAppear {
                                 pokedexSelectedViewSourceFrame = pokedexSelectionViewGeo.frame(in: .global)
                             }
@@ -95,26 +95,38 @@ struct PokedexSelectedView: View {
 }
 
 struct PokedexSelectionView: View {
-    let pokedexes: [PokedexInfo]
+    let pokedexes: [Pokedex]
     
     @Binding var sourceFrame: CGRect
     @Binding var showView: Bool
-    @Binding var selectedPokedex: PokedexInfo
+    @Binding var selectedPokedex: Pokedex?
     
-    private var filteredPokedexes: [PokedexInfo] {
-        return pokedexes.filter({$0.id != selectedPokedex.id})
+    private var filteredPokedexes: [Pokedex] {
+        return pokedexes.filter({$0 != selectedPokedex})
     }
 
     var body: some View {
         ZStack(alignment: .leading) {
-            ForEach(filteredPokedexes) { pokedex in
-                PokedexSelectedView(name: pokedex.name)
-                    .frame(width: sourceFrame.width, height: sourceFrame.height)
-                    .offset(y: showView ? CGFloat(filteredPokedexes.firstIndex(of: pokedex)!) * 35 : 0)
-                    .onTapGesture {
-                        selectedPokedex = pokedex
-                        showView.toggle()
-                    }
+            Group {
+                ForEach(filteredPokedexes) { pokedex in
+                    PokedexSelectedView(name: pokedex.name)
+                        .frame(width: sourceFrame.width, height: sourceFrame.height)
+                        .offset(y: showView ? CGFloat(filteredPokedexes.firstIndex(of: pokedex)!) * 35 : 0)
+                        .onTapGesture {
+                            selectedPokedex = pokedex
+                            showView.toggle()
+                        }
+                }
+                
+                if selectedPokedex != nil {
+                    PokedexSelectedView(name: "National")
+                        .frame(width: sourceFrame.width, height: sourceFrame.height)
+                        .offset(y: showView ? CGFloat(filteredPokedexes.count * 35) : 0)
+                        .onTapGesture {
+                            selectedPokedex = nil
+                            showView.toggle()
+                        }
+                }
             }
             .opacity(showView ? 1 : 0)
             .shadow(radius: 5)
@@ -126,13 +138,13 @@ struct PokedexSelectionView: View {
 }
 
 struct MoveDamageClassSelectionView: View {
-    let moveDamageClasses: [MoveDamageClassInfo]
+    let moveDamageClasses: [MoveDamageClass]
     
     @Binding var sourceFrame: CGRect
     @Binding var showView: Bool
-    @Binding var selectedMoveDamageClass: MoveDamageClassInfo?
+    @Binding var selectedMoveDamageClass: MoveDamageClass?
     
-    private var filteredMoveDamageClasses: [MoveDamageClassInfo] {
+    private var filteredMoveDamageClasses: [MoveDamageClass] {
         return moveDamageClasses.filter({$0.id != selectedMoveDamageClass?.id})
     }
 
@@ -168,65 +180,9 @@ struct MoveDamageClassSelectionView: View {
     }
 }
 
-struct VersionGroupSelectionView: View {
-    let generations: [GenerationInfo]
-
-    @Binding var selectedVersionGroup: VersionGroupInfo
-    @Binding var selectedVersion: VersionInfo
-
-    var body: some View {
-        ScrollView {
-            VStack {
-                Text("Select A Version")
-                    .font(.title2)
-                ForEach(generations) { generation in
-                    GenerationVersionsSelectionView(generation: generation, selectedVersionGroup: $selectedVersionGroup, selectedVersion: $selectedVersion)
-                }
-            }
-            .padding()
-        }
-    }
-}
-
-struct GenerationVersionsSelectionView: View {
-    @Environment(\.presentationMode) var presentationMode
-
-    let generation: GenerationInfo
-
-    @Binding var selectedVersionGroup: VersionGroupInfo
-    @Binding var selectedVersion: VersionInfo
-
-    var body: some View {
-        VStack {
-            Text(generation.name)
-            ForEach(generation.versionGroups) { versionGroup in
-                HStack {
-                    ForEach(versionGroup.versions) { version in
-                        Rectangle()
-                            .frame(height: 30)
-                            .foregroundColor(version.color)
-                            .overlay(
-                                Text(version.name)
-                                    .font(.headline)
-                                    .foregroundColor(.white)
-                            )
-                            .onTapGesture {
-                                selectedVersion = version
-                                selectedVersionGroup = versionGroup
-                                presentationMode.wrappedValue.dismiss()
-                            }
-                    }
-                }
-                .cornerRadius(15)
-            }
-        }
-    }
-}
-
-
 struct PokedexFilterView_Previews: PreviewProvider {
     static var previews: some View {
-        PokedexFilterView(generations: testGenerations, moveDamageClasses: testMDCs, selectedVersionGroup: .constant(redBlueVG), selectedVersion: .constant(redVersion), selectedPokedex: kantoDex, selectedMoveDamageClass: nil, selectedDexCategory: .pokémon, pokedexSelectedViewSourceFrame: .constant(.zero), showPokedexSelectionView: .constant(false), moveDamageClassSelectedViewSourceFrame: .constant(.zero), showMoveDamageClassSelectionView: .constant(false))
+        PokedexFilterView(generations: Array(testRealm.objects(Generation.self)), moveDamageClasses: Array(testRealm.objects(MoveDamageClass.self)), selectedVersionGroup: .constant(testRealm.object(ofType: VersionGroup.self, forPrimaryKey: 1)!), selectedVersion: .constant(testRealm.object(ofType: Version.self, forPrimaryKey: 1)!), selectedPokedex: testRealm.object(ofType: Pokedex.self, forPrimaryKey: 1)!, selectedMoveDamageClass: nil, selectedDexCategory: .pokémon, pokedexSelectedViewSourceFrame: .constant(.zero), showPokedexSelectionView: .constant(false), moveDamageClassSelectedViewSourceFrame: .constant(.zero), showMoveDamageClassSelectionView: .constant(false))
             .previewLayout(.sizeThatFits)
     }
 }

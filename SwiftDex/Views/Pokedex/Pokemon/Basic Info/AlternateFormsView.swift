@@ -1,30 +1,30 @@
 //
-//  FormsInfoView.swift
+//  AlternateFormsView.swift
 //  SwiftDex
 //
-//  Created by Brian Corbin on 4/8/22.
+//  Created by Brian Corbin on 6/21/22.
 //
 
 import SwiftUI
 
-struct SpeciesVariationsView: View {
-    let variations: [Pokemon]
+struct AlternateFormsView: View {
+    let forms: [PokemonForm]
     
     var body: some View {
         VStack {
-            if variations.count > 0 {
-                PokemonDetailSectionHeader(text: "Species Variations")
+            if forms.count > 1 {
+                PokemonDetailSectionHeader(text: "Forms")
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], alignment: .center) {
-                    ForEach(variations) { variation in
+                    ForEach(forms) { form in
                         VStack {
-                            Text(variation.name)
+                            Text(form.name)
                                 .minimumScaleFactor(0.5)
                                 .lineLimit(1)
                             Rectangle()
                                 .foregroundColor(Color(.secondarySystemBackground))
                                 .frame(width: 100, height: 100)
                                 .overlay(
-                                    variation.sprite
+                                    form.sprite
                                         .resizable()
                                         .scaledToFill()
                                         .frame(width: 70, height: 70)
@@ -38,9 +38,9 @@ struct SpeciesVariationsView: View {
     }
 }
 
-struct FormsInfoView_Previews: PreviewProvider {
+struct AlternateFormsView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesVariationsView(variations: Array(testRealm.object(ofType: PokemonSpecies.self, forPrimaryKey: 103)!.pokemon))
+        AlternateFormsView(forms: Array(testRealm.object(ofType: Pokemon.self, forPrimaryKey: 201)!.forms))
             .previewLayout(.sizeThatFits)
     }
 }

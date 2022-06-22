@@ -7,69 +7,12 @@
 
 import SwiftUI
 
-struct PokemonMoveInfo: Hashable {
-    let moveLearnInfo: PokemonMoveLearnInfo
-    let moveInfo: MoveInfo
-}
-
-struct PokemonMoveLearnInfo: Hashable {
-    let moveLearnMethod: MoveLearnMethod
-    let level: Int
-    let order: Int?
-}
-
-struct MoveInfo: Identifiable, Hashable {
-    let id: Int
-    let identifier: String
-    let name: String
-    let type: TypeEffectiveness.TypeData
-    let damageClassIdentifier: String
-    let damageClassName: String
-    let power: Int?
-    let accuracy: Int?
-    let pp: Int?
-    let priority: Int
-    let effect: String
-    let effectChance: Int?
-    let flavorText: String
-    let target: String
-    let machineName: String?
-    
-    var color: Color {
-        return Color("color/damage_class/\(damageClassIdentifier)")
-    }
-
-    var backgroundColor: Color {
-        return Color("color/damage_class/\(damageClassIdentifier)_bg")
-    }
-
-    var icon: Image {
-        return Image("icon/damage_class/\(damageClassIdentifier)")
-    }
-}
-
 struct MoveSummaryInfoView: View {
-    let moveLearnInfo: PokemonMoveLearnInfo?
-    let moveInfo: MoveInfo
-
-    private var subtitle: String? {
-        guard let moveLearnInfo = moveLearnInfo else {
-            return nil
-        }
-        
-        if moveLearnInfo.moveLearnMethod.id == 1 {
-            return "Level \(moveLearnInfo.level)"
-        }
-        
-        if moveLearnInfo.moveLearnMethod.id == 4 {
-            return moveInfo.machineName!
-        }
-        
-        return nil
-    }
+    let move: Move
+    let subtitle: String?
 
     private var powerText: String {
-        guard let power = moveInfo.power else {
+        guard let power = move.power else {
             return "-"
         }
 
@@ -77,7 +20,7 @@ struct MoveSummaryInfoView: View {
     }
 
     private var accuracyText: String {
-        guard let accuracy = moveInfo.accuracy else {
+        guard let accuracy = move.accuracy else {
             return "-"
         }
 
@@ -85,7 +28,7 @@ struct MoveSummaryInfoView: View {
     }
 
     private var ppText: String {
-        guard let pp = moveInfo.pp else {
+        guard let pp = move.pp else {
             return "-"
         }
 
@@ -96,15 +39,15 @@ struct MoveSummaryInfoView: View {
         HStack {
             Circle()
                 .frame(width: 30, height: 30)
-                .foregroundColor(moveInfo.type.color())
+                .foregroundColor(move.type!.color)
                 .overlay(
-                    moveInfo.type.icon()
+                    move.type!.icon
                         .frame(width: 24, height: 24)
                         .foregroundColor(Color(.white))
                 )
 
             VStack(alignment: .leading) {
-                Text(moveInfo.name)
+                Text(move.name)
                     .font(.title2)
                     .fontWeight(.semibold)
                 if let subtitle = subtitle {
@@ -136,12 +79,12 @@ struct MoveSummaryInfoView: View {
 
             Circle()
                 .frame(width: 30, height: 30)
-                .foregroundColor(moveInfo.backgroundColor)
+                .foregroundColor(move.damageClass!.backgroundColor)
                 .overlay(
-                    moveInfo.icon
+                    move.damageClass!.icon
                         .resizable()
                         .frame(width: 20, height: 20)
-                        .foregroundColor(moveInfo.color)
+                        .foregroundColor(move.damageClass!.color)
                 )
         }
         .padding(.horizontal)
@@ -151,9 +94,10 @@ struct MoveSummaryInfoView: View {
 
 struct MoveSummaryInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        MoveSummaryInfoView(moveLearnInfo: PokemonMoveLearnInfo(moveLearnMethod: testMoveLearnMethods[0], level: 1, order: nil), moveInfo: tackle)
-            .previewLayout(.sizeThatFits)
-        MoveSummaryInfoView(moveLearnInfo: nil, moveInfo: tackle)
-            .previewLayout(.sizeThatFits)
+        Group {
+            MoveSummaryInfoView(move: testRealm.object(ofType: Move.self, forPrimaryKey: 1)!, subtitle: nil)
+            MoveSummaryInfoView(move: testRealm.object(ofType: Move.self, forPrimaryKey: 1)!, subtitle: "Level 1")
+        }
+        .previewLayout(.sizeThatFits)
     }
 }

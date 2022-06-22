@@ -9,9 +9,16 @@ import SwiftUI
 
 struct PokemonBreedingInfo {
     let extraInfo: SpeciesExtraInfo
-    let eggGroups: [EggGroupInfo]
-    let stats: [PokemonStatInfo]
+    let eggGroups: [EggGroup]
+    let stats: [PokemonStat]
     let types: [TypeEffectiveness.TypeData]
+    
+    init(pokemon: Pokemon) {
+        self.extraInfo = SpeciesExtraInfo(catchRate: pokemon.species!.captureRate, baseHappiness: pokemon.species!.baseHappiness, baseExperience: pokemon.baseExperience, growthRate: pokemon.species!.growthRate!.name, eggCycles: pokemon.species!.hatchCounter, genderRate: pokemon.species!.genderRate)
+        self.eggGroups = Array(pokemon.species!.eggGroups.map({$0.eggGroup!}))
+        self.stats = Array(pokemon.stats)
+        self.types = Array(pokemon.types.map({$0.type!.typeData}))
+    }
 }
 
 struct PokemonBreedingInfoView: View {
@@ -35,6 +42,7 @@ struct PokemonBreedingInfoView: View {
 
 struct PokemonBreedingInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        PokemonBreedingInfoView(breedingInfo: testBreedingInfo, color: .grass)
+        PokemonBreedingInfoView(breedingInfo: PokemonBreedingInfo(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!), color: .grass)
+            .previewLayout(.sizeThatFits)
     }
 }

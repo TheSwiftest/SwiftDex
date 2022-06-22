@@ -7,15 +7,10 @@
 
 import SwiftUI
 
-struct PokemonAbilityInfo {
-    let name: String
-    let isHidden: Bool
-}
-
 struct PokemonAbilitiesInfoView: View {
-    let slot1Ability: PokemonAbilityInfo
-    let slot2Ability: PokemonAbilityInfo?
-    let slot3Ability: PokemonAbilityInfo?
+    let slot1Ability: PokemonAbility
+    let slot2Ability: PokemonAbility?
+    let slot3Ability: PokemonAbility?
     let color: Color
     
     var body: some View {
@@ -63,7 +58,7 @@ struct PokemonAbilityInfoView: View {
 
 struct PokemonAbilitiesView_Previews: PreviewProvider {
     static var previews: some View {
-        PokemonAbilitiesInfoView(slot1Ability: PokemonAbilityInfo(name: "Overgrow", isHidden: false), slot2Ability: nil, slot3Ability: PokemonAbilityInfo(name: "Chlorophyll", isHidden: true), color: .grass)
+        PokemonAbilitiesInfoView(slot1Ability: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!.slot1Ability, slot2Ability: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!.slot2Ability, slot3Ability: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!.slot3Ability, color: .grass)
             .previewLayout(.sizeThatFits)
         PokemonAbilityInfoView(name: "Overgrow", isHidden: false, color: .grass)
             .previewLayout(.sizeThatFits)

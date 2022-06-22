@@ -8,14 +8,8 @@
 import SwiftUI
 
 struct MoveDetailView: View {
-    let move: MoveInfo
-
-    private var moveEffectText: String {
-        let effectText = move.effect
-
-        let effectTextParsed = effectText.replacingOccurrences(of: "$effect_chance", with: "\(move.effectChance ?? 0)").replacingOccurrences(of: "\n", with: " ")
-        return effectTextParsed
-    }
+    let move: Move
+    let versionGroup: VersionGroup
 
     private var powerText: String {
         guard let power = move.power else {
@@ -56,31 +50,31 @@ struct MoveDetailView: View {
                 VStack(alignment: .leading, spacing: 15) {
                     HStack {
                         Rectangle()
-                            .foregroundColor(move.type.color())
+                            .foregroundColor(move.type!.color)
                             .frame(height: 30)
                             .cornerRadius(15)
                             .overlay(
                                 HStack {
-                                    move.type.icon()
+                                    move.type!.icon
                                         .frame(width: 20, height: 20)
                                         .foregroundColor(Color(.white))
-                                    Text(move.type.text().uppercased())
+                                    Text(move.type!.identifier.uppercased())
                                         .font(.system(size: 18))
                                         .fontWeight(.bold)
                                         .foregroundColor(Color(.white))
                                 }
                             )
                         Rectangle()
-                            .foregroundColor(move.backgroundColor)
+                            .foregroundColor(move.damageClass!.backgroundColor)
                             .frame(height: 30)
                             .cornerRadius(15)
                             .overlay(
                                 HStack {
-                                    move.icon
+                                    move.damageClass!.icon
                                         .resizable()
                                         .frame(width: 20, height: 20)
-                                        .foregroundColor(move.color)
-                                    Text(move.damageClassName.capitalized)
+                                        .foregroundColor(move.damageClass!.color)
+                                    Text(move.damageClass!.name.capitalized)
                                         .font(.system(size: 18))
                                         .fontWeight(.bold)
                                         .foregroundColor(Color(.white))
@@ -88,7 +82,7 @@ struct MoveDetailView: View {
                             )
                     }
 
-                    Text(move.flavorText)
+                    Text(move.flavorText(for: versionGroup) ?? "No Flavor Text")
                         .font(.body)
 
                     PokemonDetailSectionHeader(text: "Stats")
@@ -128,11 +122,11 @@ struct MoveDetailView: View {
                     }
 
                     PokemonDetailSectionHeader(text: "Effect")
-                    Text(moveEffectText)
+                    Text(move.shortEffectText)
                         .font(.body)
 
                     PokemonDetailSectionHeader(text: "Target")
-                    Text(move.target)
+                    Text(move.target!.name)
                         .font(.body)
                 }
                 .padding(.horizontal)
@@ -144,7 +138,7 @@ struct MoveDetailView: View {
 
 struct MoveDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        MoveDetailView(move: tackle)
+        MoveDetailView(move: testRealm.object(ofType: Move.self, forPrimaryKey: 1)!, versionGroup: testRealm.object(ofType: VersionGroup.self, forPrimaryKey: 3)!)
             .previewLayout(.sizeThatFits)
     }
 }

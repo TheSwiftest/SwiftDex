@@ -7,24 +7,20 @@
 
 import SwiftUI
 
-struct SpeciesInfo {
+struct SpeciesInfoView: View {
     let id: Int
     let height: Int
     let weight: Int
-    let bodyShape: Int
+    let bodyShape: PokemonShape?
     let genus: String
-}
-
-struct SpeciesInfoView: View {
-    let speciesInfo: SpeciesInfo
     let color: Color
 
     private var heightInMetersText: String {
-        return String(format: "%.1f", CGFloat(speciesInfo.height) / 10)
+        return String(format: "%.1f", CGFloat(height) / 10)
     }
 
     private var weightInKGText: String {
-        return String(format: "%.1f", CGFloat(speciesInfo.weight) / 10)
+        return String(format: "%.1f", CGFloat(weight) / 10)
     }
 
     var body: some View {
@@ -44,9 +40,9 @@ struct SpeciesInfoView: View {
             }
             HStack(alignment: .lastTextBaseline) {
                 Group {
-                    SpeciesInfoImageView(image: Image("icon/bodyshape/Body\(speciesInfo.bodyShape)"), imageSize: 30, subtitle: "Shape", color: nil)
-                    SpeciesInfoImageView(image: Image("icon/footprint/F\(speciesInfo.id)"), imageSize: 30, subtitle: "Footprint", color: color)
-                    SpeciesInfoTextView(title: speciesInfo.genus.replacingOccurrences(of: " Pokémon", with: "").capitalized, subtitle: "Genus")
+                    SpeciesInfoImageView(image: bodyShape?.icon ?? Image("sprite/pokemon/0"), imageSize: 30, subtitle: "Shape", color: nil)
+                    SpeciesInfoImageView(image: Image("icon/footprint/F\(id)"), imageSize: 30, subtitle: "Footprint", color: color)
+                    SpeciesInfoTextView(title: genus.replacingOccurrences(of: " Pokémon", with: "").capitalized, subtitle: "Genus")
                 }
                 .frame(minWidth: 0, maxWidth: .infinity)
             }
@@ -88,7 +84,7 @@ struct SpeciesInfoImageView: View {
 
 struct PokemonSpeciesInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesInfoView(speciesInfo: bulbasaurSpeciesInfo, color: .grass)
+        SpeciesInfoView(id: 1, height: 160, weight: 160, bodyShape: testRealm.object(ofType: PokemonShape.self, forPrimaryKey: 1)!, genus: "Seed", color: .grass)
             .previewLayout(.sizeThatFits)
     }
 }

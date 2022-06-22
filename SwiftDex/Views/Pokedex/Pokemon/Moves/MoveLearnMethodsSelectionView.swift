@@ -7,17 +7,11 @@
 
 import SwiftUI
 
-struct MoveLearnMethod: Identifiable, Hashable {
-    let id: Int
-    let name: String
-    let description: String
-}
-
 struct MoveLearnMethodsSelectionView: View {
     
-    @Binding var selectedLearnMethod: MoveLearnMethod
+    @Binding var selectedLearnMethod: PokemonMoveMethod
     
-    let moveLearnMethods: [MoveLearnMethod]
+    let moveLearnMethods: [PokemonMoveMethod]
     
     var body: some View {
         VStack {
@@ -27,7 +21,7 @@ struct MoveLearnMethodsSelectionView: View {
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
-            Text(selectedLearnMethod.description)
+            Text(selectedLearnMethod.methodDescription)
                 .font(.caption2)
                 .foregroundColor(.secondary)
                 .minimumScaleFactor(0.5)
@@ -38,7 +32,7 @@ struct MoveLearnMethodsSelectionView: View {
 
 struct MoveLearnMethodsSelectionView_Previews: PreviewProvider {
     static var previews: some View {
-        MoveLearnMethodsSelectionView(selectedLearnMethod: .constant(levelUpLearnMoveMethod), moveLearnMethods: testMoveLearnMethods)
+        MoveLearnMethodsSelectionView(selectedLearnMethod: .constant(testRealm.object(ofType: PokemonMoveMethod.self, forPrimaryKey: 1)!), moveLearnMethods: Array(testRealm.objects(PokemonMoveMethod.self).filter({$0.id <= 4})))
             .previewLayout(.sizeThatFits)
     }
 }

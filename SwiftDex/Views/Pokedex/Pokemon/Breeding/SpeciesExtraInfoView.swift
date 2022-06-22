@@ -14,7 +14,7 @@ struct SpeciesExtraInfo {
     let growthRate: String
     let eggCycles: Int
     let genderRate: Int
-    
+
     var malePercentage: CGFloat {
         if genderRate == -1 {
             return 0
@@ -96,7 +96,7 @@ struct SpeciesExtraInfoView: View {
 
 struct SpeciesExtraInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeciesExtraInfoView(extraInfo: testSpeciesExtraInfo)
+        SpeciesExtraInfoView(extraInfo: PokemonBreedingInfo(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!).extraInfo)
             .previewLayout(.sizeThatFits)
     }
 }
