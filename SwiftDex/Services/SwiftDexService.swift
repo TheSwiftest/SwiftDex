@@ -9,7 +9,7 @@ import Foundation
 import RealmSwift
 
 class SwiftDexService: ObservableObject {
-    private let realm = try! Realm(configuration: Realm.Configuration(fileURL: URL(fileURLWithPath: Bundle.main.path(forResource: "swiftdex", ofType: "realm")!), readOnly: true))
+    private static let realm = try! Realm(configuration: Realm.Configuration(fileURL: URL(fileURLWithPath: Bundle.main.path(forResource: "swiftdex", ofType: "realm")!), readOnly: true))
     
     @Published var selectedVersionGroup: VersionGroup {
         didSet {
@@ -34,7 +34,7 @@ class SwiftDexService: ObservableObject {
     @Published var filterSearchText: String = ""
     
     var pokemonDexNumbers: [PokemonDexNumber] {
-        var query = realm.objects(PokemonDexNumber.self)
+        var query = SwiftDexService.realm.objects(PokemonDexNumber.self)
         
         if let pokedex = selectedPokedex {
             query = query.filter("pokedex.id == \(pokedex.id)")
@@ -51,7 +51,7 @@ class SwiftDexService: ObservableObject {
     }
     
     var moves: [Move] {
-        var query = realm.objects(Move.self).filter("generation.id <= \(selectedVersionGroup.generation!.id)")
+        var query = SwiftDexService.realm.objects(Move.self).filter("generation.id <= \(selectedVersionGroup.generation!.id)")
         
         if !filterSearchText.isEmpty {
             query = query.filter("ANY names.name CONTAINS [c] \"\(filterSearchText)\"")
@@ -65,22 +65,22 @@ class SwiftDexService: ObservableObject {
     }
         
     var generations: [Generation] {
-        return Array(realm.objects(Generation.self))
+        return Array(SwiftDexService.realm.objects(Generation.self))
     }
     
     var moveDamageClasses: [MoveDamageClass] {
-        return Array(realm.objects(MoveDamageClass.self))
+        return Array(SwiftDexService.realm.objects(MoveDamageClass.self))
     }
         
     init() {
-        let mostRecentVersionGroup = realm.object(ofType: VersionGroup.self, forPrimaryKey: 20)!
+        let mostRecentVersionGroup = SwiftDexService.realm.object(ofType: VersionGroup.self, forPrimaryKey: 20)!
         self.selectedVersionGroup = mostRecentVersionGroup
         self.selectedVersion = mostRecentVersionGroup.versions.first!
     }
     
     func speciesVariations(for pokemon: Pokemon) -> [Pokemon] {
         
-        var query = realm.objects(Pokemon.self).filter("species.id == \(pokemon.species!.id) AND id != \(pokemon.id)")
+        var query = SwiftDexService.realm.objects(Pokemon.self).filter("species.id == \(pokemon.species!.id) AND id != \(pokemon.id)")
         query = query.filter("NOT identifier CONTAINS '-gmax' AND NOT identifier CONTAINS '-mega'")
         query = query.filter("ANY forms.introducedInVersionGroup.id <= \(selectedVersionGroup.id)")
         
@@ -88,13 +88,13 @@ class SwiftDexService: ObservableObject {
     }
     
     func alternateForms(for pokemon: Pokemon) -> [PokemonForm] {
-        let query = realm.objects(PokemonForm.self).filter("pokemon.id == \(pokemon.id)").filter("introducedInVersionGroup.id <= \(selectedVersionGroup.id)")
+        let query = SwiftDexService.realm.objects(PokemonForm.self).filter("pokemon.id == \(pokemon.id)").filter("introducedInVersionGroup.id <= \(selectedVersionGroup.id)")
         
         return Array(query)
     }
     
     func moves(for pokemon: Pokemon) -> [PokemonMove] {
-        let query = realm.objects(PokemonMove.self).filter("pokemon.id == \(pokemon.id) AND versionGroup.id == \(selectedVersionGroup.id)")
+        let query = SwiftDexService.realm.objects(PokemonMove.self).filter("pokemon.id == \(pokemon.id) AND versionGroup.id == \(selectedVersionGroup.id)")
         
         return Array(query)
     }
@@ -102,80 +102,124 @@ class SwiftDexService: ObservableObject {
 
 // Team Builder and Battle Sim helpers
 extension SwiftDexService {
-    var female: Gender {
-        return realm.object(ofType: Gender.self, forPrimaryKey: 1)!
+    static var female: Gender {
+        return Self.realm.object(ofType: Gender.self, forPrimaryKey: 1)!
     }
 
-    var male: Gender {
-        return realm.object(ofType: Gender.self, forPrimaryKey: 2)!
+    static var male: Gender {
+        return Self.realm.object(ofType: Gender.self, forPrimaryKey: 2)!
     }
     
-    var genderless: Gender {
-        return realm.object(ofType: Gender.self, forPrimaryKey: 3)!
+    static var genderless: Gender {
+        return Self.realm.object(ofType: Gender.self, forPrimaryKey: 3)!
     }
     
-    func gender(with id: Int?) -> Gender? {
+    static func gender(with id: Int?) -> Gender? {
         guard let id = id else { return nil }
-        return realm.objects(Gender.self).filter("id == \(id)").first
+        return Self.realm.objects(Gender.self).filter("id == \(id)").first
     }
     
-    var showdownFormats: Results<ShowdownFormat> {
-        return realm.objects(ShowdownFormat.self)
+    static var showdownFormats: Results<ShowdownFormat> {
+        return Self.realm.objects(ShowdownFormat.self)
     }
     
-    func showdownCategories(for generation: Generation?) -> Results<ShowdownCategory> {
+    static func showdownCategories(for generation: Generation?) -> Results<ShowdownCategory> {
         guard let generation = generation else { return showdownCategories }
         return showdownCategories.filter("ANY formats.generation.id == \(generation.id)")
     }
 
-    var showdownCategories: Results<ShowdownCategory> {
-        return realm.objects(ShowdownCategory.self)
+    static var showdownCategories: Results<ShowdownCategory> {
+        return Self.realm.objects(ShowdownCategory.self)
     }
     
-    func move(with name: String?) -> Move? {
+    static func move(with name: String?) -> Move? {
         guard var name = name else { return nil }
 
         if name.starts(with: "Hidden Power") {
             name = "Hidden Power"
         }
 
-        return realm.objects(MoveName.self).filter("name == \"\(name)\"").first?.move
+        return Self.realm.objects(MoveName.self).filter("name == \"\(name)\"").first?.move
     }
     
-    func nature(with name: String?) -> Nature? {
-        guard let name = name else { return nil }
-        return realm.objects(NatureName.self).filter("name == \"\(name)\"").first?.nature
+    static var natures: [Nature] {
+        return Array(Self.realm.objects(Nature.self))
     }
+    
+    static func nature(with name: String?) -> Nature? {
+        guard let name = name else { return nil }
+        return Self.realm.objects(NatureName.self).filter("name == \"\(name)\"").first?.nature
+    }
+    
+    static func nature(withId id: Int) -> Nature? {
+        return Self.realm.object(ofType: Nature.self, forPrimaryKey: id)
+    }
+    
+    static var items: [Item] {
+        return Array(Self.realm.objects(Item.self))
+    }
+    
+    static func item(with name: String?) -> Item? {
+        guard let name = name else { return nil }
+        return Self.realm.objects(ItemName.self).filter("name == \"\(name)\"").first?.item
+    }
+    
+    static func item(withId id: Int) -> Item? {
+        return Self.realm.object(ofType: Item.self, forPrimaryKey: id)
+    }
+    
+    static var pokemon: [Pokemon] {
+        return Array(Self.realm.objects(Pokemon.self).sorted(byKeyPath: "species.id"))
+    }
+    
+    static func pokemon(matching text: String?) -> [Pokemon] {
+        guard let text = text else { return Self.pokemon }
 
-    func item(with name: String?) -> Item? {
-        guard let name = name else { return nil }
-        return realm.objects(ItemName.self).filter("name == \"\(name)\"").first?.item
+        if text.isEmpty { return Self.pokemon }
+
+        return Array(realm.objects(Pokemon.self).filter("ANY species.names.name CONTAINS [c] \"\(text)\" OR ANY forms.names.pokemonName CONTAINS [c] \"\(text)\"").sorted(byKeyPath: "species.id"))
     }
     
-    func pokemon(withId id: Int) -> Pokemon? {
-        return realm.object(ofType: Pokemon.self, forPrimaryKey: id)
+    static func pokemon(withId id: Int) -> Pokemon? {
+        return Self.realm.object(ofType: Pokemon.self, forPrimaryKey: id)
     }
     
-    func pokemon(with name: String?) -> Pokemon? {
+    static func pokemon(with name: String?) -> Pokemon? {
         guard let name = name else { return nil }
         if name.isEmpty { return nil }
-        if let pokemon = realm.objects(PokemonFormName.self).filter("pokemonName == '\(name)'").first?.pokemonForm?.pokemon {
+        if let pokemon = Self.realm.objects(PokemonFormName.self).filter("pokemonName == '\(name)'").first?.pokemonForm?.pokemon {
             return pokemon
         }
 
-        if let pokemon = realm.objects(PokemonSpeciesName.self).filter("name == '\(name)'").first?.pokemonSpecies?.defaultForm {
+        if let pokemon = Self.realm.objects(PokemonSpeciesName.self).filter("name == '\(name)'").first?.pokemonSpecies?.defaultForm {
             return pokemon
         }
 
-        if let pokemon = realm.objects(Pokemon.self).filter("identifier == '\(name.lowercased())'").first {
+        if let pokemon = Self.realm.objects(Pokemon.self).filter("identifier == '\(name.lowercased())'").first {
             return pokemon
         }
 
         return nil
     }
 
-    func ability(with name: String?) -> Ability? {
+    static func ability(with name: String?) -> Ability? {
         guard let name = name else { return nil }
-        return realm.objects(AbilityName.self).filter("name == '\(name)'").first?.ability
+        return Self.realm.objects(AbilityName.self).filter("name == '\(name)'").first?.ability
+    }
+    
+    private static func moves(matching text: String?) -> Results<Move> {
+        let allMoves = realm.objects(Move.self).sorted(byKeyPath: "identifier")
+        guard let text = text else { return allMoves }
+        if text.isEmpty { return allMoves }
+        return allMoves.filter("ANY names.name CONTAINS [c] \"\(text)\"")
+    }
+    
+    static func moves(matching text: String?, for pokemon: Pokemon?) -> [Move] {
+        guard let pokemon = pokemon else { return moves(matching: text).compactMap({ $0 }) }
+
+        let results = pokemon.moves.filter("versionGroup.id == 18").distinct(by: ["move.id"])
+        guard let text = text, !text.isEmpty else { return results.compactMap({ $0.move }) }
+
+        return results.filter("ANY move.names.name CONTAINS [c] \"\(text)\"").compactMap({ $0.move })
     }
 }

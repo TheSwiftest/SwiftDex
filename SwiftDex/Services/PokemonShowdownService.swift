@@ -18,12 +18,9 @@ class PokemonShowdownService: ObservableObject {
         "Spe": 5
     ]
 
-    private let swiftDexService: SwiftDexService
-
     @Published var teams: [Team] = []
 
-    init(swiftDexService: SwiftDexService? = nil) {
-        self.swiftDexService = swiftDexService ?? SwiftDexService()
+    init() {
         self.teams = loadTeams()
     }
 
@@ -157,30 +154,30 @@ class PokemonShowdownService: ObservableObject {
 
         let movesData = pokemonData["moves"] as? [String?] ?? []
 
-        let firstMove = swiftDexService.move(with: movesData[0])
-        let secondMove = swiftDexService.move(with: movesData[1])
-        let thirdMove = swiftDexService.move(with: movesData[2])
-        let fourthMove = swiftDexService.move(with: movesData[3])
-        let ability = swiftDexService.ability(with: pokemonData["Ability"] as? String)
-        let nature = swiftDexService.nature(with: pokemonData["nature"] as? String)
-        let item = swiftDexService.item(with: pokemonData["item"] as? String)
+        let firstMove = SwiftDexService.move(with: movesData[0])
+        let secondMove = SwiftDexService.move(with: movesData[1])
+        let thirdMove = SwiftDexService.move(with: movesData[2])
+        let fourthMove = SwiftDexService.move(with: movesData[3])
+        let ability = SwiftDexService.ability(with: pokemonData["Ability"] as? String)
+        let nature = SwiftDexService.nature(with: pokemonData["nature"] as? String)
+        let item = SwiftDexService.item(with: pokemonData["item"] as? String)
         let shiny = pokemonData["Shiny"] as? String == "Yes"
 
         let happiness = Int(pokemonData["Happiness"] as? String ?? "255")!
         let level = Int(pokemonData["Level"] as? String ?? "100")!
 
-        guard let pokemon = swiftDexService.pokemon(with: pokemonData["pokemon"] as? String) else {
+        guard let pokemon = SwiftDexService.pokemon(with: pokemonData["pokemon"] as? String) else {
             return nil
         }
 
         var gender: Gender?
 
         if pokemonData["gender"] as? String == "M" {
-            gender = swiftDexService.male
+            gender = SwiftDexService.male
         }
 
         if pokemonData["gender"] as? String == "F" {
-            gender = swiftDexService.female
+            gender = SwiftDexService.female
         }
 
         return TeamPokemon(pokemon: pokemon, nickname: pokemonData["nickname"] as? String ?? "", gender: gender, ability: ability,
@@ -205,7 +202,7 @@ class PokemonShowdownService: ObservableObject {
             let formatIdentifier = components.removeFirst().trimmingCharacters(in: ["[", "]"])
             let name = components.joined(separator: " ")
 
-            let format = swiftDexService.showdownFormats.first(where: { $0.identifier == formatIdentifier })
+            let format = SwiftDexService.showdownFormats.first(where: { $0.identifier == formatIdentifier })
 
             var team = Team(name: name, format: format, pokemon: [])
             for data in pokemonData {

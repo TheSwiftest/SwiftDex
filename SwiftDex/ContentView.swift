@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var swiftDexService = SwiftDexService()
+    @StateObject var pokemonShowdownService = PokemonShowdownService()
     
     var body: some View {
         TabView {
@@ -17,7 +18,16 @@ struct ContentView: View {
                     Image("icon/tab/dex")
                     Text("SwiftDex")
                 }
-                
+            TeamBuilderView().environmentObject(pokemonShowdownService)
+                .tabItem {
+                    Image("icon/tab/team_builder")
+                    Text("Team Builder")
+                }
+            BattleSimulatorView().environmentObject(pokemonShowdownService)
+                .tabItem {
+                    Image("icon/tab/battle_sim")
+                    Text("Team Builder")
+                }
         }
     }
 }

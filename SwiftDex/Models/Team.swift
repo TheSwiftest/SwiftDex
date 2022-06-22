@@ -108,7 +108,7 @@ struct Team: Identifiable, Equatable, Codable {
 
     init(name: String = "", format: ShowdownFormat? = nil, pokemon: [TeamPokemon] = []) {
         self.name = name
-        self.format = format ?? swiftDexService.showdownFormats.first!
+        self.format = format ?? SwiftDexService.showdownFormats.first!
         self.pokemon = pokemon
     }
 
@@ -127,9 +127,9 @@ struct Team: Identifiable, Equatable, Codable {
         self.pokemon = try container.decode([TeamPokemon].self, forKey: .pokemon)
 
         if let formatIdentifier = try? container.decode(String.self, forKey: .format) {
-            self.format = swiftDexService.showdownFormats.first(where: { $0.identifier == formatIdentifier })!
+            self.format = SwiftDexService.showdownFormats.first(where: { $0.identifier == formatIdentifier })!
         } else {
-            self.format = swiftDexService.showdownFormats.first!
+            self.format = SwiftDexService.showdownFormats.first!
         }
     }
 
@@ -249,21 +249,21 @@ struct TeamPokemon: Identifiable, Equatable, Codable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.pokemon = swiftDexService.pokemon(with: try container.decode(String.self, forKey: .pokemonName))!
+        self.pokemon = SwiftDexService.pokemon(with: try container.decode(String.self, forKey: .pokemonName))!
         self.nickname = try container.decode(String.self, forKey: .nickname)
 
-        self.gender = swiftDexService.gender(with: try? container.decode(Int.self, forKey: .genderId))
-        self.ability = swiftDexService.ability(with: try? container.decode(String.self, forKey: .abilityName))
-        self.firstMove = swiftDexService.move(with: try? container.decode(String.self, forKey: .firstMoveName))
-        self.secondMove = swiftDexService.move(with: try? container.decode(String.self, forKey: .secondMoveName))
-        self.thirdMove = swiftDexService.move(with: try? container.decode(String.self, forKey: .thirdMoveName))
-        self.fourthMove = swiftDexService.move(with: try? container.decode(String.self, forKey: .fourthMoveName))
+        self.gender = SwiftDexService.gender(with: try? container.decode(Int.self, forKey: .genderId))
+        self.ability = SwiftDexService.ability(with: try? container.decode(String.self, forKey: .abilityName))
+        self.firstMove = SwiftDexService.move(with: try? container.decode(String.self, forKey: .firstMoveName))
+        self.secondMove = SwiftDexService.move(with: try? container.decode(String.self, forKey: .secondMoveName))
+        self.thirdMove = SwiftDexService.move(with: try? container.decode(String.self, forKey: .thirdMoveName))
+        self.fourthMove = SwiftDexService.move(with: try? container.decode(String.self, forKey: .fourthMoveName))
         self.level = try container.decode(Int.self, forKey: .level)
         self.shiny = try container.decode(Bool.self, forKey: .shiny)
-        self.item = swiftDexService.item(with: try? container.decode(String.self, forKey: .itemName))
+        self.item = SwiftDexService.item(with: try? container.decode(String.self, forKey: .itemName))
         self.evs = try container.decode([Int].self, forKey: .evs)
         self.ivs = try container.decode([Int].self, forKey: .ivs)
-        self.nature = swiftDexService.nature(with: try? container.decode(String.self, forKey: .natureName))
+        self.nature = SwiftDexService.nature(with: try? container.decode(String.self, forKey: .natureName))
         self.happiness = try container.decode(Int.self, forKey: .happiness)
     }
 
@@ -311,35 +311,35 @@ struct TeamPokemon: Identifiable, Equatable, Codable {
 }
 
 let testTeams: [Team] = [
-    Team(name: "Team 1", format: swiftDexService.showdownFormats.first, pokemon: [
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!)
+    Team(name: "Team 1", format: SwiftDexService.showdownFormats.first, pokemon: [
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!),
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!),
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!),
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!),
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!)
     ]),
     Team(name: "Team 2", pokemon: [
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!)
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!),
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!),
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!),
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!),
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!),
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!)
     ]),
     Team(name: "Team 3", pokemon: [
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!)
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!),
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!),
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!),
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!),
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!),
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!)
     ]),
     Team(name: "Team 4", pokemon: [
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!),
-        TeamPokemon(pokemon: swiftDexService.pokemon(withId: Int.random(in: 1...800))!)
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!),
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!),
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!),
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!),
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!),
+        TeamPokemon(pokemon: SwiftDexService.pokemon(withId: Int.random(in: 1...800))!)
     ])
 ]

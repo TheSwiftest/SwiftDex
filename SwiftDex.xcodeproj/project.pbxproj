@@ -52,6 +52,24 @@
 		E89A19D62863634900EBFFDA /* PokemonShowdownService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19D52863634900EBFFDA /* PokemonShowdownService.swift */; };
 		E89A19D8286363CF00EBFFDA /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19D7286363CF00EBFFDA /* Team.swift */; };
 		E89A19DB286382A800EBFFDA /* swiftdex.realm in Resources */ = {isa = PBXBuildFile; fileRef = E89A19DA286382A800EBFFDA /* swiftdex.realm */; };
+		E89A19DF2863861F00EBFFDA /* MemberNicknameGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19DE2863861F00EBFFDA /* MemberNicknameGenderView.swift */; };
+		E89A19E12863889100EBFFDA /* MemberLevelHappyShinyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19E02863889100EBFFDA /* MemberLevelHappyShinyView.swift */; };
+		E89A19E32863895000EBFFDA /* MemberAbilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19E22863895000EBFFDA /* MemberAbilityView.swift */; };
+		E89A19E528638B0E00EBFFDA /* MemberMoveSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19E428638B0E00EBFFDA /* MemberMoveSetView.swift */; };
+		E89A19E728638E8500EBFFDA /* MemberSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19E628638E8500EBFFDA /* MemberSummaryView.swift */; };
+		E89A19E928638F4300EBFFDA /* MemberNatureAndItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19E828638F4300EBFFDA /* MemberNatureAndItemView.swift */; };
+		E89A19EB2863900600EBFFDA /* ItemSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19EA2863900600EBFFDA /* ItemSummaryView.swift */; };
+		E89A19ED286392C300EBFFDA /* MemberStatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19EC286392C300EBFFDA /* MemberStatsView.swift */; };
+		E89A19EF2863937B00EBFFDA /* MemberIVsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19EE2863937B00EBFFDA /* MemberIVsView.swift */; };
+		E89A19F12863940200EBFFDA /* MemberEVsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19F02863940200EBFFDA /* MemberEVsView.swift */; };
+		E89A19F32863946000EBFFDA /* MemberDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19F22863946000EBFFDA /* MemberDetailView.swift */; };
+		E89A19F52863966A00EBFFDA /* TeamMembersDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19F42863966A00EBFFDA /* TeamMembersDetailView.swift */; };
+		E89A19F72863975700EBFFDA /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19F62863975700EBFFDA /* Array+Extensions.swift */; };
+		E89A19F928639A4C00EBFFDA /* TeamDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19F828639A4C00EBFFDA /* TeamDetailView.swift */; };
+		E89A19FB28639AEE00EBFFDA /* TeamSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19FA28639AEE00EBFFDA /* TeamSummaryView.swift */; };
+		E89A19FD28639B4E00EBFFDA /* TeamBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19FC28639B4E00EBFFDA /* TeamBuilderView.swift */; };
+		E89A1A0128639C5500EBFFDA /* BattleSimulatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19FF28639C5000EBFFDA /* BattleSimulatorViewModel.swift */; };
+		E89A1A0228639C5500EBFFDA /* BattleSimulatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A1A0028639C5500EBFFDA /* BattleSimulatorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -118,6 +136,24 @@
 		E89A19D52863634900EBFFDA /* PokemonShowdownService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonShowdownService.swift; sourceTree = "<group>"; };
 		E89A19D7286363CF00EBFFDA /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		E89A19DA286382A800EBFFDA /* swiftdex.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = swiftdex.realm; sourceTree = "<group>"; };
+		E89A19DE2863861F00EBFFDA /* MemberNicknameGenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberNicknameGenderView.swift; sourceTree = "<group>"; };
+		E89A19E02863889100EBFFDA /* MemberLevelHappyShinyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberLevelHappyShinyView.swift; sourceTree = "<group>"; };
+		E89A19E22863895000EBFFDA /* MemberAbilityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberAbilityView.swift; sourceTree = "<group>"; };
+		E89A19E428638B0E00EBFFDA /* MemberMoveSetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberMoveSetView.swift; sourceTree = "<group>"; };
+		E89A19E628638E8500EBFFDA /* MemberSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberSummaryView.swift; sourceTree = "<group>"; };
+		E89A19E828638F4300EBFFDA /* MemberNatureAndItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberNatureAndItemView.swift; sourceTree = "<group>"; };
+		E89A19EA2863900600EBFFDA /* ItemSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSummaryView.swift; sourceTree = "<group>"; };
+		E89A19EC286392C300EBFFDA /* MemberStatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberStatsView.swift; sourceTree = "<group>"; };
+		E89A19EE2863937B00EBFFDA /* MemberIVsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberIVsView.swift; sourceTree = "<group>"; };
+		E89A19F02863940200EBFFDA /* MemberEVsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberEVsView.swift; sourceTree = "<group>"; };
+		E89A19F22863946000EBFFDA /* MemberDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDetailView.swift; sourceTree = "<group>"; };
+		E89A19F42863966A00EBFFDA /* TeamMembersDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamMembersDetailView.swift; sourceTree = "<group>"; };
+		E89A19F62863975700EBFFDA /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
+		E89A19F828639A4C00EBFFDA /* TeamDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetailView.swift; sourceTree = "<group>"; };
+		E89A19FA28639AEE00EBFFDA /* TeamSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSummaryView.swift; sourceTree = "<group>"; };
+		E89A19FC28639B4E00EBFFDA /* TeamBuilderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamBuilderView.swift; sourceTree = "<group>"; };
+		E89A19FF28639C5000EBFFDA /* BattleSimulatorViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleSimulatorViewModel.swift; sourceTree = "<group>"; };
+		E89A1A0028639C5500EBFFDA /* BattleSimulatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BattleSimulatorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +259,7 @@
 			isa = PBXGroup;
 			children = (
 				E840B33027F8CDA200630F87 /* Color+Extensions.swift */,
+				E89A19F62863975700EBFFDA /* Array+Extensions.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -232,6 +269,8 @@
 			children = (
 				E88FB0E3280133350030021F /* Components */,
 				E840B33327F8CF8600630F87 /* Pokedex */,
+				E89A19DC286385D700EBFFDA /* Team Builder */,
+				E89A19FE28639C3A00EBFFDA /* BattleSimulator */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -340,8 +379,47 @@
 		E89A19C6285F9A1800EBFFDA /* Items */ = {
 			isa = PBXGroup;
 			children = (
+				E89A19EA2863900600EBFFDA /* ItemSummaryView.swift */,
 			);
 			path = Items;
+			sourceTree = "<group>";
+		};
+		E89A19DC286385D700EBFFDA /* Team Builder */ = {
+			isa = PBXGroup;
+			children = (
+				E89A19FA28639AEE00EBFFDA /* TeamSummaryView.swift */,
+				E89A19F828639A4C00EBFFDA /* TeamDetailView.swift */,
+				E89A19F42863966A00EBFFDA /* TeamMembersDetailView.swift */,
+				E89A19DD2863860C00EBFFDA /* Member */,
+				E89A19FC28639B4E00EBFFDA /* TeamBuilderView.swift */,
+			);
+			path = "Team Builder";
+			sourceTree = "<group>";
+		};
+		E89A19DD2863860C00EBFFDA /* Member */ = {
+			isa = PBXGroup;
+			children = (
+				E89A19F22863946000EBFFDA /* MemberDetailView.swift */,
+				E89A19F02863940200EBFFDA /* MemberEVsView.swift */,
+				E89A19EE2863937B00EBFFDA /* MemberIVsView.swift */,
+				E89A19EC286392C300EBFFDA /* MemberStatsView.swift */,
+				E89A19E828638F4300EBFFDA /* MemberNatureAndItemView.swift */,
+				E89A19E628638E8500EBFFDA /* MemberSummaryView.swift */,
+				E89A19E428638B0E00EBFFDA /* MemberMoveSetView.swift */,
+				E89A19E22863895000EBFFDA /* MemberAbilityView.swift */,
+				E89A19E02863889100EBFFDA /* MemberLevelHappyShinyView.swift */,
+				E89A19DE2863861F00EBFFDA /* MemberNicknameGenderView.swift */,
+			);
+			path = Member;
+			sourceTree = "<group>";
+		};
+		E89A19FE28639C3A00EBFFDA /* BattleSimulator */ = {
+			isa = PBXGroup;
+			children = (
+				E89A1A0028639C5500EBFFDA /* BattleSimulatorView.swift */,
+				E89A19FF28639C5000EBFFDA /* BattleSimulatorViewModel.swift */,
+			);
+			path = BattleSimulator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -484,8 +562,11 @@
 			files = (
 				E88FB0EF28089F6C0030021F /* PokemonListView.swift in Sources */,
 				E840B35A27FBB32800630F87 /* MoveSummaryInfoView.swift in Sources */,
+				E89A19FD28639B4E00EBFFDA /* TeamBuilderView.swift in Sources */,
 				E88FB0DE2800A52A0030021F /* DexCategoryView.swift in Sources */,
+				E89A19EF2863937B00EBFFDA /* MemberIVsView.swift in Sources */,
 				E840B35427FB68BF00630F87 /* PokedexView.swift in Sources */,
+				E89A19EB2863900600EBFFDA /* ItemSummaryView.swift in Sources */,
 				E840B34027FA17A400630F87 /* StatsInfoView.swift in Sources */,
 				E840B34227FA1F9D00630F87 /* TestData.swift in Sources */,
 				E840B35627FBB01F00630F87 /* MovesInfoView.swift in Sources */,
@@ -493,25 +574,39 @@
 				E840B34B27FB598A00630F87 /* EVYieldsInfoView.swift in Sources */,
 				E840B34F27FB5FF000630F87 /* EggGroupsInfoView.swift in Sources */,
 				E840B35827FBB0A000630F87 /* MoveLearnMethodsSelectionView.swift in Sources */,
+				E89A19E728638E8500EBFFDA /* MemberSummaryView.swift in Sources */,
+				E89A19E32863895000EBFFDA /* MemberAbilityView.swift in Sources */,
 				E840B33127F8CDA200630F87 /* Color+Extensions.swift in Sources */,
 				E88FB0E22800EC020030021F /* SpeciesVariationsView.swift in Sources */,
 				E840B34727FB573600630F87 /* BreedingInfoView.swift in Sources */,
 				E88FB0E52801334C0030021F /* DetailSectionHeaderView.swift in Sources */,
+				E89A19DF2863861F00EBFFDA /* MemberNicknameGenderView.swift in Sources */,
+				E89A19F12863940200EBFFDA /* MemberEVsView.swift in Sources */,
 				E840B2FE27F8C9FE00630F87 /* ContentView.swift in Sources */,
 				E840B2FC27F8C9FE00630F87 /* SwiftDexApp.swift in Sources */,
+				E89A19ED286392C300EBFFDA /* MemberStatsView.swift in Sources */,
 				E840B33727F8D02F00630F87 /* PokemonSummaryView.swift in Sources */,
 				E840B33D27FA13C600630F87 /* BasicInfoView.swift in Sources */,
 				E88FB0ED28089F310030021F /* BlankView.swift in Sources */,
+				E89A19E12863889100EBFFDA /* MemberLevelHappyShinyView.swift in Sources */,
 				E88FB0DB27FCADB50030021F /* MoveDetailView.swift in Sources */,
 				E840B32C27F8CCE300630F87 /* RealmDataModels.swift in Sources */,
 				E89A19D62863634900EBFFDA /* PokemonShowdownService.swift in Sources */,
+				E89A19F72863975700EBFFDA /* Array+Extensions.swift in Sources */,
+				E89A19FB28639AEE00EBFFDA /* TeamSummaryView.swift in Sources */,
 				E89A19D8286363CF00EBFFDA /* Team.swift in Sources */,
+				E89A19E928638F4300EBFFDA /* MemberNatureAndItemView.swift in Sources */,
 				E88FB0EB2801ECB90030021F /* SwiftDexService.swift in Sources */,
+				E89A1A0228639C5500EBFFDA /* BattleSimulatorView.swift in Sources */,
+				E89A1A0128639C5500EBFFDA /* BattleSimulatorViewModel.swift in Sources */,
 				E88FB0E02800A9330030021F /* PokedexSearchView.swift in Sources */,
 				E840B32E27F8CD3100630F87 /* TypeEffectivenessTable.swift in Sources */,
 				E89A19CF2860EB2D00EBFFDA /* VersionSelectionView.swift in Sources */,
 				E840B35227FB61BD00630F87 /* PokemonInfoView.swift in Sources */,
+				E89A19F928639A4C00EBFFDA /* TeamDetailView.swift in Sources */,
 				E88FB0F22808A0580030021F /* OtherModels.swift in Sources */,
+				E89A19F52863966A00EBFFDA /* TeamMembersDetailView.swift in Sources */,
+				E89A19F32863946000EBFFDA /* MemberDetailView.swift in Sources */,
 				E840B33927FA0FEC00630F87 /* SpeciesInfoView.swift in Sources */,
 				E840B34D27FB5C9000630F87 /* SpeciesExtraInfoView.swift in Sources */,
 				E840B34927FB574C00630F87 /* TypeWeaknessesInfoView.swift in Sources */,
@@ -519,6 +614,7 @@
 				E840B33B27FA137100630F87 /* AbilitiesInfoView.swift in Sources */,
 				E88FB0E72801337C0030021F /* ClearButton.swift in Sources */,
 				E88FB0E9280136320030021F /* PokedexFilterView.swift in Sources */,
+				E89A19E528638B0E00EBFFDA /* MemberMoveSetView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
