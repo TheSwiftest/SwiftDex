@@ -92,12 +92,12 @@ struct MoveSummaryInfoView: View {
     }
 }
 
-struct MoveSummaryInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            MoveSummaryInfoView(move: testRealm.object(ofType: Move.self, forPrimaryKey: 1)!, subtitle: nil)
-            MoveSummaryInfoView(move: testRealm.object(ofType: Move.self, forPrimaryKey: 1)!, subtitle: "Level 1")
-        }
-        .previewLayout(.sizeThatFits)
-    }
-}
+//struct MoveSummaryInfoView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Group {
+//            MoveSummaryInfoView(move: testRealm.object(ofType: Move.self, forPrimaryKey: 1)!, subtitle: nil)
+//            MoveSummaryInfoView(move: testRealm.object(ofType: Move.self, forPrimaryKey: 1)!, subtitle: "Level 1")
+//        }
+//        .previewLayout(.sizeThatFits)
+//    }
+//}

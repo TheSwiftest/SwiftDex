@@ -57,12 +57,12 @@ struct PokemonStatInfoView: View {
 }
 
 
-struct PokemonStatsInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        PokemonStatsInfoView(stats: Array(testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!.stats),
-                             color: .grass)
-            .previewLayout(.sizeThatFits)
-        PokemonStatInfoView(name: "HP", color: .grass, baseStat: 60, max: 255)
-            .previewLayout(.sizeThatFits)
-    }
-}
+//struct PokemonStatsInfoView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PokemonStatsInfoView(stats: Array(testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!.stats),
+//                             color: .grass)
+//            .previewLayout(.sizeThatFits)
+//        PokemonStatInfoView(name: "HP", color: .grass, baseStat: 60, max: 255)
+//            .previewLayout(.sizeThatFits)
+//    }
+//}

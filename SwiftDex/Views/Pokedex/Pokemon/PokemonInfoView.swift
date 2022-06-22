@@ -44,8 +44,8 @@ struct PokemonInfoView: View {
     }
 }
 
-struct PokemonInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        PokemonInfoView(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!, pokedexNumber: 1, version: testRealm.object(ofType: Version.self, forPrimaryKey: 1)!, speciesVariations: [], alternateForms: [], moveLearnMethods: Array(testRealm.objects(PokemonMoveMethod.self).filter({$0.id <= 4})), pokemonMoves: Array(testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!.moves.filter({$0.versionGroup!.id == 4})))
-    }
-}
+//struct PokemonInfoView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PokemonInfoView(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!, pokedexNumber: 1, version: testRealm.object(ofType: Version.self, forPrimaryKey: 1)!, speciesVariations: [], alternateForms: [], moveLearnMethods: Array(testRealm.objects(PokemonMoveMethod.self).filter({$0.id <= 4})), pokemonMoves: Array(testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!.moves.filter({$0.versionGroup!.id == 4})))
+//    }
+//}

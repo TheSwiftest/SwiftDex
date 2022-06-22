@@ -180,9 +180,9 @@ struct MoveDamageClassSelectionView: View {
     }
 }
 
-struct PokedexFilterView_Previews: PreviewProvider {
-    static var previews: some View {
-        PokedexFilterView(generations: Array(testRealm.objects(Generation.self)), moveDamageClasses: Array(testRealm.objects(MoveDamageClass.self)), selectedVersionGroup: .constant(testRealm.object(ofType: VersionGroup.self, forPrimaryKey: 1)!), selectedVersion: .constant(testRealm.object(ofType: Version.self, forPrimaryKey: 1)!), selectedPokedex: testRealm.object(ofType: Pokedex.self, forPrimaryKey: 1)!, selectedMoveDamageClass: nil, selectedDexCategory: .pokémon, pokedexSelectedViewSourceFrame: .constant(.zero), showPokedexSelectionView: .constant(false), moveDamageClassSelectedViewSourceFrame: .constant(.zero), showMoveDamageClassSelectionView: .constant(false))
-            .previewLayout(.sizeThatFits)
-    }
-}
+//struct PokedexFilterView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PokedexFilterView(generations: Array(testRealm.objects(Generation.self)), moveDamageClasses: Array(testRealm.objects(MoveDamageClass.self)), selectedVersionGroup: .constant(testRealm.object(ofType: VersionGroup.self, forPrimaryKey: 1)!), selectedVersion: .constant(testRealm.object(ofType: Version.self, forPrimaryKey: 1)!), selectedPokedex: testRealm.object(ofType: Pokedex.self, forPrimaryKey: 1)!, selectedMoveDamageClass: nil, selectedDexCategory: .pokémon, pokedexSelectedViewSourceFrame: .constant(.zero), showPokedexSelectionView: .constant(false), moveDamageClassSelectedViewSourceFrame: .constant(.zero), showMoveDamageClassSelectionView: .constant(false))
+//            .previewLayout(.sizeThatFits)
+//    }
+//}

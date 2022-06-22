@@ -68,9 +68,9 @@ struct MovesInfoView: View {
     }
 }
 
-struct MovesInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        MovesInfoView(moveLearnMethods: Array(testRealm.object(ofType: VersionGroup.self, forPrimaryKey: 3)!.pokemonMoveMethods.map({$0.pokemonMoveMethod!})), pokemonMoves: Array(testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!.moves.filter({$0.versionGroup?.id == 3})))
-            .previewLayout(.sizeThatFits)
-    }
-}
+//struct MovesInfoView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MovesInfoView(moveLearnMethods: Array(testRealm.object(ofType: VersionGroup.self, forPrimaryKey: 3)!.pokemonMoveMethods.map({$0.pokemonMoveMethod!})), pokemonMoves: Array(testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!.moves.filter({$0.versionGroup?.id == 3})))
+//            .previewLayout(.sizeThatFits)
+//    }
+//}

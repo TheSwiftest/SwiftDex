@@ -97,15 +97,15 @@ struct PokedexView: View {
     }
 }
 
-struct PokedexView_Previews: PreviewProvider {
-    static var previews: some View {
-        PokedexView(pokemon: Array(testRealm.object(ofType: Pokedex.self, forPrimaryKey: 1)!.pokemonDexNumbers), generations: Array(testRealm.objects(Generation.self)), moveDamageClasses: Array(testRealm.objects(MoveDamageClass.self)), moves: Array(testRealm.object(ofType: Generation.self, forPrimaryKey: 1)!.moves), selectedVersionGroup: .constant(testRealm.object(ofType: VersionGroup.self, forPrimaryKey: 1)!), selectedVersion: .constant(testRealm.object(ofType: Version.self, forPrimaryKey: 1)!), selectedPokedex: .constant(nil), selectedMoveDamageClass: .constant(nil), searchText: .constant("")) { _ in
-            return []
-        } alternateFormsForPokemon: { _ in
-            return []
-        } movesForPokemon: { _ in
-            return []
-        }
-
-    }
-}
+//struct PokedexView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PokedexView(pokemon: Array(testRealm.object(ofType: Pokedex.self, forPrimaryKey: 1)!.pokemonDexNumbers), generations: Array(testRealm.objects(Generation.self)), moveDamageClasses: Array(testRealm.objects(MoveDamageClass.self)), moves: Array(testRealm.object(ofType: Generation.self, forPrimaryKey: 1)!.moves), selectedVersionGroup: .constant(testRealm.object(ofType: VersionGroup.self, forPrimaryKey: 1)!), selectedVersion: .constant(testRealm.object(ofType: Version.self, forPrimaryKey: 1)!), selectedPokedex: .constant(nil), selectedMoveDamageClass: .constant(nil), searchText: .constant("")) { _ in
+//            return []
+//        } alternateFormsForPokemon: { _ in
+//            return []
+//        } movesForPokemon: { _ in
+//            return []
+//        }
+//
+//    }
+//}

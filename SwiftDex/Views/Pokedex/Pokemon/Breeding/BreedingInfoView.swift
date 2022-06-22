@@ -40,9 +40,9 @@ struct PokemonBreedingInfoView: View {
     }
 }
 
-struct PokemonBreedingInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        PokemonBreedingInfoView(breedingInfo: PokemonBreedingInfo(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!), color: .grass)
-            .previewLayout(.sizeThatFits)
-    }
-}
+//struct PokemonBreedingInfoView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PokemonBreedingInfoView(breedingInfo: PokemonBreedingInfo(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!), color: .grass)
+//            .previewLayout(.sizeThatFits)
+//    }
+//}

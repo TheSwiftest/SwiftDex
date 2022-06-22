@@ -56,13 +56,13 @@ struct PokemonAbilityInfoView: View {
     }
 }
 
-struct PokemonAbilitiesView_Previews: PreviewProvider {
-    static var previews: some View {
-        PokemonAbilitiesInfoView(slot1Ability: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!.slot1Ability, slot2Ability: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!.slot2Ability, slot3Ability: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!.slot3Ability, color: .grass)
-            .previewLayout(.sizeThatFits)
-        PokemonAbilityInfoView(name: "Overgrow", isHidden: false, color: .grass)
-            .previewLayout(.sizeThatFits)
-        PokemonAbilityInfoView(name: "Chlorophyll", isHidden: true, color: .grass)
-            .previewLayout(.sizeThatFits)
-    }
-}
+//struct PokemonAbilitiesView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PokemonAbilitiesInfoView(slot1Ability: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!.slot1Ability, slot2Ability: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!.slot2Ability, slot3Ability: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!.slot3Ability, color: .grass)
+//            .previewLayout(.sizeThatFits)
+//        PokemonAbilityInfoView(name: "Overgrow", isHidden: false, color: .grass)
+//            .previewLayout(.sizeThatFits)
+//        PokemonAbilityInfoView(name: "Chlorophyll", isHidden: true, color: .grass)
+//            .previewLayout(.sizeThatFits)
+//    }
+//}

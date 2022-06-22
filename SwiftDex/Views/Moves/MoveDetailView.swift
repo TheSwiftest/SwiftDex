@@ -136,9 +136,9 @@ struct MoveDetailView: View {
 }
 
 
-struct MoveDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        MoveDetailView(move: testRealm.object(ofType: Move.self, forPrimaryKey: 1)!, versionGroup: testRealm.object(ofType: VersionGroup.self, forPrimaryKey: 3)!)
-            .previewLayout(.sizeThatFits)
-    }
-}
+//struct MoveDetailView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MoveDetailView(move: testRealm.object(ofType: Move.self, forPrimaryKey: 1)!, versionGroup: testRealm.object(ofType: VersionGroup.self, forPrimaryKey: 3)!)
+//            .previewLayout(.sizeThatFits)
+//    }
+//}

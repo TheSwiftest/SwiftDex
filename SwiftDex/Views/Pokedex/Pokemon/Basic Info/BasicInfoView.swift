@@ -28,8 +28,8 @@ struct PokemonBasicInfoView: View {
     }
 }
 
-struct PokemonBasicInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        PokemonBasicInfoView(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!, speciesVariations: [], alternateForms: [])
-    }
-}
+//struct PokemonBasicInfoView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PokemonBasicInfoView(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!, speciesVariations: [], alternateForms: [])
+//    }
+//}

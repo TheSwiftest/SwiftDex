@@ -53,12 +53,12 @@ struct EVYieldInfoView: View {
     }
 }
 
-struct EVYieldsInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        EVYieldsInfoView(stats: PokemonBreedingInfo(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!).stats)
-            .previewLayout(.sizeThatFits)
-
-        EVYieldInfoView(stat: PokemonBreedingInfo(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!).stats.first!)
-            .previewLayout(.sizeThatFits)
-    }
-}
+//struct EVYieldsInfoView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        EVYieldsInfoView(stats: PokemonBreedingInfo(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!).stats)
+//            .previewLayout(.sizeThatFits)
+//
+//        EVYieldInfoView(stat: PokemonBreedingInfo(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!).stats.first!)
+//            .previewLayout(.sizeThatFits)
+//    }
+//}

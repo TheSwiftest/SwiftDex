@@ -82,9 +82,9 @@ struct SpeciesInfoImageView: View {
     }
 }
 
-struct PokemonSpeciesInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        SpeciesInfoView(id: 1, height: 160, weight: 160, bodyShape: testRealm.object(ofType: PokemonShape.self, forPrimaryKey: 1)!, genus: "Seed", color: .grass)
-            .previewLayout(.sizeThatFits)
-    }
-}
+//struct PokemonSpeciesInfoView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SpeciesInfoView(id: 1, height: 160, weight: 160, bodyShape: testRealm.object(ofType: PokemonShape.self, forPrimaryKey: 1)!, genus: "Seed", color: .grass)
+//            .previewLayout(.sizeThatFits)
+//    }
+//}

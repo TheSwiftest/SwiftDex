@@ -30,9 +30,9 @@ struct MoveLearnMethodsSelectionView: View {
     }
 }
 
-struct MoveLearnMethodsSelectionView_Previews: PreviewProvider {
-    static var previews: some View {
-        MoveLearnMethodsSelectionView(selectedLearnMethod: .constant(testRealm.object(ofType: PokemonMoveMethod.self, forPrimaryKey: 1)!), moveLearnMethods: Array(testRealm.objects(PokemonMoveMethod.self).filter({$0.id <= 4})))
-            .previewLayout(.sizeThatFits)
-    }
-}
+//struct MoveLearnMethodsSelectionView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MoveLearnMethodsSelectionView(selectedLearnMethod: .constant(testRealm.object(ofType: PokemonMoveMethod.self, forPrimaryKey: 1)!), moveLearnMethods: Array(testRealm.objects(PokemonMoveMethod.self).filter({$0.id <= 4})))
+//            .previewLayout(.sizeThatFits)
+//    }
+//}

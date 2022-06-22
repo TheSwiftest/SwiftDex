@@ -120,11 +120,11 @@ struct PokemonSummaryTypeView: View {
 //    }
 //}
 
-struct PokemonSummaryView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            PokemonSummaryView(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!, pokedexNumber: 1, showVersionView: false, showVersionSelectionView: .constant(false))
-        }
-        .previewLayout(.sizeThatFits)
-    }
-}
+//struct PokemonSummaryView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Group {
+//            PokemonSummaryView(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!, pokedexNumber: 1, showVersionView: false, showVersionSelectionView: .constant(false))
+//        }
+//        .previewLayout(.sizeThatFits)
+//    }
+//}

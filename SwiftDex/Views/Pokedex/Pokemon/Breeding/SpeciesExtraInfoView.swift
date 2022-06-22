@@ -94,9 +94,9 @@ struct SpeciesExtraInfoView: View {
     }
 }
 
-struct SpeciesExtraInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        SpeciesExtraInfoView(extraInfo: PokemonBreedingInfo(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!).extraInfo)
-            .previewLayout(.sizeThatFits)
-    }
-}
+//struct SpeciesExtraInfoView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SpeciesExtraInfoView(extraInfo: PokemonBreedingInfo(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!).extraInfo)
+//            .previewLayout(.sizeThatFits)
+//    }
+//}

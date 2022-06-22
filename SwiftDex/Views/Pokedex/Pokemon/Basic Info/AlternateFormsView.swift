@@ -38,9 +38,9 @@ struct AlternateFormsView: View {
     }
 }
 
-struct AlternateFormsView_Previews: PreviewProvider {
-    static var previews: some View {
-        AlternateFormsView(forms: Array(testRealm.object(ofType: Pokemon.self, forPrimaryKey: 201)!.forms))
-            .previewLayout(.sizeThatFits)
-    }
-}
+//struct AlternateFormsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AlternateFormsView(forms: Array(testRealm.object(ofType: Pokemon.self, forPrimaryKey: 201)!.forms))
+//            .previewLayout(.sizeThatFits)
+//    }
+//}

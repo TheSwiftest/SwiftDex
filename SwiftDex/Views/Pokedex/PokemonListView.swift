@@ -25,9 +25,9 @@ struct PokemonListView: View {
     }
 }
 
-struct PokemonListView_Previews: PreviewProvider {
-    static var previews: some View {
-        PokemonListView(pokemonDexNumbers: Array(testRealm.objects(PokemonDexNumber.self).filter({$0.pokedex?.id == 1}).filter({$0.pokedexNumber < 10})), pokemonToShow: .constant(nil))
-            .previewLayout(.sizeThatFits)
-    }
-}
+//struct PokemonListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PokemonListView(pokemonDexNumbers: Array(testRealm.objects(PokemonDexNumber.self).filter({$0.pokedex?.id == 1}).filter({$0.pokedexNumber < 10})), pokemonToShow: .constant(nil))
+//            .previewLayout(.sizeThatFits)
+//    }
+//}

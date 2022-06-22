@@ -36,9 +36,9 @@ struct EggGroupsInfoView: View {
     }
 }
 
-struct EggGroupsInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        EggGroupsInfoView(eggGroups: PokemonBreedingInfo(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!).eggGroups, color: .grass)
-            .previewLayout(.sizeThatFits)
-    }
-}
+//struct EggGroupsInfoView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        EggGroupsInfoView(eggGroups: PokemonBreedingInfo(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!).eggGroups, color: .grass)
+//            .previewLayout(.sizeThatFits)
+//    }
+//}

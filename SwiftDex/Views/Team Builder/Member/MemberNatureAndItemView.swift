@@ -198,16 +198,16 @@ struct NatureStatFlavorView: View {
     }
 }
 
-struct MemberNatureAndItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            MemberNatureAndItemView(availableNatures: Array(testRealm.objects(Nature.self)), availableItems: Array(testRealm.objects(Item.self)), nature: .constant(nil), item: .constant(nil))
-            NatureView(nature: SwiftDexService.nature(withId: 1)!)
-            NatureStatFlavorView(increased: true, identifier: "Test")
-        }
-        .previewLayout(.sizeThatFits)
-        
-        MemberItemSelectionView(items: Array(testRealm.objects(Item.self)), selectedItem: .constant(nil))
-        MemberNatureSelectionView(natures: Array(testRealm.objects(Nature.self)), selectedNature: .constant(nil))
-    }
-}
+//struct MemberNatureAndItemView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Group {
+//            MemberNatureAndItemView(availableNatures: Array(testRealm.objects(Nature.self)), availableItems: Array(testRealm.objects(Item.self)), nature: .constant(nil), item: .constant(nil))
+//            NatureView(nature: SwiftDexService.nature(withId: 1)!)
+//            NatureStatFlavorView(increased: true, identifier: "Test")
+//        }
+//        .previewLayout(.sizeThatFits)
+//        
+//        MemberItemSelectionView(items: Array(testRealm.objects(Item.self)), selectedItem: .constant(nil))
+//        MemberNatureSelectionView(natures: Array(testRealm.objects(Nature.self)), selectedNature: .constant(nil))
+//    }
+//}

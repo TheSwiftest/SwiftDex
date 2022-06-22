@@ -38,9 +38,9 @@ struct SpeciesVariationsView: View {
     }
 }
 
-struct FormsInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        SpeciesVariationsView(variations: Array(testRealm.object(ofType: PokemonSpecies.self, forPrimaryKey: 103)!.pokemon))
-            .previewLayout(.sizeThatFits)
-    }
-}
+//struct FormsInfoView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SpeciesVariationsView(variations: Array(testRealm.object(ofType: PokemonSpecies.self, forPrimaryKey: 103)!.pokemon))
+//            .previewLayout(.sizeThatFits)
+//    }
+//}
