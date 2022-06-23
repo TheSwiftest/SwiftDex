@@ -25,16 +25,16 @@ struct BattleSimulatorView: View {
                     VStack {
                         Text("Attacker")
                             .font(.title2)
-                        BattleSimPokemonView(pokemon: $viewModel.attackingPokemon).environmentObject(swiftDexService).environmentObject(pokemonShowdownService)
+                        BattleSimPokemonView(pokemon: $viewModel.attackingPokemon).environmentObject(pokemonShowdownService)
                     }
                     VStack {
                         Text("Defender")
                             .font(.title2)
-                        BattleSimPokemonView(pokemon: $viewModel.defendingPokemon).environmentObject(swiftDexService).environmentObject(pokemonShowdownService)
+                        BattleSimPokemonView(pokemon: $viewModel.defendingPokemon).environmentObject(pokemonShowdownService)
                     }
                 }
 
-                BattleSimAttackingMoveView(selectedMove: $viewModel.selectedMove, attackingPokemon: viewModel.attackingPokemon, defendingPokemon: viewModel.defendingPokemon).environmentObject(swiftDexService)
+                BattleSimAttackingMoveView(selectedMove: $viewModel.selectedMove, attackingPokemon: viewModel.attackingPokemon, defendingPokemon: viewModel.defendingPokemon)
 
                 BattleSimDamageView(maxDamage: viewModel.maxDamage, minDamage: viewModel.minDamage, avgDamage: viewModel.avgDamage,
                                     attackingPokemon: viewModel.attackingPokemon, defendingPokemon: viewModel.defendingPokemon, selectedMove: viewModel.selectedMove)
@@ -55,7 +55,6 @@ struct BattleSimulatorView: View {
 struct BattleSimPokemonSelectionView: View {
     @Environment(\.presentationMode) var presentationMode
 
-    @EnvironmentObject var swiftDexService: SwiftDexService
     @Binding var pokemon: TeamPokemon?
 
     @State private var searchText: String = ""
@@ -85,8 +84,6 @@ struct BattleSimPokemonSelectionView: View {
 }
 
 struct BattlePokemonDetailView: View {
-    @EnvironmentObject var swiftDexService: SwiftDexService
-
     @Binding private var teamPokemonOriginal: TeamPokemon?
     @State private var teamPokemon: TeamPokemon
 
@@ -276,8 +273,6 @@ struct BattleSimDamageView: View {
 }
 
 struct BattleSimAttackingMoveView: View {
-    @EnvironmentObject var swiftDexService: SwiftDexService
-
     @Binding var selectedMove: Move?
     let attackingPokemon: TeamPokemon?
     let defendingPokemon: TeamPokemon?
@@ -374,7 +369,6 @@ struct BattleSimAttackingMoveView: View {
 }
 
 struct BattleSimPokemonView: View {
-    @EnvironmentObject var swiftDexService: SwiftDexService
     @EnvironmentObject var pokemonShowdownService: PokemonShowdownService
 
     @Binding var pokemon: TeamPokemon?
@@ -390,7 +384,7 @@ struct BattleSimPokemonView: View {
                         showPokemonEditView = true
                     }
                     .sheet(isPresented: $showPokemonEditView, content: {
-                        BattlePokemonDetailView(teamPokemon: $pokemon).environmentObject(swiftDexService)
+                        BattlePokemonDetailView(teamPokemon: $pokemon)
                     })
 
                 VStack {
@@ -440,7 +434,7 @@ struct BattleSimPokemonView: View {
                 ])
             }
             .sheet(isPresented: $selectingPokemon) {
-                BattleSimPokemonSelectionView(pokemon: $pokemon).environmentObject(swiftDexService)
+                BattleSimPokemonSelectionView(pokemon: $pokemon)
             }
         }
     }
