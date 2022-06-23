@@ -45,6 +45,8 @@
 		E88FB0ED28089F310030021F /* BlankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88FB0EC28089F310030021F /* BlankView.swift */; };
 		E88FB0EF28089F6C0030021F /* PokemonListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88FB0EE28089F6C0030021F /* PokemonListView.swift */; };
 		E88FB0F22808A0580030021F /* OtherModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88FB0F12808A0580030021F /* OtherModels.swift */; };
+		E89290702864F1A400ED041F /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E892906F2864F1A400ED041F /* ItemDetailView.swift */; };
+		E89290732864F51900ED041F /* AbilitySummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89290722864F51900ED041F /* AbilitySummaryView.swift */; };
 		E89A19C3285F950500EBFFDA /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = E89A19C2285F950500EBFFDA /* Realm */; };
 		E89A19C5285F950500EBFFDA /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E89A19C4285F950500EBFFDA /* RealmSwift */; };
 		E89A19CF2860EB2D00EBFFDA /* VersionSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19CE2860EB2D00EBFFDA /* VersionSelectionView.swift */; };
@@ -131,6 +133,8 @@
 		E88FB0EC28089F310030021F /* BlankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankView.swift; sourceTree = "<group>"; };
 		E88FB0EE28089F6C0030021F /* PokemonListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonListView.swift; sourceTree = "<group>"; };
 		E88FB0F12808A0580030021F /* OtherModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherModels.swift; sourceTree = "<group>"; };
+		E892906F2864F1A400ED041F /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
+		E89290722864F51900ED041F /* AbilitySummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbilitySummaryView.swift; sourceTree = "<group>"; };
 		E89A19CE2860EB2D00EBFFDA /* VersionSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionSelectionView.swift; sourceTree = "<group>"; };
 		E89A19D3286276C900EBFFDA /* AlternateFormsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateFormsView.swift; sourceTree = "<group>"; };
 		E89A19D52863634900EBFFDA /* PokemonShowdownService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonShowdownService.swift; sourceTree = "<group>"; };
@@ -284,9 +288,10 @@
 				E88FB0E8280136320030021F /* PokedexFilterView.swift */,
 				E88FB0DD2800A52A0030021F /* DexCategoryView.swift */,
 				E88FB0EE28089F6C0030021F /* PokemonListView.swift */,
-				E89A19C6285F9A1800EBFFDA /* Items */,
 				E88FB0DC27FCAE590030021F /* Pokemon */,
 				E88FB0D927FCADAA0030021F /* Moves */,
+				E89A19C6285F9A1800EBFFDA /* Items */,
+				E892906E2864D4B800ED041F /* Abilities */,
 			);
 			path = Pokedex;
 			sourceTree = "<group>";
@@ -376,10 +381,19 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		E892906E2864D4B800ED041F /* Abilities */ = {
+			isa = PBXGroup;
+			children = (
+				E89290722864F51900ED041F /* AbilitySummaryView.swift */,
+			);
+			path = Abilities;
+			sourceTree = "<group>";
+		};
 		E89A19C6285F9A1800EBFFDA /* Items */ = {
 			isa = PBXGroup;
 			children = (
 				E89A19EA2863900600EBFFDA /* ItemSummaryView.swift */,
+				E892906F2864F1A400ED041F /* ItemDetailView.swift */,
 			);
 			path = Items;
 			sourceTree = "<group>";
@@ -602,8 +616,10 @@
 				E88FB0E02800A9330030021F /* PokedexSearchView.swift in Sources */,
 				E840B32E27F8CD3100630F87 /* TypeEffectivenessTable.swift in Sources */,
 				E89A19CF2860EB2D00EBFFDA /* VersionSelectionView.swift in Sources */,
+				E89290732864F51900ED041F /* AbilitySummaryView.swift in Sources */,
 				E840B35227FB61BD00630F87 /* PokemonInfoView.swift in Sources */,
 				E89A19F928639A4C00EBFFDA /* TeamDetailView.swift in Sources */,
+				E89290702864F1A400ED041F /* ItemDetailView.swift in Sources */,
 				E88FB0F22808A0580030021F /* OtherModels.swift in Sources */,
 				E89A19F52863966A00EBFFDA /* TeamMembersDetailView.swift in Sources */,
 				E89A19F32863946000EBFFDA /* MemberDetailView.swift in Sources */,

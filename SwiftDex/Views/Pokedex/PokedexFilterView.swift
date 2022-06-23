@@ -14,6 +14,7 @@ struct PokedexFilterView: View {
     @Binding var selectedVersion: Version
     let selectedPokedex: Pokedex?
     let selectedMoveDamageClass: MoveDamageClass?
+    let selectedItemPocket: ItemPocket?
     
     let selectedDexCategory: DexCategory
     
@@ -24,6 +25,9 @@ struct PokedexFilterView: View {
     
     @Binding var moveDamageClassSelectedViewSourceFrame: CGRect
     @Binding var showMoveDamageClassSelectionView: Bool
+    
+    @Binding var itemPocketSelectionViewSourceFrame: CGRect
+    @Binding var showItemPocketSelectionView: Bool
     
     var body: some View {
         GeometryReader { geo in
@@ -66,6 +70,18 @@ struct PokedexFilterView: View {
                             }
                             .onTapGesture {
                                 showMoveDamageClassSelectionView.toggle()
+                            }
+                    }
+                }
+                
+                if selectedDexCategory == .items {
+                    GeometryReader { itemPocketSelectionViewGeo in
+                        PokedexSelectedView(name: selectedItemPocket?.name ?? "All Pockets")
+                            .onAppear {
+                                itemPocketSelectionViewSourceFrame = itemPocketSelectionViewGeo.frame(in: .global)
+                            }
+                            .onTapGesture {
+                                showItemPocketSelectionView.toggle()
                             }
                     }
                 }
@@ -167,6 +183,49 @@ struct MoveDamageClassSelectionView: View {
                         .offset(y: showView ? CGFloat(filteredMoveDamageClasses.count * 35) : 0)
                         .onTapGesture {
                             selectedMoveDamageClass = nil
+                            showView.toggle()
+                        }
+                }
+            }
+            .opacity(showView ? 1 : 0)
+            .shadow(radius: 5)
+            .scaleEffect(showView ? 1.3 : 1, anchor: .topTrailing)
+            .animation(.default, value: showView)
+        }
+        .offset(x: sourceFrame.minX, y: showView ? sourceFrame.maxY + 10 : sourceFrame.minY)
+    }
+}
+
+struct ItemPocketSelectionView: View {
+    let itemPockets: [ItemPocket]
+    
+    @Binding var sourceFrame: CGRect
+    @Binding var showView: Bool
+    @Binding var selectedItemPocket: ItemPocket?
+    
+    private var filteredItemPockets: [ItemPocket] {
+        return itemPockets.filter({$0.id != selectedItemPocket?.id})
+    }
+    
+    var body: some View {
+        ZStack(alignment: .leading) {
+            Group {
+                ForEach(filteredItemPockets) { itemPocket in
+                    PokedexSelectedView(name: itemPocket.name)
+                        .frame(width: sourceFrame.width, height: sourceFrame.height)
+                        .offset(y: showView ? CGFloat(filteredItemPockets.firstIndex(of: itemPocket)!) * 35 : 0)
+                        .onTapGesture {
+                            selectedItemPocket = itemPocket
+                            showView.toggle()
+                        }
+                }
+                
+                if selectedItemPocket != nil {
+                    PokedexSelectedView(name: "All Types")
+                        .frame(width: sourceFrame.width, height: sourceFrame.height)
+                        .offset(y: showView ? CGFloat(filteredItemPockets.count * 35) : 0)
+                        .onTapGesture {
+                            selectedItemPocket = nil
                             showView.toggle()
                         }
                 }

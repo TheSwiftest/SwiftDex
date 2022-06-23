@@ -331,9 +331,9 @@ class ItemCategory: Object {
     @Persisted(primaryKey: true) var id = 0
     @Persisted var pocket: ItemPocket?
     @Persisted var identifier: String = ""
-
-    let items = LinkingObjects(fromType: Item.self, property: "category")
-    let prose = LinkingObjects(fromType: ItemCategoryProse.self, property: "itemCategory")
+    
+    @Persisted(originProperty: "category") var items: LinkingObjects<Item>
+    @Persisted(originProperty: "itemCategory") var prose: LinkingObjects<ItemCategoryProse>
     
     var name: String {
         return prose.first(where: { $0.localLanguageId == 9 })?.name ?? identifier
@@ -446,9 +446,9 @@ class ItemPocketName: Object {
 class ItemPocket: Object, Identifiable {
     @Persisted(primaryKey: true) var id = 0
     @Persisted var identifier = ""
-
-    let itemCategories = LinkingObjects(fromType: ItemCategory.self, property: "pocket")
-    let names = LinkingObjects(fromType: ItemPocketName.self, property: "itemPocket")
+    
+    @Persisted(originProperty: "pocket") var itemCategories: LinkingObjects<ItemCategory>
+    @Persisted(originProperty: "itemPocket") var names: LinkingObjects<ItemPocketName>
 
     var name: String {
         return names.first(where: { $0.localLanguageId == 9 })?.name ?? identifier
@@ -807,10 +807,10 @@ class Nature: Object, Identifiable {
     @Persisted var hatesFlavor: ContestType?
     @Persisted var likesFlavor: ContestType?
     @Persisted var gameIndex: Int = 0
-
-    let pokeathlonStatChanges = LinkingObjects(fromType: NaturePokeathlonStat.self, property: "nature")
-    let names = LinkingObjects(fromType: NatureName.self, property: "nature")
-    let moveBattleStylePreferences = LinkingObjects(fromType: NatureBattleStylePreference.self, property: "nature")
+    
+    @Persisted(originProperty: "nature") var pokeathlonStatChanges: LinkingObjects<NaturePokeathlonStat>
+    @Persisted(originProperty: "nature") var names: LinkingObjects<NatureName>
+    @Persisted(originProperty: "nature") var moveBattleStylePreferences: LinkingObjects<NatureBattleStylePreference>
 
     var name: String {
         return names.first(where: { $0.localLanguageId == 9 })?.name ?? identifier

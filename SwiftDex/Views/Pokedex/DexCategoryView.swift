@@ -39,7 +39,7 @@ struct DexCategorySelectionView: View {
     @Binding var sourceFrame: CGRect
     @Binding var searchText: String
 
-    private let dexCategoriesOrdered: [DexCategory] = [.pokémon, .moves]
+    private let dexCategoriesOrdered: [DexCategory] = [.pokémon, .moves, .items, .abilities]
 
     private func dexCategories() -> [DexCategory] {
         return dexCategoriesOrdered.filter({ $0 != selectedDexCategory })

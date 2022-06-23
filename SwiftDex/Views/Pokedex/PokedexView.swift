@@ -11,12 +11,16 @@ struct PokedexView: View {
     let pokemon: [PokemonDexNumber]
     let generations: [Generation]
     let moveDamageClasses: [MoveDamageClass]
+    let itemPockets: [ItemPocket]
     let moves: [Move]
+    let items: [Item]
+    let abilities: [Ability]
     
     @Binding var selectedVersionGroup: VersionGroup
     @Binding var selectedVersion: Version
     @Binding var selectedPokedex: Pokedex?
     @Binding var selectedMoveDamageClass: MoveDamageClass?
+    @Binding var selectedItemPocket: ItemPocket?
     
     @Binding var searchText: String
     
@@ -31,12 +35,17 @@ struct PokedexView: View {
     
     @State private var pokemonToShow: PokemonDexNumber?
     @State private var moveToShow: Move?
+    @State private var itemToShow: Item?
+    @State private var abilityToShow: Ability?
 
     @State private var pokedexSelectedViewSourceFrame = CGRect.zero
     @State private var showPokedexSelectionView = false
     
     @State private var moveDamageClassSelectedViewSourceFrame = CGRect.zero
     @State private var showMoveDamageClassSelectionView = false
+    
+    @State private var itemPocketSelectedViewSourceFrame = CGRect.zero
+    @State private var showItemPocketSelectionView = false
     
     var body: some View {
         ZStack {
@@ -45,7 +54,7 @@ struct PokedexView: View {
                     VStack {
                         PokedexSearchView(selectedDexCategory: $selectedDexCategory, showDexCategorySelectionView: $showDexCategorySelectionView, dexCategorySelectedViewSourceFrame: $dexCategorySelectedViewSourceFrame, searchText: $searchText)
                         
-                        PokedexFilterView(generations: generations, moveDamageClasses: moveDamageClasses, selectedVersionGroup: $selectedVersionGroup, selectedVersion: $selectedVersion, selectedPokedex: selectedPokedex, selectedMoveDamageClass: selectedMoveDamageClass, selectedDexCategory: selectedDexCategory, pokedexSelectedViewSourceFrame: $pokedexSelectedViewSourceFrame, showPokedexSelectionView: $showPokedexSelectionView, moveDamageClassSelectedViewSourceFrame: $moveDamageClassSelectedViewSourceFrame, showMoveDamageClassSelectionView: $showMoveDamageClassSelectionView)
+                        PokedexFilterView(generations: generations, moveDamageClasses: moveDamageClasses, selectedVersionGroup: $selectedVersionGroup, selectedVersion: $selectedVersion, selectedPokedex: selectedPokedex, selectedMoveDamageClass: selectedMoveDamageClass, selectedItemPocket: selectedItemPocket, selectedDexCategory: selectedDexCategory, pokedexSelectedViewSourceFrame: $pokedexSelectedViewSourceFrame, showPokedexSelectionView: $showPokedexSelectionView, moveDamageClassSelectedViewSourceFrame: $moveDamageClassSelectedViewSourceFrame, showMoveDamageClassSelectionView: $showMoveDamageClassSelectionView, itemPocketSelectionViewSourceFrame: $itemPocketSelectedViewSourceFrame, showItemPocketSelectionView: $showItemPocketSelectionView)
                     }
                     .padding(.horizontal)
                     .padding(.vertical, 10)
@@ -72,6 +81,31 @@ struct PokedexView: View {
                                 MoveDetailView(move: move, versionGroup: selectedVersionGroup)
                             }
                         }
+                        
+                        if selectedDexCategory == .items {
+                            LazyVStack(spacing: 2) {
+                                ForEach(items) { item in
+                                    ItemSummaryView(item: item, versionGroup: selectedVersionGroup)
+                                        .onTapGesture {
+                                            itemToShow = item
+                                        }
+                                }
+                            }
+                            .sheet(item: $itemToShow) { item in
+                                ItemDetailView(item: item, versionGroup: selectedVersionGroup)
+                            }
+                        }
+                        
+                        if selectedDexCategory == .abilities {
+                            LazyVStack(spacing: 2) {
+                                ForEach(abilities) { ability in
+                                    AbilitySummaryView(ability: ability)
+                                        .onTapGesture {
+                                            abilityToShow = ability
+                                        }
+                                }
+                            }
+                        }
                     }
                     .background(Color(.secondarySystemBackground))
                 }
@@ -91,6 +125,7 @@ struct PokedexView: View {
                 DexCategorySelectionView(selectedDexCategory: $selectedDexCategory, showView: $showDexCategorySelectionView, sourceFrame: $dexCategorySelectedViewSourceFrame, searchText: $searchText)
                 PokedexSelectionView(pokedexes: selectedVersionGroup.pokedexes.map({$0.pokedex!}), sourceFrame: $pokedexSelectedViewSourceFrame, showView: $showPokedexSelectionView, selectedPokedex: $selectedPokedex)
                 MoveDamageClassSelectionView(moveDamageClasses: moveDamageClasses, sourceFrame: $moveDamageClassSelectedViewSourceFrame, showView: $showMoveDamageClassSelectionView, selectedMoveDamageClass: $selectedMoveDamageClass)
+                ItemPocketSelectionView(itemPockets: itemPockets, sourceFrame: $itemPocketSelectedViewSourceFrame, showView: $showItemPocketSelectionView, selectedItemPocket: $selectedItemPocket)
             }
             .edgesIgnoringSafeArea(.top)
         }

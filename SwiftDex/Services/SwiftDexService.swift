@@ -13,7 +13,7 @@ class SwiftDexService: ObservableObject {
     
     @Published var selectedVersionGroup: VersionGroup {
         didSet {
-            self.selectedPokedex = selectedVersionGroup.pokedexes.first!.pokedex!
+            self.selectedPokedex = selectedVersionGroup.pokedexes.first?.pokedex
         }
     }
     
@@ -30,6 +30,8 @@ class SwiftDexService: ObservableObject {
     }
     
     @Published var selectedMoveDamageClass: MoveDamageClass? = nil
+    
+    @Published var selectedItemPocket: ItemPocket? = nil
         
     @Published var filterSearchText: String = ""
     
@@ -63,6 +65,37 @@ class SwiftDexService: ObservableObject {
         
         return Array(query.sorted(byKeyPath: "identifier"))
     }
+    
+    var items: [Item] {
+        return SwiftDexService.items(forGeneration: selectedVersionGroup.generation!, andPocket: selectedItemPocket, andSearchText: filterSearchText)
+    }
+    
+    static func items(forGeneration generation: Generation, andPocket pocket: ItemPocket?, andSearchText searchText: String) -> [Item] {
+        var query = Self.realm.objects(Item.self).filter("ANY gameIndices.generation.id <= \(generation.id)")
+        if let pocket = pocket {
+            query = query.filter("category.pocket.id == \(pocket.id)")
+        }
+        
+        if !searchText.isEmpty {
+            query = query.filter("ANY names.name CONTAINS [c] \"\(searchText)\"")
+        }
+        
+        return Array(query.sorted(byKeyPath: "identifier"))
+    }
+    
+    var abilities: [Ability] {
+        return SwiftDexService.abilities(forGeneration: selectedVersionGroup.generation!, andSearchText: filterSearchText)
+    }
+    
+    static func abilities(forGeneration generation: Generation, andSearchText searchText: String) -> [Ability] {
+        var query = Self.realm.objects(Ability.self).filter("generation.id <= \(generation.id)")
+        
+        if !searchText.isEmpty {
+            query = query.filter("ANY names.name CONTAINS [c] \"\(searchText)\"")
+        }
+        
+        return Array(query.sorted(byKeyPath: "identifier"))
+    }
         
     var generations: [Generation] {
         return Array(SwiftDexService.realm.objects(Generation.self))
@@ -70,6 +103,10 @@ class SwiftDexService: ObservableObject {
     
     var moveDamageClasses: [MoveDamageClass] {
         return Array(SwiftDexService.realm.objects(MoveDamageClass.self))
+    }
+    
+    var itemPockets: [ItemPocket] {
+        return Array(SwiftDexService.realm.objects(ItemPocket.self))
     }
         
     init() {
@@ -102,6 +139,14 @@ class SwiftDexService: ObservableObject {
 
 // Team Builder and Battle Sim helpers
 extension SwiftDexService {
+    static func version(withId id: Int) -> Version? {
+        return Self.realm.object(ofType: Version.self, forPrimaryKey: id)
+    }
+    
+    static func versionGroup(withId id: Int) -> VersionGroup? {
+        return Self.realm.object(ofType: VersionGroup.self, forPrimaryKey: id)
+    }
+    
     static var female: Gender {
         return Self.realm.object(ofType: Gender.self, forPrimaryKey: 1)!
     }
@@ -200,6 +245,10 @@ extension SwiftDexService {
         }
 
         return nil
+    }
+    
+    static func ability(withId id: Int) -> Ability? {
+        return Self.realm.object(ofType: Ability.self, forPrimaryKey: id)
     }
 
     static func ability(with name: String?) -> Ability? {

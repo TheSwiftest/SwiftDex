@@ -41,7 +41,7 @@ struct GenerationVersionsSelectionView: View {
             Text(generation.name)
             ForEach(generation.versionGroups) { versionGroup in
                 HStack {
-                    ForEach(versionGroup.versions) { version in
+                    ForEach(versionGroup.versions.filter("id != 19 AND id != 20")) { version in
                         Rectangle()
                             .frame(height: 30)
                             .foregroundColor(version.color)
