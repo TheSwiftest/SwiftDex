@@ -31,7 +31,7 @@ struct SpeciesInfoView: View {
                     SpeciesInfoTextView(title: "\(heightInMetersText)m", subtitle: "Height")
                     SpeciesInfoTextView(title: "\(weightInKGText)kg", subtitle: "Weight")
                     Button(action: {
-//                        swiftDexService.playCry(for: species)
+                        SwiftDexService.playCry(forSpeciesId: id)
                     }, label: {
                         SpeciesInfoImageView(image: Image("icon/cry"), imageSize: 18, subtitle: "Cry", color: color)
                     })

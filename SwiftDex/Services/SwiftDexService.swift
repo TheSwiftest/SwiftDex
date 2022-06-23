@@ -5,10 +5,12 @@
 //  Created by Brian Corbin on 4/9/22.
 //
 
+import AVFoundation
 import Foundation
 import RealmSwift
 
 class SwiftDexService: ObservableObject {
+    private static var avPlayer = AVPlayer()
     private static let realm = try! Realm(configuration: Realm.Configuration(fileURL: URL(fileURLWithPath: Bundle.main.path(forResource: "swiftdex", ofType: "realm")!), readOnly: true))
     
     @Published var selectedVersionGroup: VersionGroup {
@@ -34,6 +36,12 @@ class SwiftDexService: ObservableObject {
     @Published var selectedItemPocket: ItemPocket? = nil
         
     @Published var filterSearchText: String = ""
+    
+    static func playCry(forSpeciesId speciesId: Int) {
+        let playerItem = AVPlayerItem(url: URL(string: "https://pokemoncries.com/cries/\(speciesId).mp3")!)
+        avPlayer = AVPlayer(playerItem: playerItem)
+        avPlayer.play()
+    }
     
     var pokemonDexNumbers: [PokemonDexNumber] {
         var query = SwiftDexService.realm.objects(PokemonDexNumber.self)
