@@ -48,13 +48,13 @@
 		E89290702864F1A400ED041F /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E892906F2864F1A400ED041F /* ItemDetailView.swift */; };
 		E89290732864F51900ED041F /* AbilitySummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89290722864F51900ED041F /* AbilitySummaryView.swift */; };
 		E89290752864FF1700ED041F /* BattleOnlyFormsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89290742864FF1700ED041F /* BattleOnlyFormsView.swift */; };
+		E892907928652CB800ED041F /* swiftdex.realm in Resources */ = {isa = PBXBuildFile; fileRef = E892907828652CB800ED041F /* swiftdex.realm */; };
 		E89A19C3285F950500EBFFDA /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = E89A19C2285F950500EBFFDA /* Realm */; };
 		E89A19C5285F950500EBFFDA /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E89A19C4285F950500EBFFDA /* RealmSwift */; };
 		E89A19CF2860EB2D00EBFFDA /* VersionSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19CE2860EB2D00EBFFDA /* VersionSelectionView.swift */; };
 		E89A19D4286276C900EBFFDA /* AlternateFormsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19D3286276C900EBFFDA /* AlternateFormsView.swift */; };
 		E89A19D62863634900EBFFDA /* PokemonShowdownService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19D52863634900EBFFDA /* PokemonShowdownService.swift */; };
 		E89A19D8286363CF00EBFFDA /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19D7286363CF00EBFFDA /* Team.swift */; };
-		E89A19DB286382A800EBFFDA /* swiftdex.realm in Resources */ = {isa = PBXBuildFile; fileRef = E89A19DA286382A800EBFFDA /* swiftdex.realm */; };
 		E89A19DF2863861F00EBFFDA /* MemberNicknameGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19DE2863861F00EBFFDA /* MemberNicknameGenderView.swift */; };
 		E89A19E12863889100EBFFDA /* MemberLevelHappyShinyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19E02863889100EBFFDA /* MemberLevelHappyShinyView.swift */; };
 		E89A19E32863895000EBFFDA /* MemberAbilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19E22863895000EBFFDA /* MemberAbilityView.swift */; };
@@ -137,11 +137,11 @@
 		E892906F2864F1A400ED041F /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		E89290722864F51900ED041F /* AbilitySummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbilitySummaryView.swift; sourceTree = "<group>"; };
 		E89290742864FF1700ED041F /* BattleOnlyFormsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleOnlyFormsView.swift; sourceTree = "<group>"; };
+		E892907828652CB800ED041F /* swiftdex.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = swiftdex.realm; sourceTree = "<group>"; };
 		E89A19CE2860EB2D00EBFFDA /* VersionSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionSelectionView.swift; sourceTree = "<group>"; };
 		E89A19D3286276C900EBFFDA /* AlternateFormsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateFormsView.swift; sourceTree = "<group>"; };
 		E89A19D52863634900EBFFDA /* PokemonShowdownService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonShowdownService.swift; sourceTree = "<group>"; };
 		E89A19D7286363CF00EBFFDA /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
-		E89A19DA286382A800EBFFDA /* swiftdex.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = swiftdex.realm; sourceTree = "<group>"; };
 		E89A19DE2863861F00EBFFDA /* MemberNicknameGenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberNicknameGenderView.swift; sourceTree = "<group>"; };
 		E89A19E02863889100EBFFDA /* MemberLevelHappyShinyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberLevelHappyShinyView.swift; sourceTree = "<group>"; };
 		E89A19E22863895000EBFFDA /* MemberAbilityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberAbilityView.swift; sourceTree = "<group>"; };
@@ -254,7 +254,7 @@
 		E840B32A27F8CCD000630F87 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				E89A19DA286382A800EBFFDA /* swiftdex.realm */,
+				E892907828652CB800ED041F /* swiftdex.realm */,
 				E840B32B27F8CCE300630F87 /* RealmDataModels.swift */,
 				E840B32D27F8CD3100630F87 /* TypeEffectivenessTable.swift */,
 			);
@@ -552,7 +552,7 @@
 			files = (
 				E840B30327F8CA0000630F87 /* Preview Assets.xcassets in Resources */,
 				E840B30027F8CA0000630F87 /* Assets.xcassets in Resources */,
-				E89A19DB286382A800EBFFDA /* swiftdex.realm in Resources */,
+				E892907928652CB800ED041F /* swiftdex.realm in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
