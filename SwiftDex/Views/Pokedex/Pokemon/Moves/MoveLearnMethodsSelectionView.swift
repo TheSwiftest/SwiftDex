@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MoveLearnMethodsSelectionView: View {
-    
     @Binding var selectedLearnMethod: PokemonMoveMethod
     
     let moveLearnMethods: [PokemonMoveMethod]

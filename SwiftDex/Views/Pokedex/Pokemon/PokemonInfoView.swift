@@ -17,8 +17,6 @@ struct PokemonInfoView: View {
     let alternateForms: (_ pokemon: Pokemon) -> [PokemonForm]
     let pokemonMoves: (_ pokemon: Pokemon) -> [PokemonMove]
 
-    let moveLearnMethods: [PokemonMoveMethod]
-    
     @State private var showVersionSelectionView: Bool = false
     
     var body: some View {
@@ -30,11 +28,13 @@ struct PokemonInfoView: View {
                         Image(systemName: "info.circle")
                         Text("Info")
                     }
-                MovesInfoView(moveLearnMethods: moveLearnMethods, pokemonMoves: pokemonMoves(pokemon))
-                    .tabItem {
-                        Image("icon/tab/moves")
-                        Text("Moves")
-                    }
+                if pokemonMoves(pokemon).count > 0 {
+                    MovesInfoView(pokemonMoves: pokemonMoves(pokemon))
+                        .tabItem {
+                            Image("icon/tab/moves")
+                            Text("Moves")
+                        }
+                }
                 PokemonBreedingInfoView(breedingInfo: PokemonBreedingInfo(pokemon: pokemon), color: pokemon.color)
                     .tabItem {
                         Image("icon/tab/breeding")

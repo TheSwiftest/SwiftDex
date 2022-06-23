@@ -120,11 +120,11 @@ class SwiftDexService: ObservableObject {
     }
     
     static func speciesVariations(for pokemon: Pokemon, in versionGroup: VersionGroup) -> [Pokemon] {
-        var query = SwiftDexService.realm.objects(PokemonForm.self).filter("pokemon.species.id == \(pokemon.species!.id) AND pokemon.id != \(pokemon.id)")
+        var query = SwiftDexService.realm.objects(PokemonForm.self).filter("pokemon.species.id == \(pokemon.species!.id)")
         query = query.filter("introducedInVersionGroup.id <= \(versionGroup.id)")
         query = query.filter("isBattleOnly == false")
         
-        return Array(Set(query.map({$0.pokemon!})))
+        return Array(Set(query.map({$0.pokemon!}))).sorted(by: {$0.id < $1.id})
     }
     
     func alternateForms(for pokemon: Pokemon) -> [PokemonForm] {

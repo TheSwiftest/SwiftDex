@@ -8,15 +8,16 @@
 import SwiftUI
 
 struct MovesInfoView: View {
-    let moveLearnMethods: [PokemonMoveMethod]
     let pokemonMoves: [PokemonMove]
     
+    private let moveLearnMethods: [PokemonMoveMethod]
+
     @State var selectedLearnMethod: PokemonMoveMethod
     @State private var selectedMove: PokemonMove?
     
-    init(moveLearnMethods: [PokemonMoveMethod], pokemonMoves: [PokemonMove]) {
-        self.moveLearnMethods = moveLearnMethods
+    init(pokemonMoves: [PokemonMove]) {
         self.pokemonMoves = pokemonMoves
+        self.moveLearnMethods = Array(Set(pokemonMoves.map({$0.pokemonMoveMethod!}))).sorted(by: {$0.id < $1.id})
         _selectedLearnMethod = State(initialValue: moveLearnMethods.first!)
     }
     
