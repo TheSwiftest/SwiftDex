@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct PokemonInfoView: View {
-    let pokemon: Pokemon
+    @State var pokemon: Pokemon
     let pokedexNumber: Int
     let version: Version
     
-    let speciesVariations: [Pokemon]
-    let alternateForms: [PokemonForm]
+    let speciesVariations: (_ pokemon: Pokemon) -> [Pokemon]
+    let battleOnlyForms: (_ pokemon: Pokemon) -> [PokemonForm]
+    let alternateForms: (_ pokemon: Pokemon) -> [PokemonForm]
+    let pokemonMoves: (_ pokemon: Pokemon) -> [PokemonMove]
+
     let moveLearnMethods: [PokemonMoveMethod]
-    let pokemonMoves: [PokemonMove]
     
     @State private var showVersionSelectionView: Bool = false
     
@@ -23,12 +25,12 @@ struct PokemonInfoView: View {
         VStack(spacing: 5) {
             PokemonSummaryView(pokemon: pokemon, pokedexNumber: pokedexNumber, showVersionView: true, showVersionSelectionView: $showVersionSelectionView)
             TabView {
-                PokemonBasicInfoView(pokemon: pokemon, speciesVariations: speciesVariations, alternateForms: alternateForms)
+                PokemonBasicInfoView(pokemon: $pokemon, speciesVariations: speciesVariations(pokemon), battleOnlyForms: battleOnlyForms(pokemon), alternateForms: alternateForms(pokemon))
                     .tabItem {
                         Image(systemName: "info.circle")
                         Text("Info")
                     }
-                MovesInfoView(moveLearnMethods: moveLearnMethods, pokemonMoves: pokemonMoves)
+                MovesInfoView(moveLearnMethods: moveLearnMethods, pokemonMoves: pokemonMoves(pokemon))
                     .tabItem {
                         Image("icon/tab/moves")
                         Text("Moves")

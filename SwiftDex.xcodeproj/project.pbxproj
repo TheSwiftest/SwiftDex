@@ -47,6 +47,7 @@
 		E88FB0F22808A0580030021F /* OtherModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88FB0F12808A0580030021F /* OtherModels.swift */; };
 		E89290702864F1A400ED041F /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E892906F2864F1A400ED041F /* ItemDetailView.swift */; };
 		E89290732864F51900ED041F /* AbilitySummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89290722864F51900ED041F /* AbilitySummaryView.swift */; };
+		E89290752864FF1700ED041F /* BattleOnlyFormsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89290742864FF1700ED041F /* BattleOnlyFormsView.swift */; };
 		E89A19C3285F950500EBFFDA /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = E89A19C2285F950500EBFFDA /* Realm */; };
 		E89A19C5285F950500EBFFDA /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E89A19C4285F950500EBFFDA /* RealmSwift */; };
 		E89A19CF2860EB2D00EBFFDA /* VersionSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89A19CE2860EB2D00EBFFDA /* VersionSelectionView.swift */; };
@@ -135,6 +136,7 @@
 		E88FB0F12808A0580030021F /* OtherModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherModels.swift; sourceTree = "<group>"; };
 		E892906F2864F1A400ED041F /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		E89290722864F51900ED041F /* AbilitySummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbilitySummaryView.swift; sourceTree = "<group>"; };
+		E89290742864FF1700ED041F /* BattleOnlyFormsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleOnlyFormsView.swift; sourceTree = "<group>"; };
 		E89A19CE2860EB2D00EBFFDA /* VersionSelectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VersionSelectionView.swift; sourceTree = "<group>"; };
 		E89A19D3286276C900EBFFDA /* AlternateFormsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternateFormsView.swift; sourceTree = "<group>"; };
 		E89A19D52863634900EBFFDA /* PokemonShowdownService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonShowdownService.swift; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 				E840B33F27FA17A400630F87 /* StatsInfoView.swift */,
 				E840B34327FA211700630F87 /* EvolutionChainInfoView.swift */,
 				E88FB0E12800EC020030021F /* SpeciesVariationsView.swift */,
+				E89290742864FF1700ED041F /* BattleOnlyFormsView.swift */,
 				E89A19D3286276C900EBFFDA /* AlternateFormsView.swift */,
 			);
 			path = "Basic Info";
@@ -580,6 +583,7 @@
 				E88FB0DE2800A52A0030021F /* DexCategoryView.swift in Sources */,
 				E89A19EF2863937B00EBFFDA /* MemberIVsView.swift in Sources */,
 				E840B35427FB68BF00630F87 /* PokedexView.swift in Sources */,
+				E89290752864FF1700ED041F /* BattleOnlyFormsView.swift in Sources */,
 				E89A19EB2863900600EBFFDA /* ItemSummaryView.swift in Sources */,
 				E840B34027FA17A400630F87 /* StatsInfoView.swift in Sources */,
 				E840B34227FA1F9D00630F87 /* TestData.swift in Sources */,

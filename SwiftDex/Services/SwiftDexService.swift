@@ -116,22 +116,40 @@ class SwiftDexService: ObservableObject {
     }
     
     func speciesVariations(for pokemon: Pokemon) -> [Pokemon] {
+        return SwiftDexService.speciesVariations(for: pokemon, in: selectedVersionGroup)
+    }
+    
+    static func speciesVariations(for pokemon: Pokemon, in versionGroup: VersionGroup) -> [Pokemon] {
+        var query = SwiftDexService.realm.objects(PokemonForm.self).filter("pokemon.species.id == \(pokemon.species!.id) AND pokemon.id != \(pokemon.id)")
+        query = query.filter("introducedInVersionGroup.id <= \(versionGroup.id)")
+        query = query.filter("isBattleOnly == false")
         
-        var query = SwiftDexService.realm.objects(Pokemon.self).filter("species.id == \(pokemon.species!.id) AND id != \(pokemon.id)")
-        query = query.filter("NOT identifier CONTAINS '-gmax' AND NOT identifier CONTAINS '-mega'")
-        query = query.filter("ANY forms.introducedInVersionGroup.id <= \(selectedVersionGroup.id)")
-        
-        return Array(query)
+        return Array(Set(query.map({$0.pokemon!})))
     }
     
     func alternateForms(for pokemon: Pokemon) -> [PokemonForm] {
-        let query = SwiftDexService.realm.objects(PokemonForm.self).filter("pokemon.id == \(pokemon.id)").filter("introducedInVersionGroup.id <= \(selectedVersionGroup.id)")
+        return SwiftDexService.alternateForms(for: pokemon, in: selectedVersionGroup)
+    }
+    
+    static func alternateForms(for pokemon: Pokemon, in versionGroup: VersionGroup) -> [PokemonForm] {
+        let query = SwiftDexService.realm.objects(PokemonForm.self).filter("pokemon.id == \(pokemon.id)").filter("introducedInVersionGroup.id <= \(versionGroup.id)")
         
         return Array(query)
     }
     
     func moves(for pokemon: Pokemon) -> [PokemonMove] {
         let query = SwiftDexService.realm.objects(PokemonMove.self).filter("pokemon.id == \(pokemon.id) AND versionGroup.id == \(selectedVersionGroup.id)")
+        
+        return Array(query)
+    }
+    
+    func battleOnlyForms(for pokemon: Pokemon) -> [PokemonForm] {
+        return SwiftDexService.battleOnlyForms(for: pokemon, in: selectedVersionGroup)
+    }
+    
+    static func battleOnlyForms(for pokemon: Pokemon, in versionGroup: VersionGroup) -> [PokemonForm] {
+        var query = Self.realm.objects(PokemonForm.self).filter("isBattleOnly == true AND identifier CONTAINS [c] \"\(pokemon.species!.identifier)\"")
+        query = query.filter("introducedInVersionGroup.id <= \(versionGroup.id)")
         
         return Array(query)
     }
@@ -256,7 +274,7 @@ extension SwiftDexService {
         return Self.realm.objects(AbilityName.self).filter("name == '\(name)'").first?.ability
     }
     
-    private static func moves(matching text: String?) -> Results<Move> {
+    static func moves(matching text: String?) -> Results<Move> {
         let allMoves = realm.objects(Move.self).sorted(byKeyPath: "identifier")
         guard let text = text else { return allMoves }
         if text.isEmpty { return allMoves }

@@ -26,6 +26,7 @@ struct PokedexView: View {
     
     let speciesVariationsForPokemon: (_ pokemon: Pokemon) -> [Pokemon]
     let alternateFormsForPokemon: (_ pokemon: Pokemon) -> [PokemonForm]
+    let battleOnlyFormsForPokemon: (_ pokemon: Pokemon) -> [PokemonForm]
     let movesForPokemon: (_ pokemon: Pokemon) -> [PokemonMove]
     
     @State private var selectedDexCategory: DexCategory = .pokémon
@@ -64,7 +65,7 @@ struct PokedexView: View {
                         if selectedDexCategory == .pokémon {
                             PokemonListView(pokemonDexNumbers: pokemon, pokemonToShow: $pokemonToShow)
                                 .sheet(item: $pokemonToShow) { pokemonDexNumber in
-                                    PokemonInfoView(pokemon: pokemonDexNumber.pokemon!, pokedexNumber: pokemonDexNumber.pokedexNumber, version: selectedVersion, speciesVariations: speciesVariationsForPokemon(pokemonDexNumber.pokemon!), alternateForms: alternateFormsForPokemon(pokemonDexNumber.pokemon!), moveLearnMethods: Array(selectedVersionGroup.pokemonMoveMethods.filter({$0.pokemonMoveMethod!.id <= 4})).map({$0.pokemonMoveMethod!}), pokemonMoves: movesForPokemon(pokemonDexNumber.pokemon!))
+                                    PokemonInfoView(pokemon: pokemonDexNumber.pokemon!, pokedexNumber: pokemonDexNumber.pokedexNumber, version: selectedVersion, speciesVariations: speciesVariationsForPokemon, battleOnlyForms: battleOnlyFormsForPokemon, alternateForms: alternateFormsForPokemon, pokemonMoves: movesForPokemon, moveLearnMethods: Array(selectedVersionGroup.pokemonMoveMethods.filter({$0.pokemonMoveMethod!.id <= 4})).map({$0.pokemonMoveMethod!}))
                                 }
                         }
                         
