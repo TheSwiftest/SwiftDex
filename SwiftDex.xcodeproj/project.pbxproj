@@ -22,7 +22,6 @@
 		E840B33B27FA137100630F87 /* AbilitiesInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E840B33A27FA137100630F87 /* AbilitiesInfoView.swift */; };
 		E840B33D27FA13C600630F87 /* BasicInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E840B33C27FA13C600630F87 /* BasicInfoView.swift */; };
 		E840B34027FA17A400630F87 /* StatsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E840B33F27FA17A400630F87 /* StatsInfoView.swift */; };
-		E840B34227FA1F9D00630F87 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E840B34127FA1F9D00630F87 /* TestData.swift */; };
 		E840B34427FA211700630F87 /* EvolutionChainInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E840B34327FA211700630F87 /* EvolutionChainInfoView.swift */; };
 		E840B34727FB573600630F87 /* BreedingInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E840B34627FB573600630F87 /* BreedingInfoView.swift */; };
 		E840B34927FB574C00630F87 /* TypeWeaknessesInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E840B34827FB574C00630F87 /* TypeWeaknessesInfoView.swift */; };
@@ -44,7 +43,7 @@
 		E88FB0EB2801ECB90030021F /* SwiftDexService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88FB0EA2801ECB90030021F /* SwiftDexService.swift */; };
 		E88FB0ED28089F310030021F /* BlankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88FB0EC28089F310030021F /* BlankView.swift */; };
 		E88FB0EF28089F6C0030021F /* PokemonListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88FB0EE28089F6C0030021F /* PokemonListView.swift */; };
-		E88FB0F22808A0580030021F /* OtherModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88FB0F12808A0580030021F /* OtherModels.swift */; };
+		E88FB0F22808A0580030021F /* DexCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88FB0F12808A0580030021F /* DexCategory.swift */; };
 		E89290702864F1A400ED041F /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E892906F2864F1A400ED041F /* ItemDetailView.swift */; };
 		E89290732864F51900ED041F /* AbilitySummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89290722864F51900ED041F /* AbilitySummaryView.swift */; };
 		E89290752864FF1700ED041F /* BattleOnlyFormsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89290742864FF1700ED041F /* BattleOnlyFormsView.swift */; };
@@ -111,7 +110,6 @@
 		E840B33A27FA137100630F87 /* AbilitiesInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbilitiesInfoView.swift; sourceTree = "<group>"; };
 		E840B33C27FA13C600630F87 /* BasicInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicInfoView.swift; sourceTree = "<group>"; };
 		E840B33F27FA17A400630F87 /* StatsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsInfoView.swift; sourceTree = "<group>"; };
-		E840B34127FA1F9D00630F87 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
 		E840B34327FA211700630F87 /* EvolutionChainInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvolutionChainInfoView.swift; sourceTree = "<group>"; };
 		E840B34627FB573600630F87 /* BreedingInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedingInfoView.swift; sourceTree = "<group>"; };
 		E840B34827FB574C00630F87 /* TypeWeaknessesInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeWeaknessesInfoView.swift; sourceTree = "<group>"; };
@@ -133,7 +131,7 @@
 		E88FB0EA2801ECB90030021F /* SwiftDexService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDexService.swift; sourceTree = "<group>"; };
 		E88FB0EC28089F310030021F /* BlankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankView.swift; sourceTree = "<group>"; };
 		E88FB0EE28089F6C0030021F /* PokemonListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonListView.swift; sourceTree = "<group>"; };
-		E88FB0F12808A0580030021F /* OtherModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherModels.swift; sourceTree = "<group>"; };
+		E88FB0F12808A0580030021F /* DexCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DexCategory.swift; sourceTree = "<group>"; };
 		E892906F2864F1A400ED041F /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		E89290722864F51900ED041F /* AbilitySummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbilitySummaryView.swift; sourceTree = "<group>"; };
 		E89290742864FF1700ED041F /* BattleOnlyFormsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BattleOnlyFormsView.swift; sourceTree = "<group>"; };
@@ -228,7 +226,6 @@
 		E840B30127F8CA0000630F87 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				E840B34127FA1F9D00630F87 /* TestData.swift */,
 				E840B30227F8CA0000630F87 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
@@ -369,7 +366,7 @@
 		E88FB0F02808A02E0030021F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E88FB0F12808A0580030021F /* OtherModels.swift */,
+				E88FB0F12808A0580030021F /* DexCategory.swift */,
 				E89A19D7286363CF00EBFFDA /* Team.swift */,
 			);
 			path = Models;
@@ -586,7 +583,6 @@
 				E89290752864FF1700ED041F /* BattleOnlyFormsView.swift in Sources */,
 				E89A19EB2863900600EBFFDA /* ItemSummaryView.swift in Sources */,
 				E840B34027FA17A400630F87 /* StatsInfoView.swift in Sources */,
-				E840B34227FA1F9D00630F87 /* TestData.swift in Sources */,
 				E840B35627FBB01F00630F87 /* MovesInfoView.swift in Sources */,
 				E89A19D4286276C900EBFFDA /* AlternateFormsView.swift in Sources */,
 				E840B34B27FB598A00630F87 /* EVYieldsInfoView.swift in Sources */,
@@ -624,7 +620,7 @@
 				E840B35227FB61BD00630F87 /* PokemonInfoView.swift in Sources */,
 				E89A19F928639A4C00EBFFDA /* TeamDetailView.swift in Sources */,
 				E89290702864F1A400ED041F /* ItemDetailView.swift in Sources */,
-				E88FB0F22808A0580030021F /* OtherModels.swift in Sources */,
+				E88FB0F22808A0580030021F /* DexCategory.swift in Sources */,
 				E89A19F52863966A00EBFFDA /* TeamMembersDetailView.swift in Sources */,
 				E89A19F32863946000EBFFDA /* MemberDetailView.swift in Sources */,
 				E840B33927FA0FEC00630F87 /* SpeciesInfoView.swift in Sources */,
@@ -791,7 +787,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftDex/Preview Content\"";
 				DEVELOPMENT_TEAM = 27N85AU6XK;
 				ENABLE_PREVIEWS = YES;
@@ -799,6 +795,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -811,7 +808,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -821,7 +818,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftDex/Preview Content\"";
 				DEVELOPMENT_TEAM = 27N85AU6XK;
 				ENABLE_PREVIEWS = YES;
@@ -829,6 +826,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -841,7 +839,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

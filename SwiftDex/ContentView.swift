@@ -26,7 +26,7 @@ struct ContentView: View {
             BattleSimulatorView().environmentObject(pokemonShowdownService)
                 .tabItem {
                     Image("icon/tab/battle_sim")
-                    Text("Team Builder")
+                    Text("Battle Sim")
                 }
         }
     }

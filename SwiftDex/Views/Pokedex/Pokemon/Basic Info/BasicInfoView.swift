@@ -21,7 +21,7 @@ struct PokemonBasicInfoView: View {
                     PokemonAbilitiesInfoView(slot1Ability: pokemon.slot1Ability, slot2Ability: pokemon.slot2Ability, slot3Ability: pokemon.slot3Ability, color: pokemon.color)
                     PokemonStatsInfoView(stats: Array(pokemon.stats), color: pokemon.color)
                     
-                    if speciesVariations.count > 1 {
+                    if !(speciesVariations.count == 1 && speciesVariations.first! == pokemon){
                         SpeciesVariationsView(variations: speciesVariations, pokemonSelected: $pokemon)
                     }
                     
