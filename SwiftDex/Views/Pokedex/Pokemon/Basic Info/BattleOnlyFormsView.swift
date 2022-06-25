@@ -14,28 +14,26 @@ struct BattleOnlyFormsView: View {
     
     var body: some View {
         VStack {
-            if forms.count > 1 {
-                PokemonDetailSectionHeader(text: "Battle Forms")
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], alignment: .center) {
-                    ForEach(forms) { form in
-                        VStack {
-                            Text(form.formIdentifier?.capitalized ?? "Normal")
-                                .minimumScaleFactor(0.5)
-                                .lineLimit(1)
-                            Rectangle()
-                                .foregroundColor(Color(.secondarySystemBackground))
-                                .frame(width: 100, height: 100)
-                                .overlay(
-                                    form.sprite
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 70, height: 70)
-                                )
-                                .cornerRadius(23)
-                                .onTapGesture {
-                                    pokemon = form.pokemon!
-                                }
-                        }
+            PokemonDetailSectionHeader(text: "Battle Forms")
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], alignment: .center) {
+                ForEach(forms) { form in
+                    VStack {
+                        Text(form.formIdentifier?.capitalized ?? "Normal")
+                            .minimumScaleFactor(0.5)
+                            .lineLimit(1)
+                        Rectangle()
+                            .foregroundColor(Color(.secondarySystemBackground))
+                            .frame(width: 100, height: 100)
+                            .overlay(
+                                form.sprite
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 70, height: 70)
+                            )
+                            .cornerRadius(23)
+                            .onTapGesture {
+                                pokemon = form.pokemon!
+                            }
                     }
                 }
             }
