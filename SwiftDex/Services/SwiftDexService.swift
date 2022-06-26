@@ -145,10 +145,14 @@ class SwiftDexService: ObservableObject {
         return Array(query)
     }
     
-    func moves(for pokemon: Pokemon) -> [PokemonMove] {
-        let query = SwiftDexService.realm.objects(PokemonMove.self).filter("pokemon.id == \(pokemon.id) AND versionGroup.id == \(selectedVersionGroup.id)")
+    static func moves(for pokemon: Pokemon, in versionGroup: VersionGroup) -> [PokemonMove] {
+        let query = Self.realm.objects(PokemonMove.self).filter("pokemon.id == \(pokemon.id) AND versionGroup.id == \(versionGroup.id)")
         
         return Array(query)
+    }
+    
+    func moves(for pokemon: Pokemon) -> [PokemonMove] {
+        return SwiftDexService.moves(for: pokemon, in: selectedVersionGroup)
     }
     
     func battleOnlyForms(for pokemon: Pokemon) -> [PokemonForm] {

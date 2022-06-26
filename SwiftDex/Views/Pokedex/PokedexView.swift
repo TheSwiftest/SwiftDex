@@ -65,7 +65,7 @@ struct PokedexView: View {
                         if selectedDexCategory == .pokémon {
                             PokemonListView(pokemonDexNumbers: pokemon, pokemonToShow: $pokemonToShow)
                                 .sheet(item: $pokemonToShow) { pokemonDexNumber in
-                                    PokemonInfoView(pokemon: pokemonDexNumber.pokemon!, pokedexNumber: pokemonDexNumber.pokedexNumber, version: selectedVersion, speciesVariations: speciesVariationsForPokemon, battleOnlyForms: battleOnlyFormsForPokemon, alternateForms: alternateFormsForPokemon, pokemonMoves: movesForPokemon)
+                                    PokemonInfoView(pokemonDexNumber: pokemonDexNumber, versionGroup: selectedVersionGroup)
                                 }
                         }
                         

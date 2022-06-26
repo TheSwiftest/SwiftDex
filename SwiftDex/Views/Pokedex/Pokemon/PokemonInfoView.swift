@@ -7,47 +7,77 @@
 
 import SwiftUI
 
-struct PokemonInfoView: View {
-    @State var pokemon: Pokemon
+class PokemonInfoViewModel: ObservableObject {
+    @Published var pokemon: Pokemon
     let pokedexNumber: Int
-    let version: Version
+    let pokedex: Pokedex
+    let versionGroup: VersionGroup
     
-    let speciesVariations: (_ pokemon: Pokemon) -> [Pokemon]
-    let battleOnlyForms: (_ pokemon: Pokemon) -> [PokemonForm]
-    let alternateForms: (_ pokemon: Pokemon) -> [PokemonForm]
-    let pokemonMoves: (_ pokemon: Pokemon) -> [PokemonMove]
+    var speciesVariations: [Pokemon] {
+        return SwiftDexService.speciesVariations(for: pokemon, in: versionGroup)
+    }
+    
+    var battleOnlyForms: [PokemonForm] {
+        return SwiftDexService.battleOnlyForms(for: pokemon, in: versionGroup)
+    }
+    
+    var alternateForms: [PokemonForm] {
+        return SwiftDexService.alternateForms(for: pokemon, in: versionGroup)
+    }
+    
+    var pokemonMoves: [PokemonMove] {
+        return SwiftDexService.moves(for: pokemon, in: versionGroup)
+    }
+    
+    var moveLearnMethods: [PokemonMoveMethod] {
+        return Array(Set(pokemonMoves.map({$0.pokemonMoveMethod!}))).sorted(by: {$0.id < $1.id})
+    }
+    
+    init(pokemonDexNumber: PokemonDexNumber, versionGroup: VersionGroup) {
+        self.pokemon = pokemonDexNumber.pokemon!
+        self.pokedex = pokemonDexNumber.pokedex!
+        self.versionGroup = versionGroup
+        self.pokedexNumber = pokemonDexNumber.pokedexNumber
+    }
+}
 
+struct PokemonInfoView: View {
+    @ObservedObject private var viewModel: PokemonInfoViewModel
     @State private var showVersionSelectionView: Bool = false
+    
+    init(pokemonDexNumber: PokemonDexNumber, versionGroup: VersionGroup) {
+        self.viewModel = PokemonInfoViewModel(pokemonDexNumber: pokemonDexNumber, versionGroup: versionGroup)
+    }
     
     var body: some View {
         VStack(spacing: 5) {
-            PokemonSummaryView(pokemon: pokemon, pokedexNumber: pokedexNumber, showVersionView: true, showVersionSelectionView: $showVersionSelectionView)
+            PokemonSummaryView(pokemon: viewModel.pokemon, pokedexNumber: viewModel.pokedexNumber, showVersionView: true, showVersionSelectionView: $showVersionSelectionView)
             TabView {
-                PokemonBasicInfoView(pokemon: $pokemon, speciesVariations: speciesVariations(pokemon), battleOnlyForms: battleOnlyForms(pokemon), alternateForms: alternateForms(pokemon))
+                PokemonBasicInfoView(pokemon: $viewModel.pokemon, speciesVariations: viewModel.speciesVariations, battleOnlyForms: viewModel.battleOnlyForms, alternateForms: viewModel.alternateForms)
                     .tabItem {
                         Image(systemName: "info.circle")
                         Text("Info")
                     }
-                if pokemonMoves(pokemon).count > 0 {
-                    MovesInfoView(pokemonMoves: pokemonMoves(pokemon))
+                if viewModel.pokemonMoves.count > 0 {
+                    MovesInfoView(pokemonMoves: viewModel.pokemonMoves, moveLearnMethods: viewModel.moveLearnMethods, selectedLearnMethod: viewModel.moveLearnMethods.first!)
                         .tabItem {
                             Image("icon/tab/moves")
                             Text("Moves")
                         }
                 }
-                PokemonBreedingInfoView(breedingInfo: PokemonBreedingInfo(pokemon: pokemon), color: pokemon.color)
+                PokemonBreedingInfoView(breedingInfo: PokemonBreedingInfo(pokemon: viewModel.pokemon), color: viewModel.pokemon.color)
                     .tabItem {
                         Image("icon/tab/breeding")
                         Text("Breeding")
                     }
             }
-            .accentColor(pokemon.color)
+            .accentColor(viewModel.pokemon.color)
         }
     }
 }
 
-//struct PokemonInfoView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PokemonInfoView(pokemon: testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!, pokedexNumber: 1, version: testRealm.object(ofType: Version.self, forPrimaryKey: 1)!, speciesVariations: [], alternateForms: [], moveLearnMethods: Array(testRealm.objects(PokemonMoveMethod.self).filter({$0.id <= 4})), pokemonMoves: Array(testRealm.object(ofType: Pokemon.self, forPrimaryKey: 1)!.moves.filter({$0.versionGroup!.id == 4})))
-//    }
-//}
+struct PokemonInfoView_Previews: PreviewProvider {
+    static var previews: some View {
+        PokemonInfoView(pokemonDexNumber: SwiftDexService.pokemon(withId: 26)!.dexNumbers.last!, versionGroup: SwiftDexService.versionGroup(withId: 20)!)
+    }
+}

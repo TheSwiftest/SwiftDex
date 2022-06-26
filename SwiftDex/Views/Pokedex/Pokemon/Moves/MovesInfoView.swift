@@ -9,17 +9,10 @@ import SwiftUI
 
 struct MovesInfoView: View {
     let pokemonMoves: [PokemonMove]
+    let moveLearnMethods: [PokemonMoveMethod]
     
-    private let moveLearnMethods: [PokemonMoveMethod]
-
     @State var selectedLearnMethod: PokemonMoveMethod
     @State private var selectedMove: PokemonMove?
-    
-    init(pokemonMoves: [PokemonMove]) {
-        self.pokemonMoves = pokemonMoves
-        self.moveLearnMethods = Array(Set(pokemonMoves.map({$0.pokemonMoveMethod!}))).sorted(by: {$0.id < $1.id})
-        _selectedLearnMethod = State(initialValue: moveLearnMethods.first!)
-    }
     
     private func subtitle(for pokemonMove: PokemonMove) -> String? {
         if pokemonMove.pokemonMoveMethod?.id == 1 {
